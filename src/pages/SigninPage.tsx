@@ -43,9 +43,9 @@ const SigninPage = () => {
         className="login-form"
         //  onSubmit={handleSubmit}
       >
-        <h2>Log Ind</h2>
+        <h2 id="login-title">Kino App | Log Ind</h2>
         <div className="login-form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Brugernavn</label>
           <input
             type="text"
             name="username"
@@ -57,7 +57,7 @@ const SigninPage = () => {
           />
         </div>
         <div className="login-form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Kodeord</label>
           <input
             type="password"
             name="password"

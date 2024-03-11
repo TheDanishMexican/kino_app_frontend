@@ -6,6 +6,7 @@
 }
 
 .nav-header ul {
+  gap: 0px;
   margin: 0 auto;
   width: 100vw;
   background: rgb(2, 0, 36);
@@ -27,11 +28,6 @@
   list-style: none;
   padding: 10px;
   width: 8em;
-}
-
-#nav-film {
-  margin-left: 40px;
-  border-left: 1px solid gray;
 }
 
 .nav-header li:hover {
@@ -59,9 +55,17 @@
   text-decoration: none;
 }
 
+#nav-film {
+  margin-left: 40px;
+  border-left: 1px solid gray;
+}
+
 #nav-header-logo {
-  margin-left: -30px;
+  margin-left: 30px;
+  height: fit-content;
   scale: 2;
+  width: fit-content;
+  translate: 0px 0px;
 }
 
 #nav-signin {
