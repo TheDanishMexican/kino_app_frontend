@@ -7,7 +7,7 @@
 
 .nav-header ul {
   margin: 0 auto;
-  width: 100%;
+  width: 100vw;
   background: rgb(2, 0, 36);
   background: linear-gradient(
     207deg,
@@ -68,6 +68,7 @@
   margin-left: auto;
   scale: 1.7;
   width: auto;
+  translate: -20px 0px;
 }
 
 .active-header a {
