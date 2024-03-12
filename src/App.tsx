@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import MoviesPage from "./pages/MoviesPage";
 import CinemasPage from "./pages/CinemasPage";
 import SigninPage from "./pages/SigninPage";
+import CreateAccountPage from "./pages/CreateAccountPage";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/film" element={<MoviesPage />} />
         <Route path="/biografer" element={<CinemasPage />} />
         <Route path="/log-ind" element={<SigninPage />} />
+        <Route path="/opret-konto" element={<CreateAccountPage />} />
       </Routes>
     </Layout>
   );
