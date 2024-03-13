@@ -64,7 +64,8 @@
   text-decoration: none;
 }
 
-#nav-film {
+#nav-film,
+#nav-orders {
   margin-left: 40px;
   border-left: 1px solid gray;
 }
@@ -77,11 +78,32 @@
   translate: 0px 0px;
 }
 
-#nav-signin {
-  margin-left: auto;
+#nav-signin,
+#nav-signout {
+  position: absolute;
+  right: 0;
   scale: 1.7;
   width: auto;
   translate: -20px 0px;
+  font-size: 9px;
+}
+
+#nav-reservations {
+  position: absolute;
+  right: 0;
+  transform: translate(-150px, 0px);
+  scale: 1.7;
+  width: auto;
+  font-size: 9px;
+}
+
+#nav-account {
+  position: absolute;
+  right: 0;
+  transform: translate(-75px, 0px);
+  scale: 1.7;
+  width: auto;
+  font-size: 9px;
 }
 
 .active-header a {
