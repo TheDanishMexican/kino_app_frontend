@@ -26,42 +26,40 @@ export default function NavHeader() {
             <CameraIcon />
           </NavLink>
         </li>
-        {!auth.isLoggedInAs(["ADMIN", "STAFF"]) && (
-          <>
-            <li
-              id="nav-film"
-              className={location.pathname == "/film" ? "active-header" : ""}
-            >
-              <NavLink to="/film">
-                <LocalMoviesIcon />
-                <p>Film</p>
-              </NavLink>
-            </li>
-            <li
-              className={
-                location.pathname == "/biografer" ? "active-header" : ""
-              }
-            >
-              <NavLink to="/biografer">
-                <CameraIndoorIcon />
-                <p>Biografer</p>
-              </NavLink>
-            </li>
-          </>
-        )}
+
+        <li
+          id="nav-film"
+          className={location.pathname == "/film" ? "active-header" : ""}
+        >
+          <NavLink to="/film">
+            <LocalMoviesIcon />
+            <p>Film</p>
+          </NavLink>
+        </li>
+        <li
+          className={location.pathname == "/biografer" ? "active-header" : ""}
+        >
+          <NavLink to="/biografer">
+            <CameraIndoorIcon />
+            <p>Biografer</p>
+          </NavLink>
+        </li>
         {auth.isLoggedInAs(["USER"]) && (
+          <li
+            id="nav-reservations"
+            className={
+              location.pathname == "/reservationer" ? "active-header" : ""
+            }
+          >
+            <NavLink to="/reservationer">
+              <LocalActivity />
+              <p>Billetter</p>
+            </NavLink>
+          </li>
+        )}
+
+        {auth.isLoggedInAs(["USER", "ADMIN", "STAFF"]) && (
           <>
-            <li
-              id="nav-reservations"
-              className={
-                location.pathname == "/reservationer" ? "active-header" : ""
-              }
-            >
-              <NavLink to="/reservationer">
-                <LocalActivity />
-                <p>Billetter</p>
-              </NavLink>
-            </li>
             <li id="nav-account">
               <NavLink to="/min-konto">
                 <AccountCircle />
