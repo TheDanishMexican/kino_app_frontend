@@ -5,7 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import "./NavHeader.css";
 import CameraIcon from "@mui/icons-material/Camera";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
-import { LocalActivity, AccountCircle, LocationOff } from "@mui/icons-material";
+import { LocalActivity, AccountCircle } from "@mui/icons-material";
 
 export default function NavHeader() {
   const location = useLocation();
