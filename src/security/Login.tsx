@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { useAuth } from "../security/AuthProvider";
+import { useLocation } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
+import { useNavigate } from "react-router-dom";
 import { User } from "../services/authFacade";
-import { NavLink, useNavigate } from "react-router-dom";
-import "./styling/signinpage.css";
+import "./login.css";
 
-const SigninPage = () => {
+const Login = () => {
   const [user, setUser] = useState({ username: "", password: "" });
 
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   const auth = useAuth();
 
   const [err, setErr] = useState(null);
 
-  // Handles the form submit event - logs in the user and redirects to the main page.
+  //const from = location.state?.from?.pathname || "/";
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -23,11 +25,11 @@ const SigninPage = () => {
     setErr(null);
     console.log(err);
     alert("Login: " + JSON.stringify(user));
-
     auth
       .signIn(user)
       .then(() => {
-        navigate("/", { replace: true });
+        const from = location.state?.from?.pathname || "/";
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         setErr(err);
@@ -37,9 +39,9 @@ const SigninPage = () => {
   return (
     <div className="login-wrapper">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2 id="login-title">Kino App | Log Ind</h2>
+        <h2>Login</h2>
         <div className="login-form-group">
-          <label htmlFor="username">Brugernavn</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             name="username"
@@ -51,7 +53,7 @@ const SigninPage = () => {
           />
         </div>
         <div className="login-form-group">
-          <label htmlFor="password">Kodeord</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
@@ -62,25 +64,12 @@ const SigninPage = () => {
             required
           />
         </div>
-        {/* <div className="login-form-doubleholder">
-          <label htmlFor="remember-me">Husk mig:</label>
-          <input
-            type="checkbox"
-            id="remember-me"
-            name="remember-me"
-            value="remember-me"
-          />
-        </div> */}
-
         <button type="submit" className="login-btn">
-          Log ind
+          Login
         </button>
-        <NavLink to="/opret-konto">
-          Har du ikke en konto? Opret en konto her!
-        </NavLink>
       </form>
     </div>
   );
 };
 
-export default SigninPage;
+export default Login;

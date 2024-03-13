@@ -42,6 +42,11 @@ button:focus {
   margin-bottom: 15px;
 }
 
+.login-form-doubleholder {
+  display: flex;
+  justify-content: space-between;
+}
+
 .login-form-group label {
   display: block;
   margin-bottom: 5px;

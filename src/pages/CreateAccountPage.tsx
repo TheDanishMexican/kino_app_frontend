@@ -43,7 +43,7 @@ const CreateAccountPage = () => {
         className="login-form"
         //  onSubmit={handleSubmit}
       >
-        <h2 id="login-title">Kino App | Opret konto</h2>
+        <h2 id="login-title">Opret konto</h2>
         <div className="login-form-group">
           <label htmlFor="username">Brugernavn:</label>
           <input
