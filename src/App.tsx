@@ -8,6 +8,7 @@ import MoviesPage from "./pages/MoviesPage";
 import CinemasPage from "./pages/CinemasPage";
 import AdminPage from "./pages/AdminPage";
 import StaffPage from "./pages/StaffPage";
+import AdminStaffPage from "./pages/AdminStaffPage";
 // SECURITY / AUTH
 import Login from "./security/Login";
 import CreateAccountPage from "./pages/CreateAccountPage";
@@ -39,6 +40,14 @@ function App() {
           element={
             <RequireAuth roles={["ADMIN"]}>
               <AdminPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/adminStaff"
+          element={
+            <RequireAuth roles={["ADMIN"]}>
+              <AdminStaffPage />
             </RequireAuth>
           }
         />
