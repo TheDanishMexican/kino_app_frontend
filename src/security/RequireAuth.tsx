@@ -11,11 +11,11 @@ export default function RequireAuth({ children, roles }: Props) {
   const location = useLocation();
   if (roles) {
     if (!auth.isLoggedInAs(roles)) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
+      return <Navigate to="/log-ind" state={{ from: location }} replace />;
     }
   }
   if (!auth.username) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/log-ind" state={{ from: location }} replace />;
   }
   return children;
 }

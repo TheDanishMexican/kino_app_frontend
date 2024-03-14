@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { User } from "../services/authFacade";
 import "./login.css";
 
@@ -22,9 +22,6 @@ const Login = () => {
     const formData = new FormData(event.currentTarget);
     const user = Object.fromEntries(formData) as unknown as User;
 
-    setErr(null);
-    console.log(err);
-    alert("Login: " + JSON.stringify(user));
     auth
       .signIn(user)
       .then(() => {
@@ -39,9 +36,9 @@ const Login = () => {
   return (
     <div className="login-wrapper">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2>Kino App | Log ind</h2>
         <div className="login-form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Brugernavn</label>
           <input
             type="text"
             name="username"
@@ -53,7 +50,7 @@ const Login = () => {
           />
         </div>
         <div className="login-form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Kodeord</label>
           <input
             type="password"
             name="password"
@@ -64,9 +61,13 @@ const Login = () => {
             required
           />
         </div>
+        {err && (
+          <p className="login-error">Forkert kodeord eller brugernavn.</p>
+        )}
         <button type="submit" className="login-btn">
           Login
         </button>
+        <NavLink to="/opret-konto">Har du ikke en konto? Opret nu!</NavLink>
       </form>
     </div>
   );
