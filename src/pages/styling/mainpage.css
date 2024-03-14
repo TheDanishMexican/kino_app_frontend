@@ -1,0 +1,72 @@
+/* Styling for Movie component */
+.movie {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.movie .time_container {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.grid-item-movie img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-list{
+    display: grid;
+    gap: 2em;
+    padding: 2em;
+}
+
+
+@media (min-width: 600px) {
+    .movie-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 992px) {
+    .movie-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (min-width: 1200px) {
+   .movie-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.grid-item-movie{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  object-fit:scale-down
+
+}
+.movie .text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.movie h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    object-fit: contain;
+}
+
+.movie p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #888;
+}
+
