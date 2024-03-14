@@ -1,0 +1,40 @@
+/* Styling for Movie component */
+.movie {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.movie .time_container {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.movie img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.movie .text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.movie h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.movie p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #888;
+}
+
