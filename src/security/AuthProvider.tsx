@@ -5,6 +5,7 @@ import { LoginResponse, LoginRequest } from "../services/authFacade";
 
 interface AuthContextType {
   username: string | null;
+  create: (user: User) => Promise<LoginResponse>;
   signIn: (user: User) => Promise<LoginResponse>;
   signOut: () => void;
   isLoggedIn: () => boolean;
@@ -19,7 +20,19 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [username, setUsername] = useState<string | null>(initialUsername);
 
   const signIn = async (user_: LoginRequest) => {
+    console.log(user_);
     return authProvider.signIn(user_).then((user) => {
+      setUsername(user.username);
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("roles", JSON.stringify(user.roles));
+      localStorage.setItem("token", user.token);
+      return user;
+    });
+  };
+
+  const create = async (user_: User) => {
+    console.log(user_);
+    return authProvider.create(user_).then((user) => {
       setUsername(user.username);
       localStorage.setItem("username", user.username);
       localStorage.setItem("roles", JSON.stringify(user.roles));
@@ -44,10 +57,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const roles: Array<string> = JSON.parse(
       localStorage.getItem("roles") || "[]"
     );
+    console.log(roles);
     return roles?.some((r) => role.includes(r)) || false;
   }
 
-  const value = { username, isLoggedIn, isLoggedInAs, signIn, signOut };
+  const value = { username, isLoggedIn, isLoggedInAs, signIn, signOut, create };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

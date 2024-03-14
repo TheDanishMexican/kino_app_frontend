@@ -1,6 +1,6 @@
-//import { useAuth } from "./_Authprovider";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function AuthStatus() {
   const auth = useAuth();
@@ -8,13 +8,17 @@ export default function AuthStatus() {
   if (!auth.isLoggedIn()) {
     return (
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/log-ind">
+          <AccountCircle />
+        </NavLink>
       </li>
     );
   } else {
     return (
       <li>
-        <NavLink to="/logout">Logout (Logged in as {auth.username})</NavLink>
+        <NavLink to="/log-ud">
+          <AccountCircle />
+        </NavLink>
       </li>
     );
   }
