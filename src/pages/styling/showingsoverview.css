@@ -1,4 +1,4 @@
-.cinema-card {
+.showing-card {
     background-color: purple;
     width: 200px;
     padding: 10px;
@@ -11,6 +11,6 @@
     transition: transform 0.5s;
 }
 
-.cinema-card:hover {
+.showing-card:hover {
     transform: scale(1.05);
 }
