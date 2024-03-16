@@ -1,6 +1,7 @@
 import Cinema from '../interfaces/cinema'
 import { useEffect, useState } from 'react'
 import './styling/cinemaspage.css'
+import { Link } from 'react-router-dom'
 
 export default function CinemasPage() {
     const [cinemas, setCinemas] = useState<Cinema[]>([])
@@ -20,10 +21,12 @@ export default function CinemasPage() {
             </p>
             <ul style={{ listStyle: 'none' }}>
                 {cinemas.map((cinema, index) => (
-                    <li className="cinema-card" key={index}>
-                        <h3>{cinema.name}</h3>
-                        <p>{cinema.location}</p>
-                    </li>
+                    <Link to={`/cinemas/${cinema.id}/showings`} key={index}>
+                        <li className="cinema-card" key={index}>
+                            <h3>{cinema.name}</h3>
+                            <p>{cinema.location}</p>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </div>

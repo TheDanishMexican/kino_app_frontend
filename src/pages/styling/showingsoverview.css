@@ -1,0 +1,16 @@
+.showing-card {
+    background-color: purple;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.showing-card:hover {
+    transform: scale(1.05);
+}

@@ -1,13 +1,42 @@
-export default function ShowingsOverview() {
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import Showing from '../../interfaces/showing'
+import '../styling/showingsoverview.css'
+
+export default function ShowingsPage() {
+    const { cinemaId } = useParams()
+    const [showings, setShowings] = useState<Showing[]>([])
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/cinemas/${cinemaId}/showings`)
+            .then((response) => response.json())
+            .then((data) => setShowings(data))
+    }, [cinemaId])
+
     return (
         <div>
-            <h1>Showings Overview</h1>
-            <select name="showing" id="showing">
-                <option value="showing1">Showing 1</option>
-                <option value="showing2">Showing 2</option>
-                <option value="showing3">Showing 3</option>
-                <option value="showing4">Showing 4</option>
-            </select>
+            <h1>Showings</h1>
+            <Link
+                to="/biografer"
+                style={{
+                    marginBottom: '20px',
+                    display: 'block',
+                    color: 'blue',
+                    textDecoration: 'none',
+                }}
+            >
+                Back to Cinemas
+            </Link>
+            <ul style={{ listStyle: 'none' }}>
+                {showings.map((showing, index) => (
+                    <Link to={`/showing/${showing.id}/seats`} key={index}>
+                        <li className="showing-card" key={index}>
+                            <p>{showing.movie.name}</p>
+                            <p>Duration: {showing.durationInMinutes} minutes</p>
+                        </li>
+                    </Link>
+                ))}
+            </ul>
         </div>
     )
 }

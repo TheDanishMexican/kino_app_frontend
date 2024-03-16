@@ -1,6 +1,6 @@
+import { Movie } from '../services/apiFacade'
 import Hall from './hall'
 import Reservation from './reservation'
-import Movie from './movie'
 
 export default interface Showing {
     id: number
