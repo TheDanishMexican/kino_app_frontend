@@ -1,0 +1,25 @@
+.hall-container {
+    display: flex;
+    justify-content: center;
+}
+
+.hall-grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(20px, 1fr)); /* 10 seats per row */
+    gap: 15px; /* Adjust gap between seats */
+    max-width: 50%; /* Limit the width of the container to half of the page width */
+    max-height: 50vh; /* Limit the height of the container to half of the viewport height */
+}
+
+.seat {
+    background-color: purple; /* Background color of seats */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 20px;
+    text-align: center; /* Center text */
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.seat p {
+    color: white; /* Set seat number color to white */
+}

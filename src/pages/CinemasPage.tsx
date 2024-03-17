@@ -21,7 +21,11 @@ export default function CinemasPage() {
             </p>
             <ul style={{ listStyle: 'none' }}>
                 {cinemas.map((cinema, index) => (
-                    <Link to={`/cinemas/${cinema.id}/showings`} key={index}>
+                    <Link
+                        style={{ textDecoration: 'none' }}
+                        to={`/cinemas/${cinema.id}/showings`}
+                        key={index}
+                    >
                         <li className="cinema-card" key={index}>
                             <h3>{cinema.name}</h3>
                             <p>{cinema.location}</p>

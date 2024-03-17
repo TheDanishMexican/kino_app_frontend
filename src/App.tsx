@@ -29,11 +29,7 @@ function App() {
                 <Route path="/opret-konto" element={<CreateAccountPage />} />
                 <Route
                     path="/cinemas/:cinemaId/showings"
-                    element={
-                        <RequireAuth roles={['USER']}>
-                            <ShowingsOverview />
-                        </RequireAuth>
-                    }
+                    element={<ShowingsOverview />}
                 />
                 <Route
                     path="/showing/:showingId/seats"
