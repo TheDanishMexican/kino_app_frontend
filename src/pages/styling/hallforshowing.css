@@ -5,21 +5,39 @@
 
 .hall-grid {
     display: grid;
-    grid-template-columns: repeat(10, minmax(20px, 1fr)); /* 10 seats per row */
-    gap: 15px; /* Adjust gap between seats */
-    max-width: 50%; /* Limit the width of the container to half of the page width */
-    max-height: 50vh; /* Limit the height of the container to half of the viewport height */
+    grid-template-columns: repeat(10, minmax(20px, 1fr));
+    gap: 15px;
+    max-width: 50%;
+    max-height: 50vh;
 }
 
 .seat {
-    background-color: purple; /* Background color of seats */
-    border: 1px solid #ccc; /* Border color */
+    background-color: purple;
+    border: 1px solid #ccc;
     border-radius: 20px;
-    text-align: center; /* Center text */
+    text-align: center;
     padding-left: 7px;
     padding-right: 7px;
 }
 
+.seat:hover {
+    background-color: purple;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-align: center;
+    padding-left: 7px;
+    padding-right: 7px;
+    cursor: pointer;
+}
+
+.seat.reserved {
+    background-color: red;
+}
+
 .seat p {
-    color: white; /* Set seat number color to white */
+    color: white;
+}
+
+.seat.selected {
+    background-color: green;
 }
