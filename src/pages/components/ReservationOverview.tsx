@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router-dom'
 import Seat from '../../interfaces/seat'
 import '../styling/reservationoverview.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function ReservationOverview() {
     const location = useLocation()
+    const navigate = useNavigate()
     const { seats, totalPrice, showing } = location.state
 
     const showingId = showing.id
@@ -29,6 +31,7 @@ export default function ReservationOverview() {
             })
             const data = await response.json()
             console.log(`Reservation added:`, data)
+            navigate('/succesPage')
         } catch (error) {
             console.error('Error adding reservation:', error)
         }

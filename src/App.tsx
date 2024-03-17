@@ -18,6 +18,7 @@ import AccountPage from './pages/AccountPage'
 import ShowingsOverview from './pages/components/ShowingsOverview'
 import HallForShowing from './pages/components/HallForShowing'
 import ReservationOverview from './pages/components/ReservationOverview'
+import SuccesPage from './pages/SuccesPage'
 
 function App() {
     return (
@@ -41,6 +42,14 @@ function App() {
                     element={
                         <RequireAuth roles={['USER']}>
                             <ReservationOverview />
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path="/succesPage"
+                    element={
+                        <RequireAuth roles={['USER']}>
+                            <SuccesPage />
                         </RequireAuth>
                     }
                 />
