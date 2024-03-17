@@ -1,3 +1,30 @@
+.date-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.date {
+    background-color: transparent;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.date:active {
+    background-color: purple;
+    color: white;
+}
+
+.showings-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .showing-card {
     background-color: purple;
     width: 200px;
