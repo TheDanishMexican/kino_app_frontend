@@ -19,7 +19,7 @@ export default function CinemasPage() {
                 This page is meant for displaying the different cinemas and
                 picking showings.
             </p>
-            <ul style={{ listStyle: 'none' }}>
+            <ul className="cinemas-container" style={{ listStyle: 'none' }}>
                 {cinemas.map((cinema, index) => (
                     <Link
                         style={{ textDecoration: 'none' }}

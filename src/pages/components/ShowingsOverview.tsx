@@ -19,7 +19,6 @@ export default function ShowingsOverview() {
         setSelectedDate(selectedDate === date ? null : date)
     }
 
-    // Generate the next seven dates
     const generateNextSevenDays = () => {
         const dates: Date[] = []
         const today = new Date()
