@@ -17,6 +17,7 @@ import ReservationsPage from './pages/ReservationsPage'
 import AccountPage from './pages/AccountPage'
 import ShowingsOverview from './pages/components/ShowingsOverview'
 import HallForShowing from './pages/components/HallForShowing'
+import ReservationOverview from './pages/components/ReservationOverview'
 
 function App() {
     return (
@@ -33,9 +34,13 @@ function App() {
                 />
                 <Route
                     path="/showing/:showingId/seats"
+                    element={<HallForShowing />}
+                />
+                <Route
+                    path="/reservationOverview"
                     element={
                         <RequireAuth roles={['USER']}>
-                            <HallForShowing />
+                            <ReservationOverview />
                         </RequireAuth>
                     }
                 />
