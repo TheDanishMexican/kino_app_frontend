@@ -1,12 +1,11 @@
 import { useLocation } from 'react-router-dom'
 import Seat from '../../interfaces/seat'
 import '../styling/reservationoverview.css'
-import { useState } from 'react'
 
 export default function ReservationOverview() {
     const location = useLocation()
     const { seats, totalPrice, showing } = location.state
-    const [reservationId, setReservationId] = useState<number>()
+
     const showingId = showing.id
     const hallId = showing.hallId
     const username = localStorage.getItem('username')
@@ -29,8 +28,7 @@ export default function ReservationOverview() {
                 }),
             })
             const data = await response.json()
-            setReservationId(data.id) // Assuming the response includes the reservation ID
-            console.log('Reservation added:', reservationId)
+            console.log(`Reservation added:`, data)
         } catch (error) {
             console.error('Error adding reservation:', error)
         }
