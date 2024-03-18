@@ -6,10 +6,12 @@ import Showing from '../../interfaces/showing'
 import { Link } from 'react-router-dom'
 import { makeOptions } from '../../services/fetchUtils'
 import Row from '../../interfaces/row'
+import { useLocation } from 'react-router-dom'
 
 export default function HallForShowing() {
+    const location = useLocation()
+    const { cinemaName } = location.state
     const { showingId } = useParams()
-    // const [seats, setSeats] = useState<Seat[]>([])
     const [showing, setShowing] = useState<Showing>()
     const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
@@ -116,6 +118,7 @@ export default function HallForShowing() {
                                     showing: showing,
                                     totalPrice: calculateTotalPrice(),
                                     rows: rows,
+                                    cinemaName: cinemaName,
                                 }}
                             >
                                 <button className="paymentButton">

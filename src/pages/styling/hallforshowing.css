@@ -1,3 +1,7 @@
+* {
+    margin-bottom: 10px;
+}
+
 .hall-container {
     display: flex;
     justify-content: center;
@@ -134,10 +138,14 @@
         margin: 5px; /* Adjust margin for smaller screens */
     }
 
+    .header-footer {
+        gap: 15px;
+    }
+
     .seat {
-        width: 30px; /* Adjust seat width for smaller screens */
-        height: 30px; /* Adjust seat height for smaller screens */
-        font-size: 10px; /* Adjust font size for seat number for smaller screens */
+        width: 30px; /* Adjust seat width for large screens */
+        height: 30px; /* Adjust seat height for large screens */
+        font-size: 15px; /* Adjust font size for seat number for large screens */
     }
     /* Add more styles for other elements inside the .hall container as needed */
 }
@@ -147,11 +155,10 @@
     .row {
         margin: 10px; /* Adjust margin for medium screens */
     }
-
     .seat {
-        width: 35px; /* Adjust seat width for medium screens */
-        height: 35px; /* Adjust seat height for medium screens */
-        font-size: 12px; /* Adjust font size for seat number for medium screens */
+        width: 30px; /* Adjust seat width for large screens */
+        height: 30px; /* Adjust seat height for large screens */
+        font-size: 15px; /* Adjust font size for seat number for large screens */
     }
 
     /* Add more styles for other elements inside the .hall container as needed */
@@ -164,8 +171,8 @@
     }
 
     .seat {
-        width: 40px; /* Adjust seat width for large screens */
-        height: 40px; /* Adjust seat height for large screens */
+        width: 30px; /* Adjust seat width for large screens */
+        height: 30px; /* Adjust seat height for large screens */
         font-size: 15px; /* Adjust font size for seat number for large screens */
     }
 

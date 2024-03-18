@@ -25,6 +25,7 @@ export default function CinemasPage() {
                         style={{ textDecoration: 'none' }}
                         to={`/cinemas/${cinema.id}/showings`}
                         key={index}
+                        state={{ cinemaName: cinema.name }}
                     >
                         <li className="cinema-card" key={index}>
                             <h3>{cinema.name}</h3>

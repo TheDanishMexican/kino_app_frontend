@@ -7,7 +7,7 @@ import Row from '../../interfaces/row'
 export default function ReservationOverview() {
     const location = useLocation()
     const navigate = useNavigate()
-    const { seats, totalPrice, showing, rows } = location.state
+    const { seats, totalPrice, showing, rows, cinemaName } = location.state
 
     const showingId = showing.id
     const hallId = showing.hallId
@@ -55,6 +55,9 @@ export default function ReservationOverview() {
                     </div>
                 ))}
             </div>
+            <p>
+                Cinema: <br></br> {cinemaName}
+            </p>
             <p>
                 Hall: <br></br> {showing.hallId}
             </p>
