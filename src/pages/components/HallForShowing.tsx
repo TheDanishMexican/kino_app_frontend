@@ -17,13 +17,6 @@ export default function HallForShowing() {
     const [rows, setRows] = useState<Row[]>([])
     const makeOption = makeOptions('GET', null, undefined, true)
 
-    // useEffect(() => {
-    //     fetch(`${API_URL}/showings/${showingId}/seats`, makeOption)
-    //         .then((response) => response.json())
-    //         .then((data) => setSeats(data))
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [showingId])
-
     useEffect(() => {
         fetch(`http://localhost:8080/showings/${showingId}`, makeOption)
             .then((response) => response.json())
@@ -63,14 +56,6 @@ export default function HallForShowing() {
     }
 
     const handleSeatClick = async (seat: Seat) => {
-        // rows.map((row) => {
-        //     if (row.id === seat.rowId) {
-        //         console.log(
-        //             `The row number for seat: ${seat.seatNumber} is: ${row.rowNumber} and row type os: ${row.seatType}`
-        //         )
-        //     }
-        // })
-
         if (
             !reservedSeats.some(
                 (reservedSeat) => reservedSeat.seatNumber === seat.seatNumber
@@ -118,41 +103,46 @@ export default function HallForShowing() {
     return (
         <div>
             <div className="header-hallshowing">
-                <h1>Seats</h1>
-                {calculateTotalPrice() > 0 && (
-                    <Link
-                        to={{
-                            pathname: '/reservationOverview',
-                        }}
-                        state={{
-                            seats: selectedSeats,
-                            showing: showing,
-                            totalPrice: calculateTotalPrice(),
-                            rows: rows,
-                        }}
-                    >
-                        <button className="paymentButton">Go to payment</button>
-                    </Link>
-                )}
-            </div>
-
-            <div className="movie-info">
-                <p>
-                    Movie: <br></br>
-                    {showing?.movie.name}
-                </p>
-                <p>
-                    Time: <br></br>
-                    {showing?.startTime}
-                </p>
-                <p>
-                    Date: <br></br>
-                    {showing?.showingDate}
-                </p>
-                <p>
-                    Total Price: <br></br>
-                    {calculateTotalPrice()} kr
-                </p>
+                <div className="header-title">
+                    <div className="header-body">
+                        <h1>Seats</h1>
+                        {calculateTotalPrice() > 0 && (
+                            <Link
+                                to={{
+                                    pathname: '/reservationOverview',
+                                }}
+                                state={{
+                                    seats: selectedSeats,
+                                    showing: showing,
+                                    totalPrice: calculateTotalPrice(),
+                                    rows: rows,
+                                }}
+                            >
+                                <button className="paymentButton">
+                                    Make reservation
+                                </button>
+                            </Link>
+                        )}
+                    </div>
+                    <div className="header-footer">
+                        <p>
+                            Movie: <br></br>
+                            {showing?.movie.name}
+                        </p>
+                        <p>
+                            Time: <br></br>
+                            {showing?.startTime}
+                        </p>
+                        <p>
+                            Date: <br></br>
+                            {showing?.showingDate}
+                        </p>
+                        <p>
+                            Total Price: <br></br>
+                            {calculateTotalPrice()} kr
+                        </p>
+                    </div>
+                </div>
             </div>
             <div className="hall-container">
                 <div className="hall">
