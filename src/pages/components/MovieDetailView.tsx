@@ -7,10 +7,10 @@ export default function MovieDetailView() {
     const [movie, setMovie] = useState<Movie | null>();
     const [error, setError] = useState('');
     const [id, setId] = useState(0); // Assuming id is a number
-    const  movieId  = useParams(); // Extract movieId from URL
+    const  movieId  = useParams().movieId; // Extract movieId from URL
 
     
-    useEffect(() => setId(Number(movieId.movieId)), []);
+    useEffect(() => setId(Number(movieId)), [movieId]);
 
     useEffect(() => {
       if (id != 0) {
