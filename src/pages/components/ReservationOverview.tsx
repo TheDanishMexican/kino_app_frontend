@@ -39,32 +39,34 @@ export default function ReservationOverview() {
     }
 
     return (
-        <div>
-            <h1>Complete Reservation here</h1>
-            <div>
-                {seats.map((seat: Seat) => (
-                    <div key={seat.id}>
-                        <p>
-                            Seat: {seat.seatNumber}, Row:{' '}
-                            {rows.map((row: Row) => {
-                                if (row.id === seat.rowId) {
-                                    return row.rowNumber
-                                }
-                            })}
-                        </p>
-                    </div>
-                ))}
+        <div className="reservation-container">
+            <h1 className="reservation-header">Complete Reservation here</h1>
+            <div className="reservation-body">
+                <div>
+                    {seats.map((seat: Seat) => (
+                        <div key={seat.id}>
+                            <p>
+                                Seat: {seat.seatNumber}, Row:{' '}
+                                {rows.map((row: Row) => {
+                                    if (row.id === seat.rowId) {
+                                        return row.rowNumber
+                                    }
+                                })}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+                <p>
+                    Cinema: <br></br> {cinemaName}
+                </p>
+                <p>
+                    Hall: <br></br> {showing.hallId}
+                </p>
+                <p>
+                    Total Price: <br></br>
+                    {totalPrice} kr
+                </p>
             </div>
-            <p>
-                Cinema: <br></br> {cinemaName}
-            </p>
-            <p>
-                Hall: <br></br> {showing.hallId}
-            </p>
-            <p>
-                Total Price: <br></br>
-                {totalPrice} kr
-            </p>
             <button onClick={handleReservation} className="completeButton">
                 Confirm reservation
             </button>
