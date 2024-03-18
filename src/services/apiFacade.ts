@@ -26,7 +26,7 @@ async function getMovies(): Promise<Array<Movie>> {
 }
 
 async function getMovie(id: number): Promise<Movie> {
-  return fetch(MOVIES_URL + "/" + id).then(handleHttpErrors);
+  return await fetch(MOVIES_URL + "/" + id).then(handleHttpErrors);
 }
 async function addMovie(newMovie: Movie): Promise<Movie> {
   // const token = localStorage.getItem("token");

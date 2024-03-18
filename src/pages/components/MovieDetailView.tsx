@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovie } from '../../services/apiFacade'; // Assumed function
+import { Movie, getMovie } from '../../services/apiFacade'; // Assumed function
+
 
 export default function MovieDetailView() {
-    const [movie, setMovie] = useState(null);
+    const [movie, setMovie] = useState<Movie | null>();
     const [error, setError] = useState('');
-    const { movieId } = useParams(); // Extract movieId from URL
+    const  movieId  = useParams(); // Extract movieId from URL
 
+    console.log("Given ID"+movieId);
+    
     useEffect(() => {
-        getMovie(movieId)
-            .then(setMovie)
-            .catch(() => setError('Error fetching movie details'));
-    }, [movieId]);
-
+    if (typeof movieId === 'string') {
+        const id = parseInt(movieId);
+        if (!isNaN(id)) {
+            getMovie(id)
+                .then(movie => {
+                    if (movie !== null) {
+                        setMovie(movie);
+                    }
+                })
+                .catch(() => setError('Error fetching movie details'));
+        }
+    }
+}, [movieId]);
     if (error) {
         return <p>{error}</p>;
     }
