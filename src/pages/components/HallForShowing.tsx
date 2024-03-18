@@ -5,6 +5,7 @@ import '../styling/hallforshowing.css'
 import Showing from '../../interfaces/showing'
 import { Link } from 'react-router-dom'
 import { API_URL } from '../../settings'
+import { makeOptions } from '../../services/fetchUtils'
 
 export default function HallForShowing() {
     const { showingId } = useParams()
@@ -15,7 +16,8 @@ export default function HallForShowing() {
     const [seatPrices, setSeatPrices] = useState<Map<number, number>>(new Map())
 
     useEffect(() => {
-        fetch(`${API_URL}/showings/${showingId}/seats`)
+        const makeOption = makeOptions('GET', null, undefined, true)
+        fetch(`${API_URL}/showings/${showingId}/seats`, makeOption)
             .then((response) => response.json())
             .then((data) => setSeats(data))
     }, [showingId])
