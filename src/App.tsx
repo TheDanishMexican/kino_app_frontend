@@ -33,7 +33,11 @@ function App() {
                 />
                 <Route
                     path="/showing/:showingId/seats"
-                    element={<HallForShowing />}
+                    element={
+                        <RequireAuth roles={['USER']}>
+                            <HallForShowing />
+                        </RequireAuth>
+                    }
                 />
                 <Route
                     path="/reservationOverview"
