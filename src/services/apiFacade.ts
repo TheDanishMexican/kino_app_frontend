@@ -17,11 +17,12 @@ interface Movie {
 }
 
 
-async function getMovies(genre: string): Promise<Array<Movie>> {
-  console.log("genre", genre);
-  const queryParams = genre ? "?genre=" + encodeURIComponent(genre) : "";
-  return fetch(MOVIES_URL + queryParams)
+async function getMovies(): Promise<Array<Movie>> {
+  console.log("genre");
+
+  return fetch(MOVIES_URL)
     .then(handleHttpErrors);
+
 }
 
 async function getMovie(id: number): Promise<Movie> {
