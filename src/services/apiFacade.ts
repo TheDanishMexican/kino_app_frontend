@@ -34,7 +34,7 @@ async function addMovie(newMovie: Movie): Promise<Movie> {
     "Content-Type": "application/json",
     // Authorization: `Bearer ${token}`,
   };
-  const options = makeOptions(method, newMovie, headers);
+  const options = makeOptions(method, newMovie, headers, true);
   const URL = newMovie.id ? `${MOVIES_URL}/${newMovie.id}` : MOVIES_URL;
   return fetch(URL, options).then(handleHttpErrors);
 }
@@ -45,7 +45,7 @@ async function deleteMovie(id: number): Promise<Movie> {
     "Content-Type": "application/json",
     // Authorization: `Bearer ${token}`,
   };
-  const options = makeOptions("DELETE", null, headers);
+  const options = makeOptions("DELETE", null, headers, true);
   return fetch(`${MOVIES_URL}/${id}`, options).then(handleHttpErrors);
 }
 
