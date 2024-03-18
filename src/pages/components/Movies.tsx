@@ -22,7 +22,7 @@ export default function Movies() {
 
     const movieListItems = movies.map((movie,index) => (
 
-    <Link to={`/movies/${movie.id}`} key={index}>           
+    <Link to={`/movie/${movie.id}`} key={index}>           
        <div >
             <article className="grid-item-movie">
                 <img src={movie.posterUrl} alt={`Poster for ${movie.name}`} />
