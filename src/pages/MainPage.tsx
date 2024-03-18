@@ -1,4 +1,4 @@
-import Movie from "./components/Movie";
+import Movie from "./components/MoviesPage";
 import "./styling/mainpage.css"
 export default function MainPage() {
   return (
