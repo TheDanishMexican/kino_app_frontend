@@ -2,11 +2,12 @@ import { useLocation } from 'react-router-dom'
 import Seat from '../../interfaces/seat'
 import '../styling/reservationoverview.css'
 import { useNavigate } from 'react-router-dom'
+import Row from '../../interfaces/row'
 
 export default function ReservationOverview() {
     const location = useLocation()
     const navigate = useNavigate()
-    const { seats, totalPrice, showing } = location.state
+    const { seats, totalPrice, showing, rows } = location.state
 
     const showingId = showing.id
     const hallId = showing.hallId
@@ -44,7 +45,12 @@ export default function ReservationOverview() {
                 {seats.map((seat: Seat) => (
                     <div key={seat.id}>
                         <p>
-                            Seat: {seat.seatNumber}, Row: {seat.rowId}
+                            Seat: {seat.seatNumber}, Row:{' '}
+                            {rows.map((row: Row) => {
+                                if (row.id === seat.rowId) {
+                                    return row.rowNumber
+                                }
+                            })}
                         </p>
                     </div>
                 ))}

@@ -63,6 +63,14 @@ export default function HallForShowing() {
     }
 
     const handleSeatClick = async (seat: Seat) => {
+        // rows.map((row) => {
+        //     if (row.id === seat.rowId) {
+        //         console.log(
+        //             `The row number for seat: ${seat.seatNumber} is: ${row.rowNumber} and row type os: ${row.seatType}`
+        //         )
+        //     }
+        // })
+
         if (
             !reservedSeats.some(
                 (reservedSeat) => reservedSeat.seatNumber === seat.seatNumber
@@ -81,8 +89,17 @@ export default function HallForShowing() {
                 )
             } else {
                 // Otherwise, add to selection and fetch seat price
+
                 const price = await fetchSeatPrice(seat.id)
                 if (price !== null) {
+                    rows.map((row) => {
+                        if (row.id === seat.rowId) {
+                            console.log(
+                                `The row number for seat: ${seat.seatNumber} is: ${row.rowNumber} and row type: ${row.seatType} and the price is: ${price}`
+                            )
+                        }
+                    })
+
                     setSeatPrices(new Map(seatPrices.set(seat.id, price)))
                     setSelectedSeats([...selectedSeats, seat])
                 }
@@ -111,6 +128,7 @@ export default function HallForShowing() {
                             seats: selectedSeats,
                             showing: showing,
                             totalPrice: calculateTotalPrice(),
+                            rows: rows,
                         }}
                     >
                         <button className="paymentButton">Go to payment</button>
