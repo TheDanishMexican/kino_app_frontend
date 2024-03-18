@@ -7,7 +7,8 @@
 export function makeOptions(
   method: string,
   body: object | null,
-  headers: object = {}
+  headers: object = {},
+  addToken?: boolean
 ): RequestInit {
   const opts: RequestInit = {
     method: method,
@@ -19,6 +20,10 @@ export function makeOptions(
   };
   if (body) {
     opts.body = JSON.stringify(body);
+  }
+  if (addToken){
+    //@ts-expect-error // Ignore this line, it works u fuck
+    opts.headers["Authorization"] = `Bearer ${localStorage.getItem("TOKEN")}`;
   }
   return opts;
 }
