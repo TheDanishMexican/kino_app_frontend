@@ -20,7 +20,7 @@ export default function NavHeader() {
       <ul className="nav-header-ul">
         <li
           id="nav-header-logo"
-          className={location.pathname == "/" ? "active-header" : ""}
+     
         >
           <NavLink to="/">
             <CameraIcon />
@@ -29,9 +29,9 @@ export default function NavHeader() {
 
         <li
           id="nav-film"
-          className={location.pathname == "/film" ? "active-header" : ""}
+          className={location.pathname == "/" ? "active-header" : ""}
         >
-          <NavLink to="/film">
+          <NavLink to="/">
             <LocalMoviesIcon />
             <p>Film</p>
           </NavLink>

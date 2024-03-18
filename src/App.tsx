@@ -3,7 +3,6 @@ import Layout from './Layout'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 // PAGES
-import MainPage from './pages/MainPage'
 import MoviesPage from './pages/MoviesPage'
 import CinemasPage from './pages/CinemasPage'
 import AdminPage from './pages/AdminPage'
@@ -24,8 +23,7 @@ function App() {
     return (
         <Layout>
             <Routes>
-                <Route path="/" element={<MainPage />} />
-                <Route path="/film" element={<MoviesPage />} />
+                <Route path="/" element={<MoviesPage />} />
                 <Route path="/biografer" element={<CinemasPage />} />
                 <Route path="/log-ind" element={<Login />} />
                 <Route path="/opret-konto" element={<CreateAccountPage />} />

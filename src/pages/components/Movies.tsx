@@ -1,9 +1,9 @@
-import '../styling/mainpage.css'
+import '../styling/moviespage.css'
 import { useEffect, useState } from 'react'
 import { Movie as APIMovie, getMovies } from '../../services/apiFacade'
 // import { useSearchParams } from 'react-router-dom';
 
-export default function MoviesPage() {
+export default function Movies() {
     const [movies, setMovies] = useState<Array<APIMovie>>([])
     const [error, setError] = useState('')
 
