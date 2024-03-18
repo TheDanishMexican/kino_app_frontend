@@ -4,7 +4,7 @@ const MOVIES_URL = API_URL + "/movies";
 
 
 interface Movie {
-  id: number | null;
+  id: number;
   name: string;
   posterUrl: string;
   description: string;

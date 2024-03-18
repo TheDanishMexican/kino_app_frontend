@@ -16,12 +16,14 @@ import ReservationsPage from './pages/ReservationsPage'
 import AccountPage from './pages/AccountPage'
 import ShowingsOverview from './pages/components/ShowingsOverview'
 import HallForShowing from './pages/components/HallForShowing'
+import MovieDetailView from './pages/components/MovieDetailView'
 
 function App() {
     return (
         <Layout>
             <Routes>
                 <Route path="/" element={<MoviesPage />} />
+                <Route path="/movie/:movieId" element={<MovieDetailView />} />
                 <Route path="/biografer" element={<CinemasPage />} />
                 <Route path="/log-ind" element={<Login />} />
                 <Route path="/opret-konto" element={<CreateAccountPage />} />
