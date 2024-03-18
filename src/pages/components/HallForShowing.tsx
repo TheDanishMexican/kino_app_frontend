@@ -14,30 +14,37 @@ export default function HallForShowing() {
     const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
     const [seatPrices, setSeatPrices] = useState<Map<number, number>>(new Map())
+    const makeOption = makeOptions('GET', null, undefined, true)
 
     useEffect(() => {
-        const makeOption = makeOptions('GET', null, undefined, true)
         fetch(`${API_URL}/showings/${showingId}/seats`, makeOption)
             .then((response) => response.json())
             .then((data) => setSeats(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
     useEffect(() => {
-        fetch(`http://localhost:8080/showings/${showingId}`)
+        fetch(`http://localhost:8080/showings/${showingId}`, makeOption)
             .then((response) => response.json())
             .then((data) => setShowing(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
     useEffect(() => {
-        fetch(`http://localhost:8080/showings/${showingId}/reserved_seats`)
+        fetch(
+            `http://localhost:8080/showings/${showingId}/reserved_seats`,
+            makeOption
+        )
             .then((response) => response.json())
             .then((data) => setReservedSeats(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
     const fetchSeatPrice = async (seatId: number) => {
         try {
             const response = await fetch(
-                `http://localhost:8080/showings/${showingId}/seat/${seatId}/price`
+                `http://localhost:8080/showings/${showingId}/seat/${seatId}/price`,
+                makeOption
             )
             const data = await response.json()
             return data.seatPrice
