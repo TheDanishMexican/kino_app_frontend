@@ -6,24 +6,28 @@ import { Movie, getMovie } from '../../services/apiFacade'; // Assumed function
 export default function MovieDetailView() {
     const [movie, setMovie] = useState<Movie | null>();
     const [error, setError] = useState('');
+    const [id, setId] = useState(0); // Assuming id is a number
     const  movieId  = useParams(); // Extract movieId from URL
 
-    console.log("Given ID"+movieId);
     
+    useEffect(() => setId(Number(movieId.movieId)), []);
+
     useEffect(() => {
-    if (typeof movieId === 'string') {
-        const id = parseInt(movieId);
-        if (!isNaN(id)) {
-            getMovie(id)
-                .then(movie => {
-                    if (movie !== null) {
-                        setMovie(movie);
-                    }
-                })
-                .catch(() => setError('Error fetching movie details'));
-        }
-    }
-}, [movieId]);
+      if (id != 0) {
+        getMovie(id) // Assuming movieId is a number
+            .then(movie => {
+                if (movie !== null) {
+                    setMovie(movie);
+                }
+            })
+            .catch(() => setError('Error fetching movie details'));
+          }
+          console.log("given id: " + id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
+
+
+
     if (error) {
         return <p>{error}</p>;
     }
@@ -32,22 +36,22 @@ export default function MovieDetailView() {
 
     return (
         <div className="movie-detail">
-            <h2>{movie.name}</h2>
-            <img src={movie.posterUrl} alt={`Poster for ${movie.name}`} />
-            <p>{movie.description}</p>
-            <p>Release Date: {movie.releaseDate}</p>
+            {movie &&<h2>{movie.name}</h2>}
+            {movie &&<img src={movie.posterUrl} alt={`Poster for ${movie.name}`} />}
+            {movie &&<p>{movie.description}</p>}
+            {movie &&<p>Release Date: {movie.releaseDate.toString()}</p>}
         <strong>Actors:</strong>
-        <ul>
+        {movie &&<ul>
           {movie.actors.map((actor, index) => (
             <li key={index}>{actor}</li> // Assuming actors is an array of strings
           ))}
-        </ul>
+        </ul>}
         <strong>Genres:</strong>
-        <ul>
+        {movie &&<ul>
           {movie.genres.map((genre, index) => (
             <li key={index}>{genre}</li> // Assuming genres is an array of strings
           ))}
-        </ul>
+        </ul>}
       </div>
   
   );
