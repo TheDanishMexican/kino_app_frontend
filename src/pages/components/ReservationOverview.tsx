@@ -5,16 +5,27 @@ import { useNavigate } from 'react-router-dom'
 import Row from '../../interfaces/row'
 import { API_URL } from '../../settings'
 import { makeOptions } from '../../services/fetchUtils'
+import { useEffect, useState } from 'react'
+import Cinema from '../../interfaces/cinema'
 
 export default function ReservationOverview() {
     const location = useLocation()
     const navigate = useNavigate()
     const { seats, totalPrice, showing, rows } = location.state
+    const [cinema, setCinema] = useState<Cinema>()
 
     const showingId = showing.id
     const hallId = showing.hallId
     const username = localStorage.getItem('username')
     const seatPrice = totalPrice / seats.length
+    const makeOption = makeOptions('GET', null, undefined, false)
+
+    useEffect(() => {
+        fetch(`${API_URL}/cinemas/${showing.cinemaId}`, makeOption)
+            .then((response) => response.json())
+            .then((data) => setCinema(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showingId])
 
     const handleReservation = async () => {
         try {
@@ -46,30 +57,45 @@ export default function ReservationOverview() {
         <div className="reservation-container">
             <h1 className="reservation-header">Complete Reservation here</h1>
             <div className="reservation-body">
-                <div>
+                <div className="info-row">
+                    <p>
+                        Movie: <br></br>
+                        {showing?.movie.name}
+                    </p>
+                    <p>
+                        Time: <br></br>
+                        {showing?.startTime}
+                    </p>
+                    <p>
+                        Date: <br></br>
+                        {showing?.showingDate}
+                    </p>
+                </div>
+                <div className="info-row">
+                    <p>
+                        Cinema: <br></br> {cinema?.name}
+                    </p>
+                    <p>
+                        Hall: <br></br> {showing.hallId}
+                    </p>
+                    <p>
+                        Total Price: <br></br>
+                        {totalPrice} kr
+                    </p>
+                </div>
+                <div className="seats-row">
+                    <p>Seats:</p>
                     {seats.map((seat: Seat) => (
-                        <div key={seat.id}>
-                            <p>
-                                Seat: {seat.seatNumber}, Row:{' '}
-                                {rows.map((row: Row) => {
-                                    if (row.id === seat.rowId) {
-                                        return row.rowNumber
-                                    }
-                                })}
-                            </p>
-                        </div>
+                        <p key={seat.id}>
+                            Seat: {seat.seatNumber}, Row:{' '}
+                            {rows.map((row: Row) => {
+                                if (row.id === seat.rowId) {
+                                    return row.rowNumber
+                                }
+                            })}
+                        </p>
                     ))}
                 </div>
-                <p>
-                    Cinema: <br></br> some cinema
-                </p>
-                <p>
-                    Hall: <br></br> {showing.hallId}
-                </p>
-                <p>
-                    Total Price: <br></br>
-                    {totalPrice} kr
-                </p>
             </div>
             <button onClick={handleReservation} className="completeButton">
                 Confirm reservation

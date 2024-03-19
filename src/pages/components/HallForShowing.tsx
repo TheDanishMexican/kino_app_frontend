@@ -28,8 +28,6 @@ export default function HallForShowing() {
         fetch(`${API_URL}/showings/${showingId}/reserved_seats`, makeOption)
             .then((response) => response.json())
             .then((data) => setReservedSeats(data))
-        console.log(`reserved seats: ${reservedSeats}`)
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
