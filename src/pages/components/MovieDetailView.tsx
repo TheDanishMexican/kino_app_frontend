@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Movie, getMovie } from '../../services/apiFacade'; // Assumed function
+import '../styling/movieDetailView.css';
+import { Link } from 'react-router-dom';
 
 
 export default function MovieDetailView() {
     const [movie, setMovie] = useState<Movie | null>();
     const [error, setError] = useState('');
-    const [id, setId] = useState(0); // Assuming id is a number
+    const [id, setId] = useState(0); 
     const  movieId  = useParams().movieId; // Extract movieId from URL
 
     
@@ -14,7 +16,7 @@ export default function MovieDetailView() {
 
     useEffect(() => {
       if (id != 0) {
-        getMovie(id) // Assuming movieId is a number
+        getMovie(id) 
             .then(movie => {
                 if (movie !== null) {
                     setMovie(movie);
@@ -35,24 +37,34 @@ export default function MovieDetailView() {
    
 
     return (
-        <div className="movie-detail">
-            {movie &&<h2>{movie.name}</h2>}
-            {movie &&<img src={movie.posterUrl} alt={`Poster for ${movie.name}`} />}
-            {movie &&<p>{movie.description}</p>}
-            {movie &&<p>Release Date: {movie.releaseDate.toString()}</p>}
+      <div className="movie-detail">
+  {movie && (
+    <>
+      <img src={movie.posterUrl} alt={`Poster for ${movie.name}`} className="movie-poster"/>
+      <div className="movie-info">
+        <h2>{movie.name}</h2>
+        <p>{movie.description}</p>
+        <p>Release Date: {movie.releaseDate.toString()}</p>
         <strong>Actors:</strong>
-        {movie &&<ul>
+        <ul>
           {movie.actors.map((actor, index) => (
             <li key={index}>{actor}</li> // Assuming actors is an array of strings
           ))}
-        </ul>}
+        </ul>
         <strong>Genres:</strong>
-        {movie &&<ul>
+        <ul>
           {movie.genres.map((genre, index) => (
             <li key={index}>{genre}</li> // Assuming genres is an array of strings
           ))}
-        </ul>}
+        </ul>
       </div>
-  
+    </>
+  )}
+<Link to={`/biografer`} >
+<button className="booking-button">Buy Tickets for this movie</button>
+</Link>
+
+</div>
+
   );
 }
