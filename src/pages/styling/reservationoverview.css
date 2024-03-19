@@ -85,3 +85,12 @@
     max-width: 600px; /* Adjust container width */
     margin: 0 auto; /* Center container horizontally */
 }
+
+.surcharge-body {
+    display: flex;
+}
+
+.reservation-surcharge {
+    color: red;
+    font-size: smaller;
+}

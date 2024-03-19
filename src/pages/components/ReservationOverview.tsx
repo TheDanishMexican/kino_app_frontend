@@ -19,6 +19,7 @@ export default function ReservationOverview() {
     const username = localStorage.getItem('username')
     const seatPrice = totalPrice / seats.length
     const makeOption = makeOptions('GET', null, undefined, false)
+    const surcharge = showing.specialMovie
 
     useEffect(() => {
         fetch(`${API_URL}/cinemas/${showing.cinemaId}`, makeOption)
@@ -80,7 +81,7 @@ export default function ReservationOverview() {
                     </p>
                     <p>
                         Total Price: <br></br>
-                        {totalPrice} kr
+                        {surcharge ? totalPrice + 50 : totalPrice} kr
                     </p>
                 </div>
                 <div className="seats-row">
@@ -95,6 +96,19 @@ export default function ReservationOverview() {
                             })}
                         </p>
                     ))}
+                </div>
+                <div className="surcharge-body">
+                    {' '}
+                    {showing.is3dMovie && (
+                        <p className="reservation-surcharge">
+                            *3D movie +50 kr
+                        </p>
+                    )}
+                    {showing.duration > 170 && (
+                        <p className="reservation-surcharge">
+                            *Long movie +50 kr
+                        </p>
+                    )}
                 </div>
             </div>
             <button onClick={handleReservation} className="completeButton">
