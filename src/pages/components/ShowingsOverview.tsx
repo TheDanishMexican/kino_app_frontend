@@ -3,11 +3,8 @@ import { useParams } from 'react-router-dom'
 import '../styling/showingsoverview.css'
 import Showing from '../../interfaces/showing'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
 
 export default function ShowingsOverview() {
-    const location = useLocation()
-    const { cinemaName } = location.state
     const { cinemaId } = useParams()
     const [showings, setShowings] = useState<Showing[]>([])
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -66,7 +63,6 @@ export default function ShowingsOverview() {
                             <Link
                                 style={{ textDecoration: 'none' }}
                                 to={`/showing/${showing.id}/seats`}
-                                state={{ cinemaName: cinemaName }}
                                 key={index}
                             >
                                 <div className="showing-card" key={index}>

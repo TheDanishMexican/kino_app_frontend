@@ -3,11 +3,13 @@ import Seat from '../../interfaces/seat'
 import '../styling/reservationoverview.css'
 import { useNavigate } from 'react-router-dom'
 import Row from '../../interfaces/row'
+import { API_URL } from '../../settings'
+import { makeOptions } from '../../services/fetchUtils'
 
 export default function ReservationOverview() {
     const location = useLocation()
     const navigate = useNavigate()
-    const { seats, totalPrice, showing, rows, cinemaName } = location.state
+    const { seats, totalPrice, showing, rows } = location.state
 
     const showingId = showing.id
     const hallId = showing.hallId
@@ -16,20 +18,22 @@ export default function ReservationOverview() {
 
     const handleReservation = async () => {
         try {
-            const response = await fetch('http://localhost:8080/reservations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    seats,
-                    showingId,
-                    hallId,
-                    totalPrice,
-                    seatPrice,
-                    userName: username, // Include the retrieved username
-                }),
-            })
+            const response = await fetch(
+                `${API_URL}/reservations`,
+                makeOptions(
+                    'POST',
+                    {
+                        seats,
+                        showingId,
+                        hallId,
+                        totalPrice,
+                        seatPrice,
+                        userName: username,
+                    },
+                    undefined,
+                    true
+                )
+            )
             const data = await response.json()
             console.log(`Reservation added:`, data)
             navigate('/succesPage')
@@ -57,7 +61,7 @@ export default function ReservationOverview() {
                     ))}
                 </div>
                 <p>
-                    Cinema: <br></br> {cinemaName}
+                    Cinema: <br></br> some cinema
                 </p>
                 <p>
                     Hall: <br></br> {showing.hallId}

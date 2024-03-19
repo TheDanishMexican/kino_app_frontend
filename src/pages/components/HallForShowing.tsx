@@ -6,11 +6,9 @@ import Showing from '../../interfaces/showing'
 import { Link } from 'react-router-dom'
 import { makeOptions } from '../../services/fetchUtils'
 import Row from '../../interfaces/row'
-import { useLocation } from 'react-router-dom'
+import { API_URL } from '../../settings'
 
 export default function HallForShowing() {
-    const location = useLocation()
-    const { cinemaName } = location.state
     const { showingId } = useParams()
     const [showing, setShowing] = useState<Showing>()
     const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
@@ -20,24 +18,23 @@ export default function HallForShowing() {
     const makeOption = makeOptions('GET', null, undefined, true)
 
     useEffect(() => {
-        fetch(`http://localhost:8080/showings/${showingId}`, makeOption)
+        fetch(`${API_URL}/showings/${showingId}`, makeOption)
             .then((response) => response.json())
             .then((data) => setShowing(data))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
     useEffect(() => {
-        fetch(
-            `http://localhost:8080/showings/${showingId}/reserved_seats`,
-            makeOption
-        )
+        fetch(`${API_URL}/showings/${showingId}/reserved_seats`, makeOption)
             .then((response) => response.json())
             .then((data) => setReservedSeats(data))
+        console.log(`reserved seats: ${reservedSeats}`)
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
     useEffect(() => {
-        fetch(`http://localhost:8080/showings/${showingId}/rows`, makeOption)
+        fetch(`${API_URL}/showings/${showingId}/rows`, makeOption)
             .then((response) => response.json())
             .then((data) => setRows(data))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +43,7 @@ export default function HallForShowing() {
     const fetchSeatPrice = async (seatId: number) => {
         try {
             const response = await fetch(
-                `http://localhost:8080/showings/${showingId}/seat/${seatId}/price`,
+                `${API_URL}/showings/${showingId}/seat/${seatId}/price`,
                 makeOption
             )
             const data = await response.json()
@@ -118,7 +115,6 @@ export default function HallForShowing() {
                                     showing: showing,
                                     totalPrice: calculateTotalPrice(),
                                     rows: rows,
-                                    cinemaName: cinemaName,
                                 }}
                             >
                                 <button className="paymentButton">
@@ -203,7 +199,7 @@ export default function HallForShowing() {
                                         key={seat.id}
                                         onClick={() => handleSeatClick(seat)}
                                     >
-                                        <p>{seat.seatNumber}</p>
+                                        {/* <p>{seat.seatNumber}</p> */}
                                     </div>
                                 ))}
                             </div>
