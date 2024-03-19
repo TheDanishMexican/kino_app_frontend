@@ -1,0 +1,91 @@
+/* MovieDetailView.css */
+.movie-detail {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 20px auto;
+    color: white;
+    background-color: rgb(9, 9, 66);
+    border-radius: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.movie-poster {
+    flex: 1;
+    max-width: 40%;
+    height: auto;
+    margin: 20px;
+    border-radius: 4px;
+}
+
+.movie-detail-info {
+    flex: 2;
+    padding: 20px;
+}
+
+.movie-detail-info h2,
+.movie-detail-info p,
+.movie-detail-info strong {
+    margin-top: 0;
+    color: white
+}
+
+.movie-detail-info p,
+.movie-detail-info li {
+    color: white;
+    line-height: 1.6;
+}
+
+.movie-detail-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.movie-detail-info li {
+    padding: 5px 0;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .movie-detail {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .movie-poster {
+        max-width: 80%;
+    }
+
+    .movie-info {
+        max-width: 90%;
+    }
+
+    .booking-button {
+    padding: 15px;
+    font-size: 18px;
+  }
+}
+
+
+.booking-button {
+  width: 100%; /* Makes the button full-width */
+  padding: 20px; /* Increase padding for a bigger button */
+  font-size: 20px; /* Increases the font size */
+  background-color: rgba(255, 0, 234, 0.467); /* Example background color */
+  color: white; /* Text color */
+  border: none;
+  cursor: pointer;
+  border-radius: 0; /* Adjusts border-radius, set to 0 for a flat design */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.booking-button:hover {
+  background-color: rgb(192, 90, 255);
+  box-shadow: 0px 0px 20px rgba(255, 0, 234, 0.467);
+}
+
+

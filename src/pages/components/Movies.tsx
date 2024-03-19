@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { Movie as APIMovie, getMovies } from '../../services/apiFacade'
 // import { useSearchParams } from 'react-router-dom';
 
+import { Link } from "react-router-dom";
+
 export default function Movies() {
     const [movies, setMovies] = useState<Array<APIMovie>>([])
     const [error, setError] = useState('')
@@ -16,18 +18,23 @@ export default function Movies() {
             )
     }, []) // Add initialCategory to the dependencies array
 
-    const movieListItems = movies.map((movie) => (
-        <div key={movie.id}>
+
+    const movieListItems = movies.map((movie,index) => (
+
+    <Link to={`/movie/${movie.id}`} key={index}>           
+       <div >
             <article className="grid-item-movie">
                 <img src={movie.posterUrl} alt={`Poster for ${movie.name}`} />
                 <h4>{movie.name}</h4>
                 {/* <p>{movie.description}</p> */}
             </article>
-        </div>
-    ))
+        </div>  
+    </Link>
+    ));
 
     return (
-        <div>
+        <div key={1}>
+
             {error && <p>{error}</p>}
             <div className="movie-list">{movieListItems}</div>
         </div>
