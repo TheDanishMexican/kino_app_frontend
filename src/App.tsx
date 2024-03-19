@@ -19,6 +19,7 @@ import HallForShowing from './pages/components/HallForShowing'
 import MovieDetailView from './pages/components/MovieDetailView'
 import ReservationOverview from './pages/components/ReservationOverview'
 import SuccesPage from './pages/SuccesPage'
+import AdminKino from './pages/AdminKino'
 
 function App() {
     return (
@@ -76,10 +77,18 @@ function App() {
                     }
                 />
                 <Route
-                    path="/adminStaff"
+                    path="admin/staff"
                     element={
                         <RequireAuth roles={['ADMIN']}>
                             <AdminStaffPage />
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path="admin/cinemas"
+                    element={
+                        <RequireAuth roles={['ADMIN']}>
+                            <AdminKino />
                         </RequireAuth>
                     }
                 />

@@ -1,0 +1,18 @@
+.navbox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.navbox div {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+    207deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(7, 7, 57, 1) 35%,
+    rgba(42, 9, 36, 1) 100%
+  );
+    
+}
+.navbox div button{
+    color: white;
+}
