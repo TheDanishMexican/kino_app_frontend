@@ -2,12 +2,13 @@ import Cinema from '../interfaces/cinema'
 import { useEffect, useState } from 'react'
 import './styling/cinemaspage.css'
 import { Link } from 'react-router-dom'
+import { API_URL } from '../settings'
 
 export default function CinemasPage() {
     const [cinemas, setCinemas] = useState<Cinema[]>([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/cinemas')
+        fetch(`${API_URL}/cinemas`)
             .then((response) => response.json())
             .then((data) => setCinemas(data))
     }, [])
