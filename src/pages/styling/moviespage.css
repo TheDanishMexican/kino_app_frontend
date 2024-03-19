@@ -15,10 +15,16 @@
 }
 
 .grid-item-movie img {
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 450px;
     object-fit: cover;
 }
+
+.grid-item-movie h4 {
+    color: white;
+
+}
+
 
 .movie-list{
     display: grid;
