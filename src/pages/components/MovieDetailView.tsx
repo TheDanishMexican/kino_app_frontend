@@ -41,7 +41,7 @@ export default function MovieDetailView() {
   {movie && (
     <>
       <img src={movie.posterUrl} alt={`Poster for ${movie.name}`} className="movie-poster"/>
-      <div className="movie-info">
+      <div className="movie-detail-info">
         <h2>{movie.name}</h2>
         <p>{movie.description}</p>
         <p>Release Date: {movie.releaseDate.toString()}</p>
@@ -61,7 +61,7 @@ export default function MovieDetailView() {
     </>
   )}
 <Link to={`/biografer`} >
-<button className="booking-button">Buy Tickets for this movie</button>
+<button className="booking-button">Buy Tickets for this movie💸🍿</button>
 </Link>
 
 </div>

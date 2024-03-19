@@ -5,8 +5,10 @@
     max-width: 1000px;
     margin: 20px auto;
     color: white;
-    border-radius: 8px;
-
+    background-color: rgb(9, 9, 66);
+    border-radius: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -18,30 +20,30 @@
     border-radius: 4px;
 }
 
-.movie-info {
+.movie-detail-info {
     flex: 2;
     padding: 20px;
 }
 
-.movie-info h2,
-.movie-info p,
-.movie-info strong {
+.movie-detail-info h2,
+.movie-detail-info p,
+.movie-detail-info strong {
     margin-top: 0;
     color: white
 }
 
-.movie-info p,
-.movie-info li {
+.movie-detail-info p,
+.movie-detail-info li {
     color: white;
     line-height: 1.6;
 }
 
-.movie-info ul {
+.movie-detail-info ul {
     list-style: none;
     padding: 0;
 }
 
-.movie-info li {
+.movie-detail-info li {
     padding: 5px 0;
 }
 
