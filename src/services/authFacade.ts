@@ -9,6 +9,12 @@ export type User = {
   roles?: string[];
 };
 
+export type UserToUpdate = {
+  username: string;
+  email: string;
+  roles?: string[];
+};
+
 interface LoginResponse {
   username: string;
   token: string;

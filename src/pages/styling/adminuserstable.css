@@ -1,0 +1,70 @@
+#admin-users-table-container {
+  text-align: left;
+  overflow: auto;
+  border: 1px solid #b3b3b3;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+
+#admin-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+#admin-users-table th {
+  padding: 8px;
+  text-align: left;
+  /* Make the headers unselectable */
+  user-select: none;
+  cursor: pointer;
+}
+
+#users-table-edit-header,
+#users-table-delete-header {
+  cursor: none;
+}
+
+#admin-users-table-header {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 90%;
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding: 5px;
+  height: fit-content;
+}
+
+#admin-users-table-header * {
+  margin: 5px;
+}
+
+#admin-users-table-header input,
+#admin-users-table-header select,
+#admin-users-table-header button {
+  color: white;
+  height: 2em;
+  min-width: 100px;
+  margin-right: 10px;
+  background-color: rgb(60, 0, 72);
+  border: none;
+  border-radius: 5px;
+}
+
+#admin-users-table-header input {
+  width: 200px;
+}
+
+#admin-users-table-header button:hover {
+  cursor: pointer;
+  background-color: rgb(110, 1, 132);
+}

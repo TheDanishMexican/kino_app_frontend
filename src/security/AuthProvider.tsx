@@ -57,7 +57,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const roles: Array<string> = JSON.parse(
       localStorage.getItem("roles") || "[]"
     );
-    console.log(roles);
     return roles?.some((r) => role.includes(r)) || false;
   }
 
