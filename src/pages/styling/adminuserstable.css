@@ -1,7 +1,7 @@
 #admin-users-table-container {
   text-align: left;
   overflow: auto;
-  border: 1px solid #b3b3b3;
+  border: 1px solid #ea00ff;
   border-radius: 5px;
   padding: 10px;
   margin-left: auto;
@@ -13,6 +13,8 @@
   flex-direction: column;
   width: 80%;
   margin: auto;
+  background-color: rgb(20, 20, 20);
+  box-shadow: 0px 0px 50px rgba(255, 0, 132, 0.1);
 }
 
 #admin-users-table {
@@ -53,6 +55,7 @@
 #admin-users-table-header button {
   color: white;
   height: 2em;
+  padding: 5px;
   min-width: 100px;
   margin-right: 10px;
   background-color: rgb(60, 0, 72);
@@ -67,4 +70,9 @@
 #admin-users-table-header button:hover {
   cursor: pointer;
   background-color: rgb(110, 1, 132);
+}
+
+#admin-users-table-header button {
+  right: 0;
+  position: absolute;
 }

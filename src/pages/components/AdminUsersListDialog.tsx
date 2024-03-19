@@ -1,19 +1,30 @@
 import {
-  Dialog,
+  Dialog as MuiDialog,
   DialogTitle,
   DialogContent,
   TextField,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Checkbox,
-  SelectChangeEvent,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
   DialogActions,
   Button,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
 import { updateUser, getUsers } from "../../services/apiFacade";
+import "../styling/adminuserspage.css";
+
+// Styling
+
+const Dialog = styled(MuiDialog)(({ theme }) => ({
+  ".MuiPaper-root": {
+    backgroundColor:
+      "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%);",
+    color: "white", // replace with your desired color
+  },
+}));
 
 interface Role {
   roleName: string;
@@ -22,7 +33,10 @@ interface Role {
 interface APIUser {
   username: string;
   email: string;
-  roles: Role[];
+  roles: Array<Role>;
+  created: Date | string;
+  edited: Date | string;
+  [key: string]: unknown; // Add index signature with type 'unknown'
 }
 
 interface AdminUserListDialogProps {
@@ -74,8 +88,54 @@ export default function AdminUserListDialog({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} id="edit-user-dialog">
-      <DialogTitle>Edit User</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      id="edit-user-dialog"
+      fullWidth={true}
+      sx={{
+        "& .MuiDialog-paper": {
+          background:
+            "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%)",
+          color: "white",
+          boxShadow: "0px 0px 50px rgba(255, 0, 132, 0.3)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 0, 132, 1)",
+        },
+        "& .MuiFormLabel-root": {
+          color: "white", // replace with your desired color
+        },
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+        "& .MuiInputBase-input": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiInputBase-input:not(.Mui-focused)": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiCheckbox-root:not(.Mui-checked)": {
+          color: "gray", // replace with your desired color
+        },
+      }}
+    >
+      <DialogTitle>
+        Editing user {user && user.username ? user.username : "undefined"}
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -89,40 +149,46 @@ export default function AdminUserListDialog({
               ...editingUser,
               email: e.target.value,
               roles: editingUser?.roles || [],
-              username: editingUser?.username || "", // Add default empty string value for username
+              username: editingUser?.username || "",
+              created: editingUser?.created || new Date(),
+              edited: new Date(),
             })
           }
         />
         <FormControl fullWidth>
-          <InputLabel id="demo-multiple-checkbox-label">Roles</InputLabel>
-          <Select
-            labelId="demo-multiple-checkbox-label"
-            id="demo-multiple-checkbox"
-            multiple
-            value={editingUser?.roles.map((role: Role) => role.roleName) || []}
-            onChange={(e: SelectChangeEvent<string[]>) =>
-              setEditingUser({
-                ...editingUser,
-                email: editingUser?.email || "",
-                roles: (e.target.value as string[]).map((roleName: string) => ({
-                  roleName,
-                })),
-                username: editingUser?.username || "", // Add default empty string value for username
-              })
-            }
-            renderValue={(selected) => (selected as string[]).join(", ")}
-          >
+          <FormLabel>Roles</FormLabel>
+          <FormGroup>
             {["USER", "STAFF", "ADMIN"].map((role) => (
-              <MenuItem key={role} value={role}>
-                <Checkbox
-                  checked={
-                    editingUser?.roles.some((r) => r.roleName === role) || false
-                  }
-                />
-                {role}
-              </MenuItem>
+              <FormControlLabel
+                key={role}
+                control={
+                  <Checkbox
+                    checked={
+                      editingUser?.roles.some((r) => r.roleName === role) ||
+                      false
+                    }
+                    onChange={(e) => {
+                      let newRoles = [...(editingUser?.roles || [])];
+                      if (e.target.checked) {
+                        newRoles.push({ roleName: role });
+                      } else {
+                        newRoles = newRoles.filter((r) => r.roleName !== role);
+                      }
+                      setEditingUser({
+                        ...editingUser,
+                        roles: newRoles,
+                        username: editingUser?.username || "",
+                        email: editingUser?.email || "",
+                        created: editingUser?.created || new Date(),
+                        edited: new Date(),
+                      });
+                    }}
+                  />
+                }
+                label={role}
+              />
             ))}
-          </Select>
+          </FormGroup>
         </FormControl>
       </DialogContent>
       <DialogActions>
