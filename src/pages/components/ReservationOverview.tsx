@@ -104,7 +104,7 @@ export default function ReservationOverview() {
                             *3D movie +50 kr
                         </p>
                     )}
-                    {showing.duration > 170 && (
+                    {showing.durationInMinutes > 170 && (
                         <p className="reservation-surcharge">
                             *Long movie +50 kr
                         </p>
