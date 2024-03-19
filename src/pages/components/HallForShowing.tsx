@@ -1,27 +1,164 @@
 import Seat from '../../interfaces/seat'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import '../styling/hallforshowing.css'
+import Showing from '../../interfaces/showing'
+import { Link } from 'react-router-dom'
+import { API_URL } from '../../settings'
+import { makeOptions } from '../../services/fetchUtils'
 
 export default function HallForShowing() {
     const { showingId } = useParams()
     const [seats, setSeats] = useState<Seat[]>([])
+    const [showing, setShowing] = useState<Showing>()
+    const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
+    const [seatPrices, setSeatPrices] = useState<Map<number, number>>(new Map())
+    const makeOption = makeOptions('GET', null, undefined, true)
 
     useEffect(() => {
-        fetch(`http://localhost:8080/showings/${showingId}/seats`)
+        fetch(`${API_URL}/showings/${showingId}/seats`, makeOption)
             .then((response) => response.json())
             .then((data) => setSeats(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/showings/${showingId}`, makeOption)
+            .then((response) => response.json())
+            .then((data) => setShowing(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showingId])
+
+    useEffect(() => {
+        fetch(
+            `http://localhost:8080/showings/${showingId}/reserved_seats`,
+            makeOption
+        )
+            .then((response) => response.json())
+            .then((data) => setReservedSeats(data))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showingId])
+
+    const fetchSeatPrice = async (seatId: number) => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/showings/${showingId}/seat/${seatId}/price`,
+                makeOption
+            )
+            const data = await response.json()
+            return data.seatPrice
+        } catch (error) {
+            console.error('Error fetching seat price:', error)
+            return null
+        }
+    }
+
+    const handleSeatClick = async (seat: Seat) => {
+        if (
+            !reservedSeats.some(
+                (reservedSeat) => reservedSeat.seatNumber === seat.seatNumber
+            )
+        ) {
+            if (
+                selectedSeats.some(
+                    (selected) => selected.seatNumber === seat.seatNumber
+                )
+            ) {
+                // If already selected, remove from selection
+                setSelectedSeats(
+                    selectedSeats.filter(
+                        (selected) => selected.seatNumber !== seat.seatNumber
+                    )
+                )
+            } else {
+                // Otherwise, add to selection and fetch seat price
+                const price = await fetchSeatPrice(seat.id)
+                if (price !== null) {
+                    setSeatPrices(new Map(seatPrices.set(seat.id, price)))
+                    setSelectedSeats([...selectedSeats, seat])
+                }
+            }
+        }
+    }
+
+    const calculateTotalPrice = () => {
+        return selectedSeats.reduce((total, seat) => {
+            return total + (seatPrices.get(seat.id) || 0)
+        }, 0)
+    }
 
     return (
         <div>
-            <h1>Hall for showings</h1>
-            <ul style={{ listStyle: 'none' }}>
-                {seats.map((seat, index) => (
-                    <li key={index}>
-                        <p>{seat.seatNumber}</p>
-                    </li>
-                ))}
-            </ul>
+            <div className="header-hallshowing">
+                <h1>Seats</h1>
+                {calculateTotalPrice() > 0 && (
+                    <Link
+                        to={{
+                            pathname: '/reservationOverview',
+                        }}
+                        state={{
+                            seats: selectedSeats,
+                            showing: showing,
+                            totalPrice: calculateTotalPrice(),
+                        }}
+                    >
+                        <button className="paymentButton">Go to payment</button>
+                    </Link>
+                )}
+            </div>
+
+            <div className="movie-info">
+                <p>
+                    Movie: <br></br>
+                    {showing?.movie.name}
+                </p>
+                <p>
+                    Time: <br></br>
+                    {showing?.startTime}
+                </p>
+                <p>
+                    Date: <br></br>
+                    {showing?.showingDate}
+                </p>
+                <p>
+                    Total Price: <br></br>
+                    {calculateTotalPrice()} kr
+                </p>
+            </div>
+
+            <h5 style={{ color: 'purple' }}>
+                ---------------------------------Screen
+                here---------------------------------
+            </h5>
+            <div className="hall-container">
+                <div className="hall-grid">
+                    {seats.map((seat, index) => (
+                        <div
+                            className={`seat ${
+                                reservedSeats.some(
+                                    (reservedSeat) =>
+                                        reservedSeat.seatNumber ===
+                                        seat.seatNumber
+                                )
+                                    ? 'reserved'
+                                    : ''
+                            } ${
+                                selectedSeats.some(
+                                    (selected) =>
+                                        selected.seatNumber === seat.seatNumber
+                                )
+                                    ? 'selected'
+                                    : ''
+                            }`}
+                            key={index}
+                            onClick={() => handleSeatClick(seat)}
+                        >
+                            <p>{seat.seatNumber}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }

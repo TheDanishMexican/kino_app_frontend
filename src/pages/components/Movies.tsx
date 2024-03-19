@@ -1,23 +1,22 @@
-
-import "../styling/moviespage.css";
-import { useEffect, useState } from 'react';
-import { Movie as APIMovie, getMovies } from '../../services/apiFacade';
+import '../styling/moviespage.css'
+import { useEffect, useState } from 'react'
+import { Movie as APIMovie, getMovies } from '../../services/apiFacade'
 // import { useSearchParams } from 'react-router-dom';
 
 import { Link } from "react-router-dom";
 
 export default function Movies() {
-
-    const [movies, setMovies] = useState<Array<APIMovie>>([]);
-    const [error, setError] = useState('');
+    const [movies, setMovies] = useState<Array<APIMovie>>([])
+    const [error, setError] = useState('')
 
     useEffect(() => {
         // Assuming getMovies can accept a category for filtering
-        getMovies()// Adjust this call based on the actual API and how it's meant to be used
+        getMovies() // Adjust this call based on the actual API and how it's meant to be used
             .then((res) => setMovies(res))
-            .catch(() => setError('Error fetching movies, is the server running?'));
-        
-    }, []); // Add initialCategory to the dependencies array
+            .catch(() =>
+                setError('Error fetching movies, is the server running?')
+            )
+    }, []) // Add initialCategory to the dependencies array
 
 
     const movieListItems = movies.map((movie,index) => (
@@ -39,6 +38,5 @@ export default function Movies() {
             {error && <p>{error}</p>}
             <div className="movie-list">{movieListItems}</div>
         </div>
-    );
+    )
 }
-

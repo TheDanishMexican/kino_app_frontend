@@ -23,7 +23,7 @@ export function makeOptions(
   }
   if (addToken){
     //@ts-expect-error // Ignore this line, it works u fuck
-    opts.headers["Authorization"] = `Bearer ${localStorage.getItem("TOKEN")}`;
+    opts.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
   }
   return opts;
 }
