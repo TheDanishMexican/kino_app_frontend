@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import '../styling/showingsoverview.css'
 import Showing from '../../interfaces/showing'
 import { Link } from 'react-router-dom'
+import { API_URL } from '../../settings'
 
 export default function ShowingsOverview() {
     const { cinemaId } = useParams()
@@ -10,7 +11,7 @@ export default function ShowingsOverview() {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
     useEffect(() => {
-        fetch(`http://localhost:8080/cinemas/${cinemaId}/showings`)
+        fetch(`${API_URL}/cinemas/${cinemaId}/showings`)
             .then((response) => response.json())
             .then((data) => setShowings(data))
     }, [cinemaId])
