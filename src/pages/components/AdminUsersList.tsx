@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getUsers, deleteUser } from "../../services/apiFacade";
 import { Button } from "@mui/material";
 import AdminUserListDialog from "./AdminUsersListDialog";
+import "../styling/adminuserstable.css";
 
 export default function AdminUsersList() {
   // Fetch data
@@ -239,6 +240,7 @@ export default function AdminUsersList() {
               key={number}
               id={number.toString()}
               onClick={handlePageClick}
+              className="pageButton"
             >
               {number}
             </button>

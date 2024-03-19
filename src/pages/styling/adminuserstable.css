@@ -76,3 +76,15 @@
   right: 0;
   position: absolute;
 }
+
+.pageButton {
+  background-color: purple;
+  color: white;
+  border: none;
+  margin: 5px;
+}
+
+.pageButton:hover {
+  background-color: rgb(209, 0, 209);
+  cursor: pointer;
+}
