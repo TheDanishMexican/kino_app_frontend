@@ -23,8 +23,8 @@ export default function AdminNavbar() {
             onChange={(_event, newValue) => {
               setValue(newValue);
               console.log(newValue);
-              if (newValue === "staff") {
-                navigate("/admin/staff");
+              if (newValue === "users") {
+                navigate("/admin/users");
               }
               if (newValue === "cinemas") {
                 navigate("/admin/cinemas");
@@ -32,9 +32,9 @@ export default function AdminNavbar() {
             }}
           >
             <BottomNavigationAction
-              label="Staff"
+              label="Users"
               icon={<EngineeringIcon />}
-              value="staff"
+              value="users"
             />
             <BottomNavigationAction
               label="Cinemas"
