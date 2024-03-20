@@ -13,4 +13,6 @@ export default interface Showing {
     price: number
     reservations: Reservation[]
     movie: Movie
+    specialMovie: boolean
+    is3dMovie: boolean
 }

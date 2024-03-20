@@ -1,40 +1,98 @@
+/* Styling for complete reservation button */
 .completeButton {
     background-color: #4caf50;
     border: none;
-    padding: 10px;
-    margin-top: 7px;
+    padding: 10px 20px;
+    margin-top: 20px;
     color: white;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     border-radius: 5px;
-    transition: transform 0.5s; /* Add transition for smooth effect */
+    transition: transform 0.3s, background-color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .completeButton:hover {
     background-color: #45a049;
-    transform: scale(1.1); /* Increase scale on hover */
+    transform: scale(1.05);
 }
 
+/* Styling for reservation header */
 .reservation-header {
-    color: rgb(168, 68, 168);
+    color: #a84ca8; /* Purple color for the header */
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+/* Styling for reservation body */
 .reservation-body {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #fff; /* White color for text */
+    background-color: #1a1a1a; /* Dark background */
+    border: 1px solid #a84ca8; /* Purple border */
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 1px #a84ca8; /* Purple shadow */
     display: flex;
     flex-direction: column;
-    color: rgb(168, 68, 168);
-    background-color: rgb(46, 39, 39);
-    border: purple solid 1px;
-    border-radius: 15px;
-    box-shadow: 0px 0px 7px 1px rgb(168, 68, 168);
-    min-width: 300px;
 }
 
+/* Styling for rows of movie information and details */
+.info-row,
+.seats-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-row p,
+.seats-row p {
+    flex-basis: calc(
+        33.33% - 10px
+    ); /* Adjust width for three columns with space between */
+}
+
+/* Styling for individual seats */
+.seats-row p {
+    flex-basis: 100%; /* Take full width */
+}
+
+/* Styling for each piece of movie information */
+.reservation-body p {
+    margin: 10px 0;
+}
+
+/* Styling for movie info section */
+.movie-info {
+    border-top: 1px solid #a84ca8; /* Purple border for movie info */
+    padding-top: 10px;
+    margin-top: 20px;
+}
+
+.movie-info p:first-child {
+    margin-top: 0;
+}
+
+/* Styling for reservation container */
 .reservation-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 600px; /* Adjust container width */
+    margin: 0 auto; /* Center container horizontally */
+}
+
+.surcharge-body {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+}
+
+.reservation-surcharge {
+    color: red;
+    font-size: smaller;
 }

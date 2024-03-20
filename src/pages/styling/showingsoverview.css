@@ -36,8 +36,16 @@
     font-size: 15px;
     cursor: pointer;
     transition: transform 0.5s;
+    padding-bottom: 20px;
 }
 
 .showing-card:hover {
     transform: scale(1.05);
+}
+
+.surcharge {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
 }
