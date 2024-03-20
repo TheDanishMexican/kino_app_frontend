@@ -1,5 +1,5 @@
 import { API_URL } from "../settings";
-import { User, UserToUpdate } from "./authFacade";
+import { User, UserToUpdate, CinemaToUpdate } from "./authFacade";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
 const MOVIES_URL = API_URL + "/movies";
 
@@ -16,10 +16,40 @@ interface Movie {
   updated: Date | string;
 }
 
+async function addCinema(Cinema: CinemaToUpdate): Promise<CinemaToUpdate> {
+  const options = makeOptions("POST", Cinema, undefined, true);
+  return fetch(API_URL + "/api/cinema", options).then(handleHttpErrors);
+}
+
+async function getCinemas(){
+  const options = makeOptions("GET",null, undefined, true);
+return await fetch(API_URL + "/api/user-with-role/users", options).then(
+  handleHttpErrors
+);
+}
+
+
+async function deleteCinema(name: string) {
+  const options = makeOptions("DELETE", null, undefined, true);
+  return fetch(API_URL + "/api/user-with-role/" + name, options).then(
+    handleHttpErrors
+  );
+}
+
+async function updateCinema(cinema: CinemaToUpdate) {
+  const options = makeOptions("PUT", cinema, undefined, true);
+  return fetch(
+    API_URL + "/api/cinema/update-user/" + cinema.name,
+    options
+  ).then(handleHttpErrors);
+}
+
+
 async function getMovies(): Promise<Array<Movie>> {
   console.log("genre");
 
-  return fetch(MOVIES_URL).then(handleHttpErrors);
+  const res = fetch(MOVIES_URL).then(handleHttpErrors);
+  return res;
 }
 
 async function getMovie(id: number): Promise<Movie> {
@@ -98,6 +128,10 @@ async function createUser(user: User) {
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
+  addCinema,
+  getCinemas,
+  deleteCinema,
+  updateCinema,
   getMovies,
   getMovie,
   addMovie,
