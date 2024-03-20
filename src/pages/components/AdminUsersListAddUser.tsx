@@ -13,10 +13,10 @@ import {
   styled,
 } from "@mui/material";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createUser, getUsers } from "../../services/apiFacade";
 
-const Dialog = styled(MuiDialog)(({ theme }) => ({
+const Dialog = styled(MuiDialog)(() => ({
   ".MuiPaper-root": {
     backgroundColor:
       "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%);",
@@ -250,15 +250,13 @@ export default function AdminUsersListAddUser({
                 key={role}
                 control={
                   <Checkbox
-                    checked={
-                      newUser?.roles.some((r) => r.roleName === role) || false
-                    }
+                    checked={newUser?.roles?.includes(role) || false}
                     onChange={(e) => {
                       let newRoles = [...(newUser?.roles || [])];
                       if (e.target.checked) {
-                        newRoles.push({ roleName: role });
+                        newRoles.push(role);
                       } else {
-                        newRoles = newRoles.filter((r) => r.roleName !== role);
+                        newRoles = newRoles.filter((r) => r !== role);
                       }
                       setNewUser({
                         ...newUser,
