@@ -95,6 +95,16 @@ async function createUser(user: User) {
   return fetch(API_URL + "/api/user-with-role", options).then(handleHttpErrors);
 }
 
+async function getUserReservations(user: User) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("GET", null, headers, true);
+  return fetch(API_URL + "/api/reservation/", options).then(handleHttpErrors);
+}
+
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
@@ -106,4 +116,5 @@ export {
   deleteUser,
   updateUser,
   createUser,
+  getUserReservations,
 };
