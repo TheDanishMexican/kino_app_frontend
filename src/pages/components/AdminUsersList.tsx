@@ -190,12 +190,12 @@ export default function AdminUsersList() {
       </td>
       <td>{new Date(user.created).toLocaleString("da-DK")}</td>
       <td>{new Date(user.edited).toLocaleString("da-DK")}</td>
-      <td>
+      <td className="list-button">
         <Button onClick={() => handleEditClick(user)}>
           <EditIcon />
         </Button>
       </td>
-      <td>
+      <td className="list-button">
         <Button color="error" onClick={() => handleDeleteClick(user.username)}>
           <DeleteIcon />
         </Button>

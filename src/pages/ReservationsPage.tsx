@@ -1,3 +1,5 @@
+import UserReservations from "./components/UserReservations";
+
 export default function ReservationsPage() {
   return (
     <div>
@@ -6,6 +8,7 @@ export default function ReservationsPage() {
         This page is for viewing the reservations made by the user that is
         signed in. This page is of course only meant for signed in users.
       </p>
+      <UserReservations />
     </div>
   );
 }
