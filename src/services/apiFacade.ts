@@ -85,6 +85,16 @@ async function updateUser(user: UserToUpdate) {
   ).then(handleHttpErrors);
 }
 
+async function createUser(user: User) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("POST", user, headers, true);
+  return fetch(API_URL + "/api/user-with-role", options).then(handleHttpErrors);
+}
+
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
@@ -95,4 +105,5 @@ export {
   getUsers,
   deleteUser,
   updateUser,
+  createUser,
 };

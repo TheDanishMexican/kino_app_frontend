@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getUsers, deleteUser } from "../../services/apiFacade";
 import { Button } from "@mui/material";
 import AdminUserListDialog from "./AdminUsersListDialog";
+import AdminUsersListAddUser from "./AdminUsersListAddUser";
 import "../styling/adminuserstable.css";
 
 export default function AdminUsersList() {
@@ -49,6 +50,7 @@ export default function AdminUsersList() {
 
   // Edit dialog
   const [open, setOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<APIUser | null>(null);
 
   // Filtering the users list
@@ -56,6 +58,12 @@ export default function AdminUsersList() {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setRoleFilter(event.target.value);
+  };
+
+  const fetchUsers = () => {
+    getUsers()
+      .then((res) => setUsers(res))
+      .catch(() => setError("Error fetching users, is the server running?"));
   };
 
   const filteredUsers = users
@@ -115,6 +123,16 @@ export default function AdminUsersList() {
     setOpen(false);
   };
 
+  const handleAddSave = () => {
+    setAddOpen(false);
+    //wait 1 second before fetching the users again
+    setTimeout(() => {
+      getUsers()
+        .then((res) => setUsers(res))
+        .catch(() => setError("Error fetching users, is the server running?"));
+    }, 1000);
+  };
+
   // Search in the users list
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -146,6 +164,17 @@ export default function AdminUsersList() {
         console.error("Failed to delete user:", error);
       }
     }
+  };
+
+  const handleAddUserClick = () => {
+    setEditingUser({
+      username: "",
+      email: "",
+      roles: [],
+      created: new Date(),
+      edited: new Date(),
+    });
+    setAddOpen(true);
   };
 
   // Displaying the users list
@@ -196,7 +225,9 @@ export default function AdminUsersList() {
           <option value="STAFF">Staff</option>
           <option value="USER">User</option>
         </select>
-        <button id="admin-users-add-user">Add User</button>
+        <button id="admin-users-add-user" onClick={handleAddUserClick}>
+          Add User
+        </button>
       </div>
       <table id="admin-users-table">
         <thead>
@@ -252,6 +283,12 @@ export default function AdminUsersList() {
         user={editingUser as APIUser} // Fix: Ensure that the user prop is of type APIUser
         setUsers={setUsers}
         onClose={() => setOpen(false)}
+      />
+      <AdminUsersListAddUser
+        open={addOpen}
+        onClose={() => setAddOpen(false)}
+        onSave={handleAddSave}
+        onUserAdded={fetchUsers}
       />
     </div>
   );
