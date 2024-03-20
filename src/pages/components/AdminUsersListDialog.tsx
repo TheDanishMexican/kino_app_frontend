@@ -18,7 +18,7 @@ import "../styling/adminuserspage.css";
 
 // Styling
 
-const Dialog = styled(MuiDialog)(({ theme }) => ({
+const Dialog = styled(MuiDialog)(() => ({
   ".MuiPaper-root": {
     backgroundColor:
       "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%);",
