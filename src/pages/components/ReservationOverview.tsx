@@ -41,7 +41,7 @@ export default function ReservationOverview() {
                         hallId,
                         totalPrice: reservationPrice,
                         seatPrice,
-                        userName: username,
+                        username,
                     },
                     undefined,
                     true
