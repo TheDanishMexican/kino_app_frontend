@@ -14,9 +14,38 @@ export default function HallForShowing() {
     const [showing, setShowing] = useState<Showing>()
     const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
+    const [reservationPrice, setReservationPrice] = useState<number>(0)
     const [seatPrices, setSeatPrices] = useState<Map<number, number>>(new Map())
     const [rows, setRows] = useState<Row[]>([])
     const makeOption = makeOptions('GET', null, undefined, true)
+    const preReservationBody = {
+        selectedSeats: selectedSeats,
+        showingId: showingId,
+    }
+    const optionPreRes = makeOptions(
+        'POST',
+        preReservationBody,
+        undefined,
+        true
+    )
+
+    useEffect(() => {
+        const fetchReservationPrice = async () => {
+            try {
+                const response = await fetch(
+                    `${API_URL}/showings/reservation_price`,
+                    optionPreRes
+                )
+                const data = await response.json()
+                setReservationPrice(data.reservationPrice)
+                console.log('data.reservationPrice:', data.reservationPrice)
+            } catch (error) {
+                console.error('Error fetching reservation price:', error)
+            }
+        }
+        fetchReservationPrice()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedSeats])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -95,7 +124,7 @@ export default function HallForShowing() {
         }
     }
 
-    function calculateTotalPrice() {
+    function showTotalSeatPrice() {
         return selectedSeats.reduce((total, seat) => {
             return total + (seatPrices.get(seat.id) || 0)
         }, 0)
@@ -107,7 +136,7 @@ export default function HallForShowing() {
                 <div className="header-title">
                     <div className="header-body">
                         <h1>Seats</h1>
-                        {calculateTotalPrice() > 0 && (
+                        {showTotalSeatPrice() > 0 && (
                             <Link
                                 to={{
                                     pathname: '/reservationOverview',
@@ -115,8 +144,8 @@ export default function HallForShowing() {
                                 state={{
                                     seats: selectedSeats,
                                     showing: showing,
-                                    totalPrice: calculateTotalPrice(),
                                     rows: rows,
+                                    reservationPrice: reservationPrice,
                                 }}
                             >
                                 <button className="paymentButton">
@@ -140,7 +169,7 @@ export default function HallForShowing() {
                         </p>
                         <p>
                             Total Price: <br></br>
-                            {calculateTotalPrice()} kr
+                            {showTotalSeatPrice()} kr
                         </p>
                     </div>
                 </div>
