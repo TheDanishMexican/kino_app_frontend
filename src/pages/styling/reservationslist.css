@@ -1,0 +1,25 @@
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reservations-table th,
+.reservations-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left; /* Align text to the left */
+}
+
+.reservations-table th {
+    background-color: rgb(132, 49, 132);
+    color: #fff; /* Text color for header */
+}
+
+.reservations-table td:first-child {
+    font-weight: bold;
+}
+
+.reservation-seats-list {
+    list-style: none;
+    padding-left: 0;
+}
