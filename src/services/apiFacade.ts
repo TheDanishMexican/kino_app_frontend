@@ -29,11 +29,11 @@ async function getMovie(id: number): Promise<Movie> {
   return await fetch(MOVIES_URL + "/" + id).then(handleHttpErrors);
 }
 async function addMovie(newMovie: Movie): Promise<Movie> {
-  // const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const method = newMovie.id ? "PUT" : "POST";
   const headers = {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   };
   const options = makeOptions(method, newMovie, headers, true);
   const URL = newMovie.id ? `${MOVIES_URL}/${newMovie.id}` : MOVIES_URL;
@@ -41,10 +41,10 @@ async function addMovie(newMovie: Movie): Promise<Movie> {
 }
 
 async function deleteMovie(id: number): Promise<Movie> {
-  // const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const headers = {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   };
   const options = makeOptions("DELETE", null, headers, true);
   return fetch(`${MOVIES_URL}/${id}`, options).then(handleHttpErrors);
