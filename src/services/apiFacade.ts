@@ -16,6 +16,21 @@ interface Movie {
   updated: Date | string;
 }
 
+async function getCinemas(): Promise<Array<Movie>> {
+  return null
+
+}
+async function postCinema(cinema:APICinema): Promise<Array<Movie>> {
+  return null
+
+}
+async function putCinema(): Promise<Array<Movie>> {
+  return null
+
+}
+
+
+
 
 async function getMovies(): Promise<Array<Movie>> {
   console.log("genre");
