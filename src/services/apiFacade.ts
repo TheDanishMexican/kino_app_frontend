@@ -16,19 +16,62 @@ interface Movie {
   updated: Date | string;
 }
 
+// Cinema interface
+interface APICinema {
+  name: string;
+  location: string;
+  halls: Array<APIHall>;
+  
+}
+
+// Hall interface
+interface APIHall {
+  name: string;
+  rows: number;
+  cinema: APICinema;
+  showings: Array<APIShowing>;
+}
+
+// Showing interface
+interface APIShowing {
+  movie: Movie;
+  hall: APIHall;
+  time: Date | string;
+  price: number;
+}
+
 async function getCinemas(): Promise<Array<Movie>> {
-  return null
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
 async function postCinema(cinema:APICinema): Promise<Array<Movie>> {
-  return null
-
+  const options = makeOptions("POST", cinema, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 }
 async function putCinema(): Promise<Array<Movie>> {
-  return null
+  const options = makeOptions("PUT", null, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
 
+async function getHalls(): Promise<Array<Movie>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+
+
+}
+
+async function postHall(hall:APIHall): Promise<Array<Movie>> {
+  const options = makeOptions("POST", hall, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+
+}
+
+async function putHall(): Promise<Array<Movie>> {
+  const options = makeOptions("PUT", null, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+}
 
 
 
@@ -69,6 +112,12 @@ async function deleteMovie(id: number): Promise<Movie> {
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
+  getCinemas,
+  postCinema,
+  putCinema,
+  getHalls,
+  postHall,
+  putHall,
   getMovies,
   getMovie,
   addMovie,
