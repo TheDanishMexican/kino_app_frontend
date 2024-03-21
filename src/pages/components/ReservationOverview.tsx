@@ -48,8 +48,9 @@ export default function ReservationOverview() {
                 )
             )
             const data = await response.json()
-            console.log(`Reservation added:`, data)
-            navigate('/succesPage')
+            const { id } = data
+            console.log(`Reservation added with ID:${id}`)
+            navigate('/succesPage', { state: { id } })
         } catch (error) {
             console.error('Error adding reservation:', error)
         }
@@ -99,7 +100,6 @@ export default function ReservationOverview() {
                     ))}
                 </div>
                 <div className="surcharge-body">
-                    {' '}
                     {showing.is3dMovie && (
                         <p className="reservation-surcharge">
                             *3D movie +50 kr

@@ -1,9 +1,11 @@
 import AdminNavbar from "./components/AdminNavbar";
-import "./styling/administrationpage.css";
-export default function AdminPage() {
+export default function AdminHallsPage() {
   return (
     <div>
       <AdminNavbar />
+      <p>
+        Imagine a list of halls here
+      </p>
     </div>
   );
 }

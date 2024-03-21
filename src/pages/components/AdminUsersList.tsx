@@ -190,12 +190,12 @@ export default function AdminUsersList() {
       </td>
       <td>{new Date(user.created).toLocaleString("da-DK")}</td>
       <td>{new Date(user.edited).toLocaleString("da-DK")}</td>
-      <td>
+      <td className="list-button">
         <Button onClick={() => handleEditClick(user)}>
           <EditIcon />
         </Button>
       </td>
-      <td>
+      <td className="list-button">
         <Button color="error" onClick={() => handleDeleteClick(user.username)}>
           <DeleteIcon />
         </Button>
@@ -206,57 +206,57 @@ export default function AdminUsersList() {
   return (
     <div id="admin-users-table-container">
       <div id="admin-users-table-header">
-        <label htmlFor="admin-users-search">Search:</label>
+        <label htmlFor="admin-users-search">Søg:</label>
         <input
           type="text"
           id="admin-users-search"
           placeholder="Search users"
           onChange={handleSearchChange}
         />
-        <label htmlFor="admin-users-role-filter">Role:</label>
+        <label htmlFor="admin-users-role-filter">Rolle:</label>
         <select
           name="role"
           id="admin-users-role-filter"
           value={roleFilter}
           onChange={handleRoleFilterChange}
         >
-          <option value="all">All roles</option>
-          <option value="ADMIN">Admin</option>
-          <option value="STAFF">Staff</option>
-          <option value="USER">User</option>
+          <option value="all">Alle</option>
+          <option value="ADMIN">Administrator</option>
+          <option value="STAFF">Personale</option>
+          <option value="USER">Bruger</option>
         </select>
         <button id="admin-users-add-user" onClick={handleAddUserClick}>
-          Add User
+          Tilføj Bruger
         </button>
       </div>
       <table id="admin-users-table">
         <thead>
           <tr>
             <th onClick={() => handleHeaderClick("username")}>
-              Username
+              Brugernavn
               {sortField === "username" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th onClick={() => handleHeaderClick("email")}>
-              E-mail
+              E-mail adresse
               {sortField === "email" && (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th onClick={() => handleHeaderClick("roles")}>
-              Roles
+              Roller
               {sortField === "roles" && (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th onClick={() => handleHeaderClick("created")}>
-              Created
+              Oprettet
               {sortField === "created" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th onClick={() => handleHeaderClick("edited")}>
-              Edited
+              Redigeret sidst
               {sortField === "edited" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
-            <th id="users-table-edit-header">Edit User</th>
-            <th id="users-table-delete-header">Delete User</th>
+            <th id="users-table-edit-header">Redigér</th>
+            <th id="users-table-delete-header">Slet</th>
           </tr>
         </thead>
         <tbody>
