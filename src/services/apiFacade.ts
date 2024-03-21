@@ -1,6 +1,8 @@
 import { API_URL } from "../settings";
 import { User, UserToUpdate } from "./authFacade";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
+import Cinema from "../interfaces/cinema";
+import Hall from "../interfaces/hall";
 const MOVIES_URL = API_URL + "/movies";
 
 interface Movie {
@@ -16,10 +18,53 @@ interface Movie {
   edited: Date | string;
 }
 
+
+async function getCinemas(): Promise<Array<Cinema>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+
+}
+async function postCinema(cinema:Cinema): Promise<Cinema> {
+  const options = makeOptions("POST", cinema, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+}
+async function putCinema(cinema:Cinema): Promise<Cinema> {
+  const options = makeOptions("PUT", cinema, undefined, true);
+  return fetch(`${API_URL}/cinemas/${cinema.id}`, options).then(handleHttpErrors);
+}
+async function deleteCinema(id: number): Promise<Cinema> {
+  const options = makeOptions("DELETE", null, undefined, true);
+  return fetch(`${API_URL}/cinemas/${id}`, options).then(handleHttpErrors);
+}
+
+async function getHalls(): Promise<Array<Hall>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return await fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+
+
+}
+
+interface int {
+  int: number;
+}
+async function postHall(hall:Hall, cinemaId: int): Promise<Hall> {
+  const options = makeOptions("POST", hall, undefined, true);
+  return fetch(`${API_URL}/${cinemaId}/halls`, options).then(handleHttpErrors);
+
+}
+
+async function putHall(hall:Hall): Promise<Hall> {
+  const options = makeOptions("PUT", hall, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+}
+
+
+
 async function getMovies(): Promise<Array<Movie>> {
   console.log("genre");
 
-  return fetch(MOVIES_URL).then(handleHttpErrors);
+  const res = fetch(MOVIES_URL).then(handleHttpErrors);
+  return res;
 }
 
 async function getMovie(id: number): Promise<Movie> {
@@ -142,6 +187,13 @@ async function getShowing(id: number) {
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
+  getCinemas,
+  postCinema,
+  putCinema,
+  deleteCinema,
+  getHalls,
+  postHall,
+  putHall,
   getMovies,
   getMovie,
   addMovie,

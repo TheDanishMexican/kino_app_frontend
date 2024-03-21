@@ -4,7 +4,7 @@ import Showing from './showing'
 
 export default interface Hall {
     id: number
-    cinema: Cinema
-    rows: Row[]
-    showings: Showing[]
+    cinema?: Cinema
+    rows?: Row[]
+    showings?: Showing[]
 }
