@@ -4,8 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import { getMovies, deleteMovie, addMovie, updateMovie } from "../../services/apiFacade";
 import { Button } from "@mui/material";
-import MovieAdminDialog from "./MovieAdminEditDialog";
-import MovieAdminAddDialog from "./MovieAdminAddDialog";
+import MovieAdminDialog from "./MovieAdminDialog";
 
 import { Movie as APIMovie } from "../../services/apiFacade";
 
@@ -29,17 +28,17 @@ export default function AdminMoviesList() {
 const handleSave = async (movie: APIMovie) => {
   try {
     let savedMovie: APIMovie;
-    if ('id' in movie && movie.id !== 0) {
- 
+    if ('id' in movie && movie.id !== undefined) {
+      // Update existing movie
       savedMovie = await updateMovie(movie);
       setMovies(movies.map(m => m.id === savedMovie.id ? savedMovie : m));
     } else {
-
+      // Create new movie
       savedMovie = await addMovie(movie);
       setMovies([...movies, savedMovie]);
     }
 
-
+    // Close the dialog and clear any errors
     setOpen(false);
     setError('');
   } catch (error) {
@@ -48,23 +47,21 @@ const handleSave = async (movie: APIMovie) => {
   }
 };
 
-  const handleDeleteClick = async (id: number) => { 
-    const confirmDelete = window.confirm("Are you sure you want to delete this movie?, You can only delete it if there are no more showings of this movie.");
+  const handleDeleteClick = async (id: number) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this movie?");
     if (confirmDelete) {
       try {
         await deleteMovie(id);
-        setMovies(movies.filter(movie => movie.id !== id)); 
+        setMovies(movies.filter(movie => movie.id !== id)); // Optimistic UI update
       } catch (error) {
         console.error("Failed to delete movie:", error);
-        setError("Failed to delete movie.");
+        setError("Failed to delete movie."); // Display error to user
       }
     }
   };
 
 const handleAddMovieClick = () => {
-
-  setEditingMovie(null); 
-
+  setEditingMovie({} as APIMovie); // Prepare to add a new movie
   setOpen(true);
 };
 
@@ -82,13 +79,11 @@ const handleAddMovieClick = () => {
         </Button>
       </td>
       <td>
-        <Button color="error" onClick={() => handleDeleteClick(movie.id || 0)}>
+        <Button color="error" onClick={() => handleDeleteClick(movie.id)}>
           <DeleteIcon />
         </Button>
       </td>
     </tr>
-
-    
   ));
 
   return (
@@ -119,14 +114,6 @@ const handleAddMovieClick = () => {
       onSave={(movie) => {
       handleSave(movie);  
       setOpen(false); 
-  }}
-  onClose={() => setOpen(false)}
-/>
-
-<MovieAdminAddDialog
-  open={open && editMovie === null} 
-  onSave={(newMovie: APIMovie) => {
-    handleSave(newMovie);
   }}
   onClose={() => setOpen(false)}
 />

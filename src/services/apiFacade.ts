@@ -4,7 +4,7 @@ const MOVIES_URL = API_URL + "/movies";
 
 
 interface Movie {
-  id?: number;
+  id: number;
   name: string;
   posterUrl: string;
   description: string;
@@ -28,10 +28,13 @@ async function getMovies(): Promise<Array<Movie>> {
 async function getMovie(id: number): Promise<Movie> {
   return await fetch(MOVIES_URL + "/" + id).then(handleHttpErrors);
 }
-
 async function addMovie(newMovie: Movie): Promise<Movie> {
-
-  const options = makeOptions("POST", newMovie, undefined, true);
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("POST", newMovie, headers, true);
   return fetch(MOVIES_URL, options).then(handleHttpErrors);
 }
 
@@ -39,15 +42,23 @@ async function updateMovie(updatedMovie: Movie): Promise<Movie> {
   if (!updatedMovie.id) {
     throw new Error("Movie must have an id to be updated");
   }
-
-  const options = makeOptions("PUT", updatedMovie, undefined, true);
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("PUT", updatedMovie, headers, true);
   const URL = `${MOVIES_URL}/${updatedMovie.id}`;
   return fetch(URL, options).then(handleHttpErrors);
 }
 
 async function deleteMovie(id: number): Promise<Movie> {
-
-  const options = makeOptions("DELETE", null, undefined, true);
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("DELETE", null, headers, true);
   return fetch(`${MOVIES_URL}/${id}`, options).then(handleHttpErrors);
 }
 
