@@ -96,13 +96,7 @@ export default function ReservationsList() {
             reservation.username
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-            showings.some(
-                (showing, index) =>
-                    showing?.movie.name
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()) &&
-                    reservation.id === showings[index]?.id
-            )
+            reservation.id.toString().includes(searchTerm.toLowerCase())
     )
 
     return (
@@ -111,7 +105,7 @@ export default function ReservationsList() {
                 <div className="search-container">
                     <input
                         type="text"
-                        placeholder="Search by user or movie"
+                        placeholder="Search orderID or username"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />

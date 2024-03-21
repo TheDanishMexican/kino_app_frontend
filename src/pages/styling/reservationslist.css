@@ -28,3 +28,10 @@
     cursor: pointer;
     background-color: #ddd;
 }
+
+.search-container input {
+    padding: 10px;
+    min-width: 170px;
+    border-radius: 10px;
+    border: none;
+}
