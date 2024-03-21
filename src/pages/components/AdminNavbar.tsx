@@ -4,6 +4,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import EngineeringIcon from '@mui/icons-material/Engineering'
 import CameraOutdoorIcon from '@mui/icons-material/CameraOutdoor'
 import EventSeatIcon from '@mui/icons-material/EventSeat'
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import '../styling/administrationpage.css'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
@@ -26,8 +27,16 @@ export default function AdminNavbar() {
                             if (newValue === 'staff') {
                                 navigate('/admin/staff')
                             }
+                            if (newValue === 'showings') {
+                                navigate('/admin/showings')
+                            }
                             if (newValue === 'cinemas') {
                                 navigate('/admin/cinemas')
+                            } if (newValue === 'movies') {
+                                navigate('/admin/movies')
+                            }
+                            if (newValue === 'halls') {
+                                navigate('/admin/halls')
                             }
                         }}
                     >
@@ -44,6 +53,17 @@ export default function AdminNavbar() {
                         <BottomNavigationAction
                             label="Halls"
                             icon={<EventSeatIcon />}
+                            value="halls"
+                        />
+                        <BottomNavigationAction
+                            label="Showings"
+                            icon={<CameraOutdoorIcon />}
+                            value="showings"
+                        />
+                         <BottomNavigationAction
+                            label="Movies"
+                            icon={<MovieFilterIcon />}
+                            value="movies"
                         />
                     </BottomNavigation>
                 </Box>
