@@ -1,5 +1,5 @@
 import { API_URL } from "../settings";
-import { User, UserToUpdate, CinemaToUpdate } from "./authFacade";
+import { User, UserToUpdate } from "./authFacade";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
 const MOVIES_URL = API_URL + "/movies";
 
