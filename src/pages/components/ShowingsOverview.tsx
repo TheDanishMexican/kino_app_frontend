@@ -74,6 +74,16 @@ export default function ShowingsOverview() {
                                     </p>
                                     <p>Date: {showing.showingDate}</p>
                                     <p>{showing.startTime}</p>
+                                    {showing.is3dMovie && (
+                                        <p className="surcharge">
+                                            *surcharge for 3D movie
+                                        </p>
+                                    )}
+                                    {showing.durationInMinutes > 170 && (
+                                        <p className="surcharge">
+                                            *surcharge for long movie
+                                        </p>
+                                    )}
                                 </div>
                             </Link>
                         ))}

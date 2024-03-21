@@ -16,33 +16,63 @@ interface Movie {
   updated: Date | string;
 }
 
-async function addCinema(Cinema: CinemaToUpdate): Promise<CinemaToUpdate> {
-  const options = makeOptions("POST", Cinema, undefined, true);
-  return fetch(API_URL + "/api/cinema", options).then(handleHttpErrors);
+// Cinema interface
+interface APICinema {
+  name: string;
+  location: string;
+  halls: Array<APIHall>;
+  
 }
 
-async function getCinemas(){
-  const options = makeOptions("GET",null, undefined, true);
-return await fetch(API_URL + "/api/user-with-role/users", options).then(
-  handleHttpErrors
-);
+// Hall interface
+interface APIHall {
+  name: string;
+  rows: number;
+  cinema: APICinema;
+  showings: Array<APIShowing>;
 }
 
-
-async function deleteCinema(name: string) {
-  const options = makeOptions("DELETE", null, undefined, true);
-  return fetch(API_URL + "/api/user-with-role/" + name, options).then(
-    handleHttpErrors
-  );
+// Showing interface
+interface APIShowing {
+  movie: Movie;
+  hall: APIHall;
+  time: Date | string;
+  price: number;
 }
 
-async function updateCinema(cinema: CinemaToUpdate) {
-  const options = makeOptions("PUT", cinema, undefined, true);
-  return fetch(
-    API_URL + "/api/cinema/update-user/" + cinema.name,
-    options
-  ).then(handleHttpErrors);
+async function getCinemas(): Promise<Array<Movie>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+
 }
+async function postCinema(cinema:APICinema): Promise<Array<Movie>> {
+  const options = makeOptions("POST", cinema, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+}
+async function putCinema(): Promise<Array<Movie>> {
+  const options = makeOptions("PUT", null, undefined, true);
+  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+
+}
+
+async function getHalls(): Promise<Array<Movie>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+
+
+}
+
+async function postHall(hall:APIHall): Promise<Array<Movie>> {
+  const options = makeOptions("POST", hall, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+
+}
+
+async function putHall(): Promise<Array<Movie>> {
+  const options = makeOptions("PUT", null, undefined, true);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+}
+
 
 
 async function getMovies(): Promise<Array<Movie>> {
@@ -128,10 +158,12 @@ async function createUser(user: User) {
 export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
-  addCinema,
   getCinemas,
-  deleteCinema,
-  updateCinema,
+  postCinema,
+  putCinema,
+  getHalls,
+  postHall,
+  putHall,
   getMovies,
   getMovie,
   addMovie,
