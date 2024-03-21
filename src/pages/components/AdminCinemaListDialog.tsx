@@ -8,7 +8,12 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
-import { updateCinema, getCinemas } from "../../services/apiFacade";
+import { putCinema, getCinemas } from "../../services/apiFacade"
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Cinema from "../../interfaces/cinema";
+import React from "react";
 import "../styling/adminuserspage.css";
 
 // Styling
@@ -21,18 +26,15 @@ const Dialog = styled(MuiDialog)(() => ({
   },
 }));
 
-interface APICinema {
-  name: string;
-  [key: string]: unknown; // Add index signature with type 'unknown'
-}
-
 interface AdminUserListDialogProps {
   open: boolean;
   onClose: () => void;
-  onSave: (user: APICinema) => void;
-  user: APICinema;
-  setCinemas: React.Dispatch<React.SetStateAction<APICinema[]>>;
+  onSave: (user: Cinema) => void;
+  user: Cinema;
+  setCinemas: React.Dispatch<React.SetStateAction<Cinema[]>>;
 }
+
+
 
 export default function AdminCinemaListDialog({
   open,
@@ -41,7 +43,7 @@ export default function AdminCinemaListDialog({
   user,
   setCinemas,
 }: AdminUserListDialogProps) {
-  const [editingUser, setEditingUser] = useState<APICinema | null>(user);
+  const [editingUser, setEditingUser] = useState<Cinema | null>(user);
 
   useEffect(() => {
     setEditingUser(user);
@@ -53,10 +55,10 @@ export default function AdminCinemaListDialog({
       if (!editingUser.name) {
         alert("All field must be filled!");
       } else {
-        // Call updateCinema with the editingUser object
-        updateCinema({ ...editingUser })
+        // Call putCinema with the editingUser object
+        putCinema({ ...editingUser })
           .then(() => {
-            // Call onSave after updateCinema has completed
+            // Call onSave after putCinema has completed
             onSave(editingUser);
             // Fetch the list of users
             getCinemas().then((users) => {
@@ -70,6 +72,12 @@ export default function AdminCinemaListDialog({
           });
       }
     }
+  };
+  
+  const [halls, setHalls] = React.useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setHalls(event.target.value as string);
   };
 
   return (
@@ -125,17 +133,47 @@ export default function AdminCinemaListDialog({
         <TextField
           autoFocus
           margin="dense"
-          label="Email Address"
-          type="email"
+          label="name"
+          type="text"
           fullWidth
-          value={editingUser?.email || ""}
+          value={editingUser?.name || ""}
           onChange={(e) =>
             setEditingUser({
               ...editingUser,
               name: e.target.value,
-            })
+            } as Cinema)
           }
         />
+      </DialogContent>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          label="location"
+          type="text"
+          fullWidth
+          value={editingUser?.name || ""}
+          onChange={(e) =>
+            setEditingUser({
+              ...editingUser,
+              location: e.target.value
+            } as Cinema)
+          }
+        />
+      </DialogContent>
+      <DialogContent>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={halls}
+          label="Hall"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

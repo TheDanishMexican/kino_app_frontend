@@ -31,7 +31,10 @@ async function postCinema(cinema:Cinema): Promise<Cinema> {
 async function putCinema(cinema:Cinema): Promise<Cinema> {
   const options = makeOptions("PUT", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
-
+}
+async function deleteCinema(id: number): Promise<Cinema> {
+  const options = makeOptions("DELETE", null, undefined, true);
+  return fetch(`${API_URL}/cinemas/${id}`, options).then(handleHttpErrors);
 }
 
 async function getHalls(): Promise<Array<Hall>> {
@@ -143,6 +146,7 @@ export {
   getCinemas,
   postCinema,
   putCinema,
+  deleteCinema,
   getHalls,
   postHall,
   putHall,

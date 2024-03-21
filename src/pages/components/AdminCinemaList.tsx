@@ -6,6 +6,7 @@ import { getCinemas, deleteCinema } from "../../services/apiFacade";
 import { Button } from "@mui/material";
 import AdminCinemaListDialog from "./AdminCinemaListDialog";
 import AdminCinemaListAddCinema from "./AdminCinemaListAddCinema";
+import Cinema from "../../interfaces/cinema";
 import "../styling/adminuserstable.css";
 
 export default function AdmincinemasList() {
@@ -16,14 +17,9 @@ export default function AdmincinemasList() {
       .catch(() => setError("Error fetching cinemas, is the server running?"));
   }, []);
 
-  // Interfaces
-  interface APICinema {
-    name: string;
-    [key: string]: unknown; // Add index signature with type 'unknown'
-  }
 
   // State
-  const [cinemas, setCinemas] = useState<Array<APICinema>>([]);
+  const [cinemas, setCinemas] = useState<Array<Cinema>>([]);
   const [error, setError] = useState("");
 
   // Filtering the cinemas list
@@ -42,11 +38,11 @@ export default function AdmincinemasList() {
   // Edit dialog
   const [open, setOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
-  const [editingCinema, setEditingCinema] = useState<APICinema | null>(null);
+  const [editingCinema, setEditingCinema] = useState<Cinema[] | null>(null);
 
 
   const fetchCinemas = () => {
-    getCinemas()
+     getCinemas()
       .then((res) => setCinemas(res))
       .catch(() => setError("Error fetching cinemas, is the server running?"));
   };
@@ -83,7 +79,6 @@ export default function AdmincinemasList() {
 
   const sortedcinemas = [...filteredcinemas].sort((a, b) => {
     if (!sortField) return 0;
-
     if ((a[sortField] as string) < (b[sortField] as string))
       return sortDirection === "asc" ? -1 : 1;
     if ((a[sortField] as string) > (b[sortField] as string))
@@ -92,7 +87,7 @@ export default function AdmincinemasList() {
   });
 
   // Handle edit user button
-  const handleEditClick = (user: APICinema) => {
+  const handleEditClick = (user: Cinema[]) => {
     setEditingCinema(user);
     setOpen(true);
   };
@@ -222,7 +217,7 @@ export default function AdmincinemasList() {
       <AdminCinemaListDialog
         open={open}
         onSave={handleSave}
-        user={editingCinema as APICinema} // Fix: Ensure that the user prop is of type APICinema
+        user={editingCinema as Cinema} // Fix: Ensure that the user prop is of type Cinema
         setCinemas={setCinemas}
         onClose={() => setOpen(false)}
       />

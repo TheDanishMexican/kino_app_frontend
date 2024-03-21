@@ -9,7 +9,8 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { addCinema, getCinemas } from "../../services/apiFacade";
+import { postCinema, getCinemas } from "../../services/apiFacade";
+import Cinema from "../../interfaces/cinema";
 
 const Dialog = styled(MuiDialog)(() => ({
   ".MuiPaper-root": {
@@ -19,34 +20,34 @@ const Dialog = styled(MuiDialog)(() => ({
   },
 }));
 
-interface APICinema {
+interface Cinema {
   name: string;
   [key: string]: unknown; // Add index signature with type 'unknown'
 }
 
-const initialUserState: APICinema = {
+const initialUserState: Cinema = {
   name: "",
 };
 
 interface AdminUserListAddUserProps {
   open: boolean;
   onClose: () => void;
-  onSave: (user: APICinema) => void;
+  onSave: (user: Cinema) => void;
 }
 
 interface AdminUserListAddUserProps {
   open: boolean;
   onClose: () => void;
-  onSave: (user: APICinema) => void;
+  onSave: (user: Cinema) => void;
   onCinemaAdded: () => void;
 }
 
-export default function AdminCinemaListAddCinema({
+export default function AdminCinemaListpostCinema({
   open,
   onClose,
   onCinemaAdded,
 }: AdminUserListAddUserProps) {
-  const [newUser, setNewUser] = useState<APICinema>(initialUserState);
+  const [newUser, setNewUser] = useState<Cinema>(initialUserState);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -60,7 +61,7 @@ export default function AdminCinemaListAddCinema({
       );
     } else {
       if (newUser) {
-        addCinema(newUser)
+        postCinema(newUser)
           .then(() => {
             setNewUser(initialUserState); // Reset newUser state after successful addition
             onClose();
@@ -142,6 +143,28 @@ export default function AdminCinemaListAddCinema({
               setNewUser({
                 ...newUser,
                 name: e.target.value,
+              });
+            }
+          }}
+          onKeyPress={(e) => {
+            if (e.key === " ") {
+              e.preventDefault();
+            }
+          }}
+        ></TextField>
+      </DialogContent>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          label="location"
+          type="text"
+          fullWidth
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (newUser) {
+              setNewUser({
+                ...newUser,
+                location: e.target.value,
               });
             }
           }}

@@ -1,7 +1,7 @@
 import Hall from './hall'
 
 export default interface Cinema {
-    id: number
+    id?: number
     name: string
     location: string
     halls: Hall[]
