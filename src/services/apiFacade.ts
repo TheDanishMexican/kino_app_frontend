@@ -13,7 +13,7 @@ interface Movie {
   actors: Array<string>;
   genres: Array<string>;
   created: Date | string;
-  updated: Date | string;
+  edited: Date | string;
 }
 
 
@@ -30,13 +30,25 @@ async function getMovie(id: number): Promise<Movie> {
 }
 async function addMovie(newMovie: Movie): Promise<Movie> {
   const token = localStorage.getItem("token");
-  const method = newMovie.id ? "PUT" : "POST";
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
-  const options = makeOptions(method, newMovie, headers, true);
-  const URL = newMovie.id ? `${MOVIES_URL}/${newMovie.id}` : MOVIES_URL;
+  const options = makeOptions("POST", newMovie, headers, true);
+  return fetch(MOVIES_URL, options).then(handleHttpErrors);
+}
+
+async function updateMovie(updatedMovie: Movie): Promise<Movie> {
+  if (!updatedMovie.id) {
+    throw new Error("Movie must have an id to be updated");
+  }
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("PUT", updatedMovie, headers, true);
+  const URL = `${MOVIES_URL}/${updatedMovie.id}`;
   return fetch(URL, options).then(handleHttpErrors);
 }
 
@@ -57,5 +69,6 @@ export {
   getMovies,
   getMovie,
   addMovie,
+  updateMovie,
   deleteMovie,
 };
