@@ -3,9 +3,21 @@ import { useEffect, useState } from 'react'
 import Showing from '../interfaces/showing'
 import { API_URL } from '../settings'
 import './styling/adminshowingpage.css'
+import AddShowingDialog from './components/AddShowingDialog'
+import { Dialog } from '@mui/material'
 
 export default function AdminShowingsPage() {
     const [showings, setShowings] = useState<Showing[]>([])
+
+    const [openDialog, setOpenDialog] = useState(false)
+
+    function handleOpenDialog() {
+        setOpenDialog(true)
+    }
+
+    function handleCloseDialog() {
+        setOpenDialog(false)
+    }
 
     useEffect(() => {
         async function getShowings() {
@@ -19,18 +31,30 @@ export default function AdminShowingsPage() {
     }, [])
 
     async function deleteShowing(showingId: number) {
-        const response = await fetch(`${API_URL}/showings/${showingId}`)
-        if (response.ok) {
-            setShowings((prevShowings) =>
-                prevShowings.filter((showing) => showing.id != showingId)
-            )
+        const confirm = window.confirm(
+            `Are you  sure you want to delete showing with id: ${showingId}`
+        )
+
+        if (confirm) {
+            const response = await fetch(`${API_URL}/showings/${showingId}`)
+            if (response.ok) {
+                setShowings((prevShowings) =>
+                    prevShowings.filter((showing) => showing.id != showingId)
+                )
+            }
+            console.log(`deleted showing with id: ${showingId}`)
         }
-        console.log(`deleted showing with id: ${showingId}`)
     }
 
     return (
         <div>
             <AdminNavbar />
+            <button
+                className="add-showing-button"
+                onClick={() => handleOpenDialog()}
+            >
+                Add Showing
+            </button>
             <table>
                 <thead>
                     <tr>
@@ -50,6 +74,7 @@ export default function AdminShowingsPage() {
                             <td>{showing.startTime}</td>
                             <td>
                                 <button
+                                    className="delete-button-showings"
                                     onClick={async () =>
                                         deleteShowing(showing.id)
                                     }
@@ -61,6 +86,9 @@ export default function AdminShowingsPage() {
                     ))}
                 </tbody>
             </table>
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                <AddShowingDialog />
+            </Dialog>
         </div>
     )
 }
