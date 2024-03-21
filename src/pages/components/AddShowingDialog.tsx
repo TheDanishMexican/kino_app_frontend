@@ -1,49 +1,62 @@
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, MenuItem, TextField } from '@mui/material'
-import { ChangeEvent, useEffect, useState } from 'react'
-import Movie from '../../interfaces/movie'
 import { API_URL } from '../../settings'
+import '../styling/addshowingdialog.css'
+import Hall from '../../interfaces/hall'
+import { Movie } from '../../services/apiFacade'
+import { makeOptions } from '../../services/fetchUtils'
 
 interface FormData {
-    hallId: string
+    hallId: number
     startTime: string
-    durationInMinutes: string
-    movieId: string
-    price: string
+    movieId: number
+    price: number
     showingDate: string
-    is3dMovie: boolean
+    is3D: boolean
 }
 
 export default function AddShowingDialog() {
-    const [movies, setMovies] = useState<Movie[]>([])
+    const [halls, setHalls] = useState<Hall[]>([])
+    const [movies, setMovies] = useState<Movie[]>([]) // State for storing movies
     const [formData, setFormData] = useState<FormData>({
-        hallId: '',
+        hallId: 0,
         startTime: '',
-        durationInMinutes: '',
-        movieId: '',
-        price: '',
+        movieId: 0,
+        price: 0,
         showingDate: '',
-        is3dMovie: false,
+        is3D: false,
     })
+    const option = makeOptions('POST', formData, undefined, true)
+
+    async function addShowing() {
+        const response = await fetch(`${API_URL}/movies`, option)
+        if (response.ok) {
+            console.log('Movie added successfully')
+        } else {
+            console.error('Failed to add movie')
+        }
+    }
 
     useEffect(() => {
-        async function getMovies() {
+        async function fetchData() {
             try {
-                const response = await fetch(`${API_URL}/movies`)
-                if (response.ok) {
-                    const data = await response.json()
-                    setMovies(data)
+                // Fetch movies data
+                const moviesResponse = await fetch(`${API_URL}/movies`)
+                const hallsResponse = await fetch(`${API_URL}/halls`)
+                if (moviesResponse.ok && hallsResponse.ok) {
+                    const moviesData = await moviesResponse.json()
+                    const hallsData = await hallsResponse.json()
+                    setMovies(moviesData)
+                    setHalls(hallsData)
                 } else {
-                    console.error(
-                        'Failed to fetch movies:',
-                        response.statusText
-                    )
+                    console.error('Failed to fetch movies data')
                 }
             } catch (error) {
-                console.error('Error fetching movies:', error)
+                console.error('Error fetching data:', error)
             }
         }
 
-        getMovies()
+        fetchData()
     }, [])
 
     const handleChange = (
@@ -54,41 +67,42 @@ export default function AddShowingDialog() {
         >
     ) => {
         const { name, value } = e.target
+
         setFormData({ ...formData, [name as string]: value })
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // Send formData to your backend API to create a new showing
         console.log('Form submitted:', formData)
-        // Reset form data after submission if needed
+        // Here you can perform any additional actions, like sending the data to the server
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="add-showing-form" onSubmit={handleSubmit}>
             <TextField
+                select
                 name="hallId"
-                label="Hall ID"
+                label="Hall"
                 value={formData.hallId}
                 onChange={handleChange}
                 fullWidth
-            />
+            >
+                {halls.map((hall) => (
+                    <MenuItem key={hall.id} value={hall.id}>
+                        {hall.id}
+                    </MenuItem>
+                ))}
+            </TextField>
             <TextField
+                type="time"
+                label="---------Start Time"
                 name="startTime"
-                label="Start Time"
                 value={formData.startTime}
                 onChange={handleChange}
                 fullWidth
             />
             <TextField
-                name="durationInMinutes"
-                label="Duration (in minutes)"
-                value={formData.durationInMinutes}
-                onChange={handleChange}
-                fullWidth
-            />
-            <TextField
-                select
+                select // Change to select input for movies
                 name="movieId"
                 label="Movie"
                 value={formData.movieId}
@@ -111,12 +125,24 @@ export default function AddShowingDialog() {
             <TextField
                 type="date"
                 name="showingDate"
-                label="Showing Date"
                 value={formData.showingDate}
                 onChange={handleChange}
                 fullWidth
             />
-            <Button type="submit" variant="contained" color="primary">
+            <TextField
+                type="checkbox"
+                name="is3D"
+                label="3D"
+                value={formData.is3D}
+                onChange={handleChange}
+                fullWidth
+            />
+            <Button
+                onClick={() => addShowing()}
+                type="submit"
+                variant="contained"
+                color="primary"
+            >
                 Add Showing
             </Button>
         </form>

@@ -60,6 +60,7 @@ export default function AdminShowingsPage() {
                     <tr>
                         <th>ID</th>
                         <th>Movie</th>
+                        <th>Hall</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th></th>
@@ -70,6 +71,7 @@ export default function AdminShowingsPage() {
                         <tr key={showing.id}>
                             <td>{showing.id}</td>
                             <td>{showing.movie.name}</td>
+                            <td>{showing.hallId}</td>
                             <td>{showing.showingDate}</td>
                             <td>{showing.startTime}</td>
                             <td>
@@ -86,7 +88,11 @@ export default function AdminShowingsPage() {
                     ))}
                 </tbody>
             </table>
-            <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <Dialog
+                className="dialog-add-showing"
+                open={openDialog}
+                onClose={handleCloseDialog}
+            >
                 <AddShowingDialog />
             </Dialog>
         </div>
