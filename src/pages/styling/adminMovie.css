@@ -1,0 +1,99 @@
+#admin-movies-table-container {
+    text-align: left;
+    overflow: auto;
+    border: 1px solid #ea00ff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    background-color: rgb(20, 20, 20);
+    box-shadow: 0px 0px 50px rgba(255, 0, 132, 0.1);
+  }
+  
+  #admin-movies-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+  }
+  
+  #admin-movies-table th {
+    padding: 8px;
+    text-align: left;
+    /* Make the headers unselectable */
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  #admin-movies-table th#users-table-edit-header,
+  #admin-movies-table th#users-table-delete-header,
+  #admin-movies-table td.list-button {
+    text-align: center;
+  }
+  
+  #users-table-edit-header,
+  #users-table-delete-header,
+  .list-button {
+    width: 100px;
+    text-align: center;
+  }
+  #admin-movies-table-header {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    width: 90%;
+    position: sticky;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    height: fit-content;
+  }
+  
+  #admin-movies-table-header * {
+    margin: 5px;
+  }
+  
+  #admin-movies-table-header input,
+  #admin-movies-table-header select,
+  #admin-movies-table-header button {
+    color: white;
+    height: 2em;
+    padding: 5px;
+    min-width: 100px;
+    margin-right: 10px;
+    background-color: rgb(60, 0, 72);
+    border: none;
+    border-radius: 5px;
+  }
+  
+  #admin-movies-table-header input {
+    width: 200px;
+  }
+  
+  #admin-movies-table-header button:hover {
+    cursor: pointer;
+    background-color: rgb(110, 1, 132);
+  }
+  
+  #admin-movies-table-header button {
+    right: 0;
+    position: absolute;
+    margin-right: 100px;
+  }
+  
+  .pageButton {
+    background-color: purple;
+    color: white;
+    border: none;
+    margin: 5px;
+  }
+  
+  .pageButton:hover {
+    background-color: rgb(209, 0, 209);
+    cursor: pointer;
+  }
+  

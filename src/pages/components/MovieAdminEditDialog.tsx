@@ -1,7 +1,13 @@
-
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { Movie as APIMovie } from '../../services/apiFacade';
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import { Movie as APIMovie } from "../../services/apiFacade";
 
 interface MovieEditDialogProps {
   open: boolean;
@@ -10,9 +16,13 @@ interface MovieEditDialogProps {
   onClose: () => void;
 }
 
-export default function MovieEditDialog({ open, movie, onSave, onClose }: MovieEditDialogProps) {
+export default function MovieEditDialog({
+  open,
+  movie,
+  onSave,
+  onClose,
+}: MovieEditDialogProps) {
   const [editedMovie, setEditedMovie] = useState<APIMovie | null>(null);
-
 
   useEffect(() => {
     setEditedMovie(movie);
@@ -32,7 +42,49 @@ export default function MovieEditDialog({ open, movie, onSave, onClose }: MovieE
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      sx={{
+        "& .MuiDialog-paper": {
+          background:
+            "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%)",
+          color: "white",
+          boxShadow: "0px 0px 50px rgba(255, 0, 132, 0.3)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 0, 132, 1)",
+        },
+        "& .MuiFormLabel-root": {
+          color: "white", // replace with your desired color
+        },
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+        "& .MuiInputBase-input": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiInputBase-input:not(.Mui-focused)": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiCheckbox-root:not(.Mui-checked)": {
+          color: "gray", // replace with your desired color
+        },
+      }}
+    >
       <DialogTitle>Edit Movie</DialogTitle>
       <DialogContent>
         <TextField
@@ -44,7 +96,7 @@ export default function MovieEditDialog({ open, movie, onSave, onClose }: MovieE
           fullWidth
           variant="outlined"
           name="name"
-          value={editedMovie?.name || ''}
+          value={editedMovie?.name || ""}
           onChange={handleChange}
         />
         <TextField
@@ -55,7 +107,7 @@ export default function MovieEditDialog({ open, movie, onSave, onClose }: MovieE
           fullWidth
           variant="outlined"
           name="duration"
-          value={editedMovie?.duration || ''}
+          value={editedMovie?.duration || ""}
           onChange={handleChange}
         />
         <TextField
@@ -66,7 +118,7 @@ export default function MovieEditDialog({ open, movie, onSave, onClose }: MovieE
           fullWidth
           variant="outlined"
           name="description"
-          value={editedMovie?.description || ''}
+          value={editedMovie?.description || ""}
           onChange={handleChange}
         />
       </DialogContent>

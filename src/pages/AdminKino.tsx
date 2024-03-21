@@ -1,4 +1,5 @@
 import AdminNavbar from './components/AdminNavbar';
+import AdminCinemaList from './components/AdminCinemaList';
 export default function AdminKino() {
     //Admins board for managing all CRUD for cinemas and halls
 
@@ -7,7 +8,7 @@ export default function AdminKino() {
             <AdminNavbar />
             <div>
                 <h1>Admin Kino</h1>
-                <p>Her kan du oprette, redigere og slette biografer og sale</p>
+                <AdminCinemaList />
             </div>
             
         </>

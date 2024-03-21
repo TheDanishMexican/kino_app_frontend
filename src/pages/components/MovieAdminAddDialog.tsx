@@ -1,6 +1,14 @@
-import { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Grid } from '@mui/material';
-import {Movie as APIMovie} from '../../services/apiFacade';
+import { useState } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Grid,
+} from "@mui/material";
+import { Movie as APIMovie } from "../../services/apiFacade";
 
 interface MovieAdminAddDialogProps {
   open: boolean;
@@ -8,43 +16,82 @@ interface MovieAdminAddDialogProps {
   onClose: () => void;
 }
 
-
-
-export default function MovieAdminAddDialog ({ open, onSave, onClose }: MovieAdminAddDialogProps) {
-
-  const [name, setName] = useState('');
-  const [posterUrl, setPosterUrl] = useState('');
-  const [description, setDescription] = useState('');
-  const [releaseDate, setReleaseDate] = useState('');
-  const [director, setDirector] = useState('');
-  const [duration, setDuration] = useState('');
-  const [actors, setActors] = useState('');
-  const [genres, setGenres] = useState('');
+export default function MovieAdminAddDialog({
+  open,
+  onSave,
+  onClose,
+}: MovieAdminAddDialogProps) {
+  const [name, setName] = useState("");
+  const [posterUrl, setPosterUrl] = useState("");
+  const [description, setDescription] = useState("");
+  const [releaseDate, setReleaseDate] = useState("");
+  const [director, setDirector] = useState("");
+  const [duration, setDuration] = useState("");
+  const [actors, setActors] = useState("");
+  const [genres, setGenres] = useState("");
 
   const handleSaveClick = () => {
-
     const movie = {
-  
       name,
       posterUrl,
       description,
-      releaseDate, 
+      releaseDate,
       director,
       duration: parseInt(duration),
-      actors: actors.split(',').map(actor => actor.trim()), 
-      genres: genres.split(',').map(genre => genre.trim()), 
+      actors: actors.split(",").map((actor) => actor.trim()),
+      genres: genres.split(",").map((genre) => genre.trim()),
       created: new Date(),
       edited: new Date(),
-
     };
 
-
     onSave(movie);
-
   };
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby="form-dialog-title"
+      sx={{
+        "& .MuiDialog-paper": {
+          background:
+            "linear-gradient(207deg, rgba(2, 0, 36, 1) 0%, rgba(7, 7, 57, 1) 35%, rgba(42, 9, 36, 1) 100%)",
+          color: "white",
+          boxShadow: "0px 0px 50px rgba(255, 0, 132, 0.3)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 0, 132, 1)",
+        },
+        "& .MuiFormLabel-root": {
+          color: "white", // replace with your desired color
+        },
+        "& label.Mui-focused": {
+          color: "white",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+        "& .MuiInputBase-input": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiInputBase-input:not(.Mui-focused)": {
+          color: "white", // replace with your desired color
+        },
+        "& .MuiCheckbox-root:not(.Mui-checked)": {
+          color: "gray", // replace with your desired color
+        },
+      }}
+    >
       <DialogTitle id="form-dialog-title">Add New Movie</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
@@ -92,7 +139,7 @@ export default function MovieAdminAddDialog ({ open, onSave, onClose }: MovieAdm
               name="release-date"
               value={releaseDate}
               onChange={(e) => setReleaseDate(e.target.value)}
-              style={{ marginLeft: '10px' }}
+              style={{ marginLeft: "10px" }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -155,9 +202,3 @@ export default function MovieAdminAddDialog ({ open, onSave, onClose }: MovieAdm
     </Dialog>
   );
 }
-
-
-
-
-
-       

@@ -32,6 +32,10 @@ interface LoginRequest {
   password: string;
 }
 
+export type CinemaToUpdate = {
+  name: string;
+}
+
 const authProvider = {
   isAuthenticated: false,
   async signIn(user_: LoginRequest): Promise<LoginResponse> {
