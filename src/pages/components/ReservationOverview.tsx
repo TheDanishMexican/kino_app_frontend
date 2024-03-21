@@ -11,17 +11,18 @@ import Cinema from '../../interfaces/cinema'
 export default function ReservationOverview() {
     const location = useLocation()
     const navigate = useNavigate()
-    const { seats, totalPrice, showing, rows } = location.state
+    const { seats, showing, rows, reservationPrice } = location.state
     const [cinema, setCinema] = useState<Cinema>()
 
     const showingId = showing.id
     const hallId = showing.hallId
     const username = localStorage.getItem('username')
-    const seatPrice = totalPrice / seats.length
     const makeOption = makeOptions('GET', null, undefined, false)
-    const surcharge = showing.specialMovie
+    const seatPrice = reservationPrice / seats.length
 
     useEffect(() => {
+        console.log(`this is reservation_price: ${reservationPrice}`)
+
         fetch(`${API_URL}/cinemas/${showing.cinemaId}`, makeOption)
             .then((response) => response.json())
             .then((data) => setCinema(data))
@@ -38,9 +39,9 @@ export default function ReservationOverview() {
                         seats,
                         showingId,
                         hallId,
-                        totalPrice,
+                        totalPrice: reservationPrice,
                         seatPrice,
-                        userName: username,
+                        username,
                     },
                     undefined,
                     true
@@ -81,7 +82,7 @@ export default function ReservationOverview() {
                     </p>
                     <p>
                         Total Price: <br></br>
-                        {surcharge ? totalPrice + 50 : totalPrice} kr
+                        {reservationPrice} kr
                     </p>
                 </div>
                 <div className="seats-row">
@@ -107,6 +108,16 @@ export default function ReservationOverview() {
                     {showing.durationInMinutes > 170 && (
                         <p className="reservation-surcharge">
                             *Long movie +50 kr
+                        </p>
+                    )}
+                    {seats.length < 5 && (
+                        <p className="reservation-surcharge">
+                            *Under 5 tickets +50kr
+                        </p>
+                    )}
+                    {seats.length >= 10 && (
+                        <p className="reservation-surcharge">
+                            *Over 10 tickets 7% discount
                         </p>
                     )}
                 </div>

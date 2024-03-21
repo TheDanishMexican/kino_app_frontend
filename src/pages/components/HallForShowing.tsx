@@ -7,44 +7,85 @@ import { Link } from 'react-router-dom'
 import { makeOptions } from '../../services/fetchUtils'
 import Row from '../../interfaces/row'
 import { API_URL } from '../../settings'
+import SeatPriceResponse from '../../interfaces/seatPrice'
 
 export default function HallForShowing() {
     const { showingId } = useParams()
     const [showing, setShowing] = useState<Showing>()
     const [reservedSeats, setReservedSeats] = useState<Seat[]>([])
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
+    const [reservationPrice, setReservationPrice] = useState<number>(0)
     const [seatPrices, setSeatPrices] = useState<Map<number, number>>(new Map())
     const [rows, setRows] = useState<Row[]>([])
     const makeOption = makeOptions('GET', null, undefined, true)
+    const preReservationBody = {
+        selectedSeats: selectedSeats,
+        showingId: showingId,
+    }
+    const optionPreRes = makeOptions(
+        'POST',
+        preReservationBody,
+        undefined,
+        true
+    )
 
     useEffect(() => {
-        fetch(`${API_URL}/showings/${showingId}`, makeOption)
-            .then((response) => response.json())
-            .then((data) => setShowing(data))
+        const fetchReservationPrice = async () => {
+            try {
+                const response = await fetch(
+                    `${API_URL}/showings/reservation_price`,
+                    optionPreRes
+                )
+                const data = await response.json()
+                setReservationPrice(data.reservationPrice)
+                console.log('data.reservationPrice:', data.reservationPrice)
+            } catch (error) {
+                console.error('Error fetching reservation price:', error)
+            }
+        }
+        fetchReservationPrice()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedSeats])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [showingResponse, reservedSeatsResponse, rowsResponse] =
+                    await Promise.all([
+                        fetch(`${API_URL}/showings/${showingId}`, makeOption),
+                        fetch(
+                            `${API_URL}/showings/${showingId}/reserved_seats`,
+                            makeOption
+                        ),
+                        fetch(
+                            `${API_URL}/showings/${showingId}/rows`,
+                            makeOption
+                        ),
+                    ])
+                const [showingData, reservedSeatsData, rowsData] =
+                    await Promise.all([
+                        showingResponse.json(),
+                        reservedSeatsResponse.json(),
+                        rowsResponse.json(),
+                    ])
+                setShowing(showingData)
+                setReservedSeats(reservedSeatsData)
+                setRows(rowsData)
+            } catch (error) {
+                console.error('Error fetching SHOWING/ROWS/SEATS data:', error)
+            }
+        }
+        fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showingId])
 
-    useEffect(() => {
-        fetch(`${API_URL}/showings/${showingId}/reserved_seats`, makeOption)
-            .then((response) => response.json())
-            .then((data) => setReservedSeats(data))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showingId])
-
-    useEffect(() => {
-        fetch(`${API_URL}/showings/${showingId}/rows`, makeOption)
-            .then((response) => response.json())
-            .then((data) => setRows(data))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showingId])
-
-    const fetchSeatPrice = async (seatId: number) => {
+    async function fetchSeatPrice(seatId: number) {
         try {
             const response = await fetch(
                 `${API_URL}/showings/${showingId}/seat/${seatId}/price`,
                 makeOption
             )
-            const data = await response.json()
+            const data: SeatPriceResponse = await response.json()
             return data.seatPrice
         } catch (error) {
             console.error('Error fetching seat price:', error)
@@ -52,7 +93,7 @@ export default function HallForShowing() {
         }
     }
 
-    const handleSeatClick = async (seat: Seat) => {
+    async function handleSeatClick(seat: Seat) {
         if (
             !reservedSeats.some(
                 (reservedSeat) => reservedSeat.seatNumber === seat.seatNumber
@@ -60,13 +101,15 @@ export default function HallForShowing() {
         ) {
             if (
                 selectedSeats.some(
-                    (selected) => selected.seatNumber === seat.seatNumber
+                    (selectedSeat) =>
+                        selectedSeat.seatNumber === seat.seatNumber
                 )
             ) {
                 // If already selected, remove from selection
                 setSelectedSeats(
                     selectedSeats.filter(
-                        (selected) => selected.seatNumber !== seat.seatNumber
+                        (selectedSeat) =>
+                            selectedSeat.seatNumber !== seat.seatNumber
                     )
                 )
             } else {
@@ -74,14 +117,6 @@ export default function HallForShowing() {
 
                 const price = await fetchSeatPrice(seat.id)
                 if (price !== null) {
-                    rows.map((row) => {
-                        if (row.id === seat.rowId) {
-                            console.log(
-                                `The row number for seat: ${seat.seatNumber} is: ${row.rowNumber} and row type: ${row.seatType} and the price is: ${price}`
-                            )
-                        }
-                    })
-
                     setSeatPrices(new Map(seatPrices.set(seat.id, price)))
                     setSelectedSeats([...selectedSeats, seat])
                 }
@@ -89,9 +124,7 @@ export default function HallForShowing() {
         }
     }
 
-    // Sort seats by order (uneven on left, even on right)
-
-    const calculateTotalPrice = () => {
+    function showTotalSeatPrice() {
         return selectedSeats.reduce((total, seat) => {
             return total + (seatPrices.get(seat.id) || 0)
         }, 0)
@@ -103,7 +136,7 @@ export default function HallForShowing() {
                 <div className="header-title">
                     <div className="header-body">
                         <h1>Seats</h1>
-                        {calculateTotalPrice() > 0 && (
+                        {showTotalSeatPrice() > 0 && (
                             <Link
                                 to={{
                                     pathname: '/reservationOverview',
@@ -111,8 +144,8 @@ export default function HallForShowing() {
                                 state={{
                                     seats: selectedSeats,
                                     showing: showing,
-                                    totalPrice: calculateTotalPrice(),
                                     rows: rows,
+                                    reservationPrice: reservationPrice,
                                 }}
                             >
                                 <button className="paymentButton">
@@ -136,7 +169,7 @@ export default function HallForShowing() {
                         </p>
                         <p>
                             Total Price: <br></br>
-                            {calculateTotalPrice()} kr
+                            {showTotalSeatPrice()} kr
                         </p>
                     </div>
                 </div>
@@ -196,9 +229,7 @@ export default function HallForShowing() {
                                         }`}
                                         key={seat.id}
                                         onClick={() => handleSeatClick(seat)}
-                                    >
-                                        {/* <p>{seat.seatNumber}</p> */}
-                                    </div>
+                                    ></div>
                                 ))}
                             </div>
                         )
