@@ -24,6 +24,10 @@ async function getCinemas(): Promise<Array<Cinema>> {
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
+async function getCinema(id: number): Promise<Cinema> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/cinemas/${id}`, options).then(handleHttpErrors);
+}
 async function postCinema(cinema:Cinema): Promise<Cinema> {
   const options = makeOptions("POST", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
@@ -40,16 +44,15 @@ async function deleteCinema(id: number): Promise<Cinema> {
 async function getHalls(): Promise<Array<Hall>> {
   const options = makeOptions("GET", null, undefined, true);
   return await fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
-
-
+}
+async function deleteHall(id: number): Promise<Hall> {
+  const options = makeOptions("DELETE", null, undefined, true);
+  return fetch(`${API_URL}/halls/${id}`, options).then(handleHttpErrors);
 }
 
-interface int {
-  int: number;
-}
-async function postHall(hall:Hall, cinemaId: int): Promise<Hall> {
+async function postHall(hall:Hall): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);
-  return fetch(`${API_URL}/${cinemaId}/halls`, options).then(handleHttpErrors);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 
 }
 
@@ -188,12 +191,14 @@ export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
   getCinemas,
+  getCinema,
   postCinema,
   putCinema,
   deleteCinema,
   getHalls,
   postHall,
   putHall,
+  deleteHall,
   getMovies,
   getMovie,
   addMovie,
