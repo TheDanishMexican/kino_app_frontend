@@ -23,6 +23,7 @@
 .movie-detail-info {
     flex: 2;
     padding: 20px;
+    text-align: left;
 }
 
 .movie-detail-info h2,
