@@ -6,6 +6,13 @@ export type User = {
   confirmPassword: string;
   username: string;
   password: string;
+  email: string;
+  roles?: string[];
+};
+
+export type UserToUpdate = {
+  username: string;
+  email: string;
   roles?: string[];
 };
 

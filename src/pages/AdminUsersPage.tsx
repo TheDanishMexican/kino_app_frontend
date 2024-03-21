@@ -1,11 +1,10 @@
 import AdminNavbar from "./components/AdminNavbar";
+import AdminUsersList from "./components/AdminUsersList";
 export default function AdminStaffPage() {
   return (
     <div>
       <AdminNavbar />
-      <p>
-        Imagine a list of staff here
-      </p>
+      <AdminUsersList />
     </div>
   );
 }
