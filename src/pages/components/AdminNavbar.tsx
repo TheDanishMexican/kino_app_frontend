@@ -26,8 +26,14 @@ export default function AdminNavbar() {
                             if (newValue === 'staff') {
                                 navigate('/admin/staff')
                             }
+                            if (newValue === 'showings') {
+                                navigate('/admin/showings')
+                            }
                             if (newValue === 'cinemas') {
                                 navigate('/admin/cinemas')
+                            }
+                            if (newValue === 'halls') {
+                                navigate('/admin/halls')
                             }
                         }}
                     >
@@ -44,6 +50,12 @@ export default function AdminNavbar() {
                         <BottomNavigationAction
                             label="Halls"
                             icon={<EventSeatIcon />}
+                            value="halls"
+                        />
+                        <BottomNavigationAction
+                            label="Showings"
+                            icon={<CameraOutdoorIcon />}
+                            value="showings"
                         />
                     </BottomNavigation>
                 </Box>
