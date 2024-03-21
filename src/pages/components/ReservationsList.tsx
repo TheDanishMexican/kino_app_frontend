@@ -10,6 +10,7 @@ export default function ReservationsList() {
     const [showings, setShowings] = useState<Showing[]>([])
     const options = makeOptions('GET', null, undefined, true)
     const optionsForDelete = makeOptions('DELETE', null, undefined, true)
+    const [searchTerm, setSearchTerm] = useState<string>('')
 
     useEffect(() => {
         async function getReservations() {
@@ -90,9 +91,31 @@ export default function ReservationsList() {
         }
     }
 
+    const filteredReservations = reservations.filter(
+        (reservation) =>
+            reservation.username
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+            showings.some(
+                (showing, index) =>
+                    showing?.movie.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) &&
+                    reservation.id === showings[index]?.id
+            )
+    )
+
     return (
         <div>
             <div className="reservation-list-container">
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search by user or movie"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
                 <table className="reservations-table">
                     <thead>
                         <tr>
@@ -106,7 +129,7 @@ export default function ReservationsList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {reservations.map((reservation, index) => (
+                        {filteredReservations.map((reservation, index) => (
                             <tr key={reservation.id}>
                                 <td>{reservation.id}</td>
                                 <td>{showings[index]?.movie.name}</td>
