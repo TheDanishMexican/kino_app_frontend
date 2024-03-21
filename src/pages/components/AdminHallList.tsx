@@ -156,6 +156,12 @@ export default function AdminHallList() {
   const hallListItems = currentHalls.map((hall, index) => (
     <tr key={index}>
       <td>{hall.id}</td>
+      {hall.rows && <td>
+        {hall.rows.length}
+      </td>}
+      <td>
+        {hall.cinema && hall.cinema.name}
+      </td>
       <td>
         <Button onClick={() => handleEditClick(hall)}>
           <EditIcon />
@@ -186,10 +192,18 @@ export default function AdminHallList() {
       <table id="admin-users-table">
         <thead>
           <tr>
-            <th onClick={() => handleHeaderClick("name")}>
-             Name
-              {sortField === "name" &&
+            <th onClick={() => handleHeaderClick("id")}>
+             Hall ID
+              {sortField === "id" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
+            </th>
+            <th onClick={() => handleHeaderClick("rows")}>
+              Rows
+              {sortField === "rows" && (sortDirection === "asc" ? " ▲" : " ▼")}
+            </th>
+            <th onClick={() => handleHeaderClick("cinema")}>
+              Cinema
+              {sortField === "cinema" && (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th id="users-table-edit-header">Edit Hall</th>
             <th id="users-table-delete-header">Delete Hall</th>

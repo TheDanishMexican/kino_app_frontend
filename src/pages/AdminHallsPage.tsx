@@ -4,10 +4,10 @@ export default function AdminHallsPage() {
   return (
     <div>
       <AdminNavbar />
-      <p>
+      
         Imagine a list of halls here
         <AdminHallList />
-      </p>
+      
     </div>
   );
 }

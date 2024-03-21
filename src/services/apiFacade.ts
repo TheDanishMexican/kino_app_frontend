@@ -3,6 +3,7 @@ import { User, UserToUpdate } from "./authFacade";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
 import Cinema from "../interfaces/cinema";
 import Hall from "../interfaces/hall";
+import Row from "../interfaces/row";
 const MOVIES_URL = API_URL + "/movies";
 
 interface Movie {
@@ -49,11 +50,15 @@ async function deleteHall(id: number): Promise<Hall> {
   const options = makeOptions("DELETE", null, undefined, true);
   return fetch(`${API_URL}/halls/${id}`, options).then(handleHttpErrors);
 }
-
 async function postHall(hall:Hall): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);
   return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 
+}
+
+async function getRows(): Promise<Array<Row>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/rows`, options).then(handleHttpErrors);
 }
 
 async function putHall(hall:Hall): Promise<Hall> {
@@ -199,6 +204,7 @@ export {
   postHall,
   putHall,
   deleteHall,
+  getRows,
   getMovies,
   getMovie,
   addMovie,

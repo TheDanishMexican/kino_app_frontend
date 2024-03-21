@@ -5,7 +5,7 @@ import Showing from './showing'
 type HallProperty = string | number | Row[] | Showing[] | Cinema | undefined;
 
 export default interface Hall {
-    id: number
+    id?: number
     cinema?: Cinema
     rows?: Row[]
     showings?: Showing[]

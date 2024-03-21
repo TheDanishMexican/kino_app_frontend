@@ -9,6 +9,8 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  FormControl,
+  FormLabel,
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -16,6 +18,7 @@ import { postHall, getHalls, getRows, getCinemas } from "../../services/apiFacad
 import Hall from "../../interfaces/hall";
 import React from "react";
 import Row from "../../interfaces/row";
+import Cinema from "../../interfaces/cinema";
 
 const Dialog = styled(MuiDialog)(() => ({
   ".MuiPaper-root": {
@@ -26,7 +29,6 @@ const Dialog = styled(MuiDialog)(() => ({
 }));
 
 const initialHallState: Hall = {
-  id: 0,
   name: "",
   cinema: undefined,
   rows: [],
@@ -46,7 +48,7 @@ interface AdminUserListAddUserProps {
   onHallAdded: () => void;
 }
 
-export default function AdminHallListpostHall({
+export default function AdminrowListpostHall({
   open,
   onClose,
   onHallAdded,
@@ -56,12 +58,12 @@ export default function AdminHallListpostHall({
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSave = () => {
+    console.log(newHall);
     if (
-      !newHall ||
-      newHall.password !== newHall.confirmPassword
+      !newHall
     ) {
       setErrorMessage(
-        "Please fill all field"
+        "Please fill all fields"
       );
     } else {
       if (newHall) {
@@ -77,20 +79,26 @@ export default function AdminHallListpostHall({
                 onHallAdded(); // Fetch the users again in the parent component
               })
               .catch(() =>
-                setErrorMessage("Error fetching users, is the server running?")
+                setErrorMessage("Error fetching halls, is the server running?")
               );
           })
           .catch((error) => {
             // Display the error message
-            setErrorMessage(`Failed to create user: ${error.message}`);
+            setErrorMessage(`Failed to create hall: ${error.message}`);
           });
       }
     }
   };
-  const [hallList, setHallList] = React.useState([] as Hall[]);
+  const [rowList, setRowList] = React.useState([] as Row[]);
   useEffect(() => {
-    getHalls().then((hallList) => {
-      setHallList(hallList);
+    getRows().then((rowList) => {
+      setRowList(rowList);
+    });
+  }, []);
+  const [cinemaList, setCinemaList] = React.useState([] as Cinema[]);
+  useEffect(() => {
+    getCinemas().then((list) => {
+      setCinemaList(list);
     });
   }, []);
 
@@ -186,30 +194,57 @@ export default function AdminHallListpostHall({
         ></TextField>
       </DialogContent>
       <DialogContent>
+      <FormLabel>Cinemas</FormLabel>
       <FormGroup>
-            {hallList.map((hall) => (
+            {cinemaList.map((cinema) => (
               <FormControlLabel
-                key={hall.id}
+                key={cinema.name}
                 control={
                   <Checkbox
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      let newhalls = [...(newHall?.halls || [])];
+                      let newCinema = (newHall?.cinema || {});
                       if (e.target.checked) {
-                        newhalls.push({ id: hall.id });
-                      } else {
-                        newhalls = newhalls.filter((r) => r.id !== hall.id);
+                        newCinema = { ...cinema } ;
                       }
                       setNewHall({
                       ...newHall,
-                      halls: newhalls,
-                    });
+                      cinema: newCinema,
+                    } as Hall);
                     }}
                   />
                 }
-                label={hall.id}
+                label={cinema.name}
               />
             ))}
           </FormGroup>
+          <FormControl fullWidth>
+          <FormLabel>Rows</FormLabel>
+          <FormGroup>
+            {rowList.map((row) => (
+              <FormControlLabel
+                key={row.id}
+                control={
+                  <Checkbox
+                    checked={newHall?.rows?.includes(row) || false}
+                    onChange={(e) => {
+                      let newRows = [...(newHall?.rows || [])];
+                      if (e.target.checked) {
+                        newRows.push(row);
+                      } else {
+                        newRows = newRows.filter((r) => r !== row);
+                      }
+                      setNewHall({
+                        ...newHall,
+                        roles: newRows,
+                      });
+                    }}
+                  />
+                }
+                label={row.id}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       </DialogContent>
       {errorMessage && (
         <Typography
