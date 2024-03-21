@@ -38,7 +38,7 @@ export default function AdmincinemasList() {
   // Edit dialog
   const [open, setOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
-  const [editingCinema, setEditingCinema] = useState<Cinema[] | null>(null);
+  const [editingCinema, setEditingCinema] = useState<Cinema | null>(null);
 
 
   const fetchCinemas = () => {
@@ -87,7 +87,7 @@ export default function AdmincinemasList() {
   });
 
   // Handle edit user button
-  const handleEditClick = (user: Cinema[]) => {
+  const handleEditClick = (user: Cinema) => {
     setEditingCinema(user);
     setOpen(true);
   };
@@ -125,15 +125,15 @@ export default function AdmincinemasList() {
   };
 
   // Delete and edit buttons
-  const handleDeleteClick = async (username: string) => {
+  const handleDeleteClick = async (id: number) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this user?"
     );
     if (confirmDelete) {
       try {
-        await deleteCinema(username);
+        await deleteCinema(id);
         // Remove the user from the local state
-        setCinemas(cinemas.filter((user) => user.username !== username));
+        setCinemas(cinemas.filter((user) => user.id !== id));
       } catch (error) {
         console.error("Failed to delete user:", error);
       }
@@ -143,6 +143,8 @@ export default function AdmincinemasList() {
   const handleAddUserClick = () => {
     setEditingCinema({
       name: "",
+      location: "",
+      halls: [],
     });
     setAddOpen(true);
   };
@@ -153,17 +155,12 @@ export default function AdmincinemasList() {
     <tr key={index}>
       <td>{user.name}</td>
       <td>
-        {(user.roles as unknown as { roleName: string }[])
-          .map((role) => role.roleName)
-          .join(", ")}
-      </td>
-      <td>
         <Button onClick={() => handleEditClick(user)}>
           <EditIcon />
         </Button>
       </td>
       <td>
-        <Button color="error" onClick={() => handleDeleteClick(user.name)}>
+        <Button color="error" onClick={() => handleDeleteClick(user.id || 0)}>
           <DeleteIcon />
         </Button>
       </td>
@@ -187,9 +184,9 @@ export default function AdmincinemasList() {
       <table id="admin-users-table">
         <thead>
           <tr>
-            <th onClick={() => handleHeaderClick("username")}>
+            <th onClick={() => handleHeaderClick("name")}>
              Name
-              {sortField === "username" &&
+              {sortField === "name" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th id="users-table-edit-header">Edit Cinema</th>
@@ -220,6 +217,7 @@ export default function AdmincinemasList() {
         user={editingCinema as Cinema} // Fix: Ensure that the user prop is of type Cinema
         setCinemas={setCinemas}
         onClose={() => setOpen(false)}
+        key={editingCinema?.id || 0}
       />
       <AdminCinemaListAddCinema
         open={addOpen}

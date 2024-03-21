@@ -6,11 +6,16 @@ import {
   DialogTitle,
   TextField,
   styled,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
 } from "@mui/material";
 import { Typography } from "@mui/material";
-import { useState } from "react";
-import { postCinema, getCinemas } from "../../services/apiFacade";
+import { useEffect, useState } from "react";
+import { postCinema, getCinemas, getHalls } from "../../services/apiFacade";
 import Cinema from "../../interfaces/cinema";
+import React from "react";
+import Hall from "../../interfaces/hall";
 
 const Dialog = styled(MuiDialog)(() => ({
   ".MuiPaper-root": {
@@ -20,13 +25,10 @@ const Dialog = styled(MuiDialog)(() => ({
   },
 }));
 
-interface Cinema {
-  name: string;
-  [key: string]: unknown; // Add index signature with type 'unknown'
-}
-
 const initialUserState: Cinema = {
   name: "",
+  location: "",
+  halls: [],
 };
 
 interface AdminUserListAddUserProps {
@@ -83,6 +85,12 @@ export default function AdminCinemaListpostCinema({
       }
     }
   };
+  const [hallList, setHallList] = React.useState([] as Hall[]);
+  useEffect(() => {
+    getHalls().then((hallList) => {
+      setHallList(hallList);
+    });
+  }, []);
 
   return (
     <Dialog
@@ -174,6 +182,32 @@ export default function AdminCinemaListpostCinema({
             }
           }}
         ></TextField>
+      </DialogContent>
+      <DialogContent>
+      <FormGroup>
+            {hallList.map((hall) => (
+              <FormControlLabel
+                key={hall.id}
+                control={
+                  <Checkbox
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      let newhalls = [...(newUser?.halls || [])];
+                      if (e.target.checked) {
+                        newhalls.push({ id: hall.id });
+                      } else {
+                        newhalls = newhalls.filter((r) => r.id !== hall.id);
+                      }
+                      setNewUser({
+                      ...newUser,
+                      halls: newhalls,
+                    });
+                    }}
+                  />
+                }
+                label={hall.id}
+              />
+            ))}
+          </FormGroup>
       </DialogContent>
       {errorMessage && (
         <Typography

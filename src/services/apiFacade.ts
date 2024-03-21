@@ -30,7 +30,7 @@ async function postCinema(cinema:Cinema): Promise<Cinema> {
 }
 async function putCinema(cinema:Cinema): Promise<Cinema> {
   const options = makeOptions("PUT", cinema, undefined, true);
-  return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
+  return fetch(`${API_URL}/cinemas/${cinema.id}`, options).then(handleHttpErrors);
 }
 async function deleteCinema(id: number): Promise<Cinema> {
   const options = makeOptions("DELETE", null, undefined, true);
@@ -39,7 +39,7 @@ async function deleteCinema(id: number): Promise<Cinema> {
 
 async function getHalls(): Promise<Array<Hall>> {
   const options = makeOptions("GET", null, undefined, true);
-  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+  return await fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 
 
 }

@@ -3,18 +3,20 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Button,
+  DialogActions,
+  FormGroup,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
-import { putCinema, getCinemas } from "../../services/apiFacade"
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import { putCinema, getCinemas, getHalls } from "../../services/apiFacade"
 import Cinema from "../../interfaces/cinema";
+import Hall from "../../interfaces/hall";
 import React from "react";
 import "../styling/adminuserspage.css";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
 
 // Styling
 
@@ -43,23 +45,23 @@ export default function AdminCinemaListDialog({
   user,
   setCinemas,
 }: AdminUserListDialogProps) {
-  const [editingUser, setEditingUser] = useState<Cinema | null>(user);
+  const [editingCinema, setEditingCinema] = useState<Cinema | null>(user);
 
   useEffect(() => {
-    setEditingUser(user);
+    setEditingCinema(user);
   }, [user]);
 
   const handleSave = () => {
-    if (editingUser) {
+    if (editingCinema) {
       // Check if any of the fields are empty
-      if (!editingUser.name) {
+      if (!editingCinema.name) {
         alert("All field must be filled!");
       } else {
-        // Call putCinema with the editingUser object
-        putCinema({ ...editingUser })
+        // Call putCinema with the editingCinema object
+        putCinema({ ...editingCinema })
           .then(() => {
             // Call onSave after putCinema has completed
-            onSave(editingUser);
+            onSave(editingCinema);
             // Fetch the list of users
             getCinemas().then((users) => {
               // Update the state with the new list of users
@@ -74,11 +76,17 @@ export default function AdminCinemaListDialog({
     }
   };
   
-  const [halls, setHalls] = React.useState('');
+  // const [halls, setHalls] = React.useState('');
+  const [hallList, setHallList] = React.useState([] as Hall[]);
+  useEffect(() => {
+    getHalls().then((hallList) => {
+      setHallList(hallList);
+    });
+  }, []);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setHalls(event.target.value as string);
-  };
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setHalls(event.target.value as string);
+  // };
 
   return (
     <Dialog
@@ -136,10 +144,10 @@ export default function AdminCinemaListDialog({
           label="name"
           type="text"
           fullWidth
-          value={editingUser?.name || ""}
+          value={editingCinema?.name || ""}
           onChange={(e) =>
-            setEditingUser({
-              ...editingUser,
+            setEditingCinema({
+              ...editingCinema,
               name: e.target.value,
             } as Cinema)
           }
@@ -152,37 +160,53 @@ export default function AdminCinemaListDialog({
           label="location"
           type="text"
           fullWidth
-          value={editingUser?.name || ""}
+          value={editingCinema?.name || ""}
           onChange={(e) =>
-            setEditingUser({
-              ...editingUser,
+            setEditingCinema({
+              ...editingCinema,
               location: e.target.value
             } as Cinema)
           }
         />
       </DialogContent>
       <DialogContent>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={halls}
-          label="Hall"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
+      <FormGroup>
+            {hallList.map((hall) => (
+              <FormControlLabel
+                key={hall.id}
+                control={
+                  <Checkbox
+                    checked={
+                      editingCinema?.id == hall.id ||
+                      false
+                    }
+                    onChange={(e) => {
+                      let newhalls = [...(editingCinema?.halls || [])];
+                      if (e.target.checked) {
+                        newhalls.push({ id: hall.id });
+                      } else {
+                        newhalls = newhalls.filter((r) => r.id !== hall.id);
+                      }
+                      setEditingCinema({
+                        ...editingCinema,
+                        halls: newhalls
+                      } as Cinema);
+                    }}
+                  />
+                }
+                label={hall.id}
+              />
+            ))}
+          </FormGroup>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleSave} color="primary">
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+          <DialogActions>
+            <Button onClick={onClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSave} color="primary">
+              Confirm
+            </Button>
+        </DialogActions>
+</Dialog>
+)
 }
