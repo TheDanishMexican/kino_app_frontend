@@ -1,4 +1,5 @@
 import Seat from './seat'
+import { User } from '../services/authFacade'
 
 export default interface Reservation {
     id: number
@@ -8,4 +9,6 @@ export default interface Reservation {
     cinemaId: number
     totalPrice: number
     seatPrice: number
+    user: User
+    username: string
 }

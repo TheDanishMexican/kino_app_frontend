@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Movie, getMovie } from '../../services/apiFacade'; // Assumed function
+import { Movie, getMovie } from '../../services/apiFacade'; 
 import '../styling/movieDetailView.css';
 import { Link } from 'react-router-dom';
 
@@ -48,13 +48,13 @@ export default function MovieDetailView() {
         <strong>Actors:</strong>
         <ul>
           {movie.actors.map((actor, index) => (
-            <li key={index}>{actor}</li> // Assuming actors is an array of strings
+            <li key={index}>{actor}</li> 
           ))}
         </ul>
         <strong>Genres:</strong>
         <ul>
           {movie.genres.map((genre, index) => (
-            <li key={index}>{genre}</li> // Assuming genres is an array of strings
+            <li key={index}>{genre}</li> 
           ))}
         </ul>
       </div>

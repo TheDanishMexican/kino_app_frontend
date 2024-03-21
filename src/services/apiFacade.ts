@@ -4,7 +4,7 @@ import { makeOptions, handleHttpErrors } from "./fetchUtils";
 const MOVIES_URL = API_URL + "/movies";
 
 interface Movie {
-  id: number;
+  id?: number;
   name: string;
   posterUrl: string;
   description: string;
@@ -13,7 +13,7 @@ interface Movie {
   actors: Array<string>;
   genres: Array<string>;
   created: Date | string;
-  updated: Date | string;
+  edited: Date | string;
 }
 
 async function getMovies(): Promise<Array<Movie>> {
@@ -25,26 +25,32 @@ async function getMovies(): Promise<Array<Movie>> {
 async function getMovie(id: number): Promise<Movie> {
   return await fetch(MOVIES_URL + "/" + id).then(handleHttpErrors);
 }
+
 async function addMovie(newMovie: Movie): Promise<Movie> {
-  // const token = localStorage.getItem("token");
-  const method = newMovie.id ? "PUT" : "POST";
-  const headers = {
-    "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
-  };
-  const options = makeOptions(method, newMovie, headers, true);
-  const URL = newMovie.id ? `${MOVIES_URL}/${newMovie.id}` : MOVIES_URL;
+
+  const options = makeOptions("POST", newMovie, undefined, true);
+  return fetch(MOVIES_URL, options).then(handleHttpErrors);
+}
+
+async function updateMovie(updatedMovie: Movie): Promise<Movie> {
+  if (!updatedMovie.id) {
+    throw new Error("Movie must have an id to be updated");
+  }
+
+  const options = makeOptions("PUT", updatedMovie, undefined, true);
+  const URL = `${MOVIES_URL}/${updatedMovie.id}`;
   return fetch(URL, options).then(handleHttpErrors);
 }
 
-async function deleteMovie(id: number): Promise<Movie> {
-  // const token = localStorage.getItem("token");
-  const headers = {
-    "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
-  };
-  const options = makeOptions("DELETE", null, headers, true);
-  return fetch(`${MOVIES_URL}/${id}`, options).then(handleHttpErrors);
+async function deleteMovie(id: number) {
+
+  const options = makeOptions("DELETE", null, undefined, true);
+
+  const response = await fetch(`${MOVIES_URL}/${id}`, options);
+
+  if(response.ok) {
+    console.log("Movie deleted");
+  }
 }
 
 async function getUsers() {
@@ -140,6 +146,7 @@ export {
   getMovies,
   getMovie,
   addMovie,
+  updateMovie,
   deleteMovie,
   getUsers,
   deleteUser,
