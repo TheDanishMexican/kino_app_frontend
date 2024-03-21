@@ -1,13 +1,11 @@
 import UserReservations from "./components/UserReservations";
+const user = localStorage.getItem("username");
 
 export default function ReservationsPage() {
   return (
     <div>
-      <h1>Welcome to the Reservations Page</h1>
-      <p>
-        This page is for viewing the reservations made by the user that is
-        signed in. This page is of course only meant for signed in users.
-      </p>
+      <p>Hej {user}</p>
+      <p>Dine reservationer er her:</p>
       <UserReservations />
     </div>
   );

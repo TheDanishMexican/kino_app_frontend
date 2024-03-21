@@ -69,7 +69,7 @@ function App() {
         />
         {/* ADMIN PAGE */}
         <Route
-          path="/administrator"
+          path="/admin"
           element={
             <RequireAuth roles={["ADMIN"]}>
               <AdminPage />

@@ -75,7 +75,6 @@ async function deleteUser(username: string) {
 async function updateUser(user: UserToUpdate) {
   const token = localStorage.getItem("token");
   const headers = {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
   const options = makeOptions("PUT", user, headers, true);
@@ -95,14 +94,44 @@ async function createUser(user: User) {
   return fetch(API_URL + "/api/user-with-role", options).then(handleHttpErrors);
 }
 
-async function getUserReservations(user: User) {
+async function getUserReservations() {
   const token = localStorage.getItem("token");
   const headers = {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
   const options = makeOptions("GET", null, headers, true);
-  return fetch(API_URL + "/api/reservation/", options).then(handleHttpErrors);
+  return fetch(API_URL + "/reservations/user", options).then(handleHttpErrors);
+}
+
+async function deleteUserReservation(id: number) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const options = makeOptions("DELETE", null, headers, true);
+  const response = await fetch(API_URL + "/reservations/" + id, options);
+
+  if (!response.ok) {
+    return handleHttpErrors(response);
+  }
+
+  const data = await response.text();
+
+  if (!data) {
+    return null;
+  }
+
+  return JSON.parse(data);
+}
+
+async function getShowing(id: number) {
+  try {
+    const response = await fetch(`${API_URL}/showings/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching showing:", error);
+  }
 }
 
 export type { Movie };
@@ -117,4 +146,6 @@ export {
   updateUser,
   createUser,
   getUserReservations,
+  deleteUserReservation,
+  getShowing
 };

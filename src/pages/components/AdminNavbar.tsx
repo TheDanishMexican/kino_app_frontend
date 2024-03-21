@@ -14,7 +14,6 @@ export default function AdminNavbar() {
   const navigate = useNavigate();
   return (
     <>
-      <p>Logget ind som: {localStorage.getItem("username")}.</p>
       <div className="navbox">
         <Box sx={{ width: 500 }}>
           <BottomNavigation
