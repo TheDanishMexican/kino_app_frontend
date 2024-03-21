@@ -57,7 +57,7 @@ const handleSave = async (movie: APIMovie) => {
       } catch (error) {
         console.error("Failed to delete movie:", error);
         setError("Failed to delete movie.");
-      }
+      } 
     }
   };
 

@@ -45,10 +45,15 @@ async function updateMovie(updatedMovie: Movie): Promise<Movie> {
   return fetch(URL, options).then(handleHttpErrors);
 }
 
-async function deleteMovie(id: number): Promise<Movie> {
+async function deleteMovie(id: number) {
 
   const options = makeOptions("DELETE", null, undefined, true);
-  return fetch(`${MOVIES_URL}/${id}`, options).then(handleHttpErrors);
+
+  const response = await fetch(`${MOVIES_URL}/${id}`, options);
+
+  if(response.ok) {
+    console.log("Movie deleted");
+  }
 }
 
 
