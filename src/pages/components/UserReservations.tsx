@@ -100,6 +100,7 @@ export default function UserReservations() {
         </thead>
         <tbody>{userReservationsList}</tbody>
       </table>
+      {error && <p>{error}</p>}
     </div>
   );
 }
