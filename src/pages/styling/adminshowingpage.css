@@ -1,0 +1,31 @@
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #000; /* Black border */
+    padding: 8px;
+    text-align: left;
+}
+
+/* Header row */
+thead {
+    background-color: rgb(132, 49, 132); /* Purple background */
+    color: #fff; /* White text */
+}
+
+/* Delete button styling */
+button {
+    background-color: rgb(132, 49, 132); /* Purple background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7c287c; /* Darker purple on hover */
+}
