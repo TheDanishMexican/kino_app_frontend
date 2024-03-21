@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   styled,
   Checkbox,
   FormControlLabel,
@@ -29,7 +28,6 @@ const Dialog = styled(MuiDialog)(() => ({
 }));
 
 const initialHallState: Hall = {
-  name: "",
   cinema: undefined,
   rows: [],
   showings: [],
@@ -149,50 +147,8 @@ export default function AdminrowListpostHall({
       }}
     >
       <DialogTitle>Creating a new Hall</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="name"
-          type="text"
-          fullWidth
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (newHall) {
-              setNewHall({
-                ...newHall,
-                name: e.target.value,
-              });
-            }
-          }}
-          onKeyPress={(e) => {
-            if (e.key === " ") {
-              e.preventDefault();
-            }
-          }}
-        ></TextField>
-      </DialogContent>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="location"
-          type="text"
-          fullWidth
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (newHall) {
-              setNewHall({
-                ...newHall,
-                location: e.target.value,
-              });
-            }
-          }}
-          onKeyPress={(e) => {
-            if (e.key === " ") {
-              e.preventDefault();
-            }
-          }}
-        ></TextField>
-      </DialogContent>
+
+
       <DialogContent>
       <FormLabel>Cinemas</FormLabel>
       <FormGroup>
@@ -209,6 +165,7 @@ export default function AdminrowListpostHall({
                       setNewHall({
                       ...newHall,
                       cinema: newCinema,
+                      cinemaId: cinema.id,
                     } as Hall);
                     }}
                   />

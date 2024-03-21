@@ -2,7 +2,6 @@ import {
   Dialog as MuiDialog,
   DialogTitle,
   DialogContent,
-  TextField,
   Button,
   DialogActions,
   FormGroup,
@@ -141,38 +140,6 @@ export default function AdmincinemaDialog({
         Editing hall {user && user.id ? user.id : "undefined"}
       </DialogTitle>
       <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="name"
-          type="text"
-          fullWidth
-          value={editingHall?.id || ""}
-          onChange={(e) =>
-            setEditingHall({
-              ...editingHall,
-              name: e.target.value,
-            } as Hall)
-          }
-        />
-      </DialogContent>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="location"
-          type="text"
-          fullWidth
-          value={editingHall?.id || ""}
-          onChange={(e) =>
-            setEditingHall({
-              ...editingHall,
-              location: e.target.value
-            } as Hall)
-          }
-        />
-      </DialogContent>
-      <DialogContent>
       <FormGroup>
       {cinemaList.map((cinema) => (
               <FormControlLabel
@@ -186,11 +153,12 @@ export default function AdmincinemaDialog({
                     onChange={(e) => {
                       let newCinema = (editingHall?.cinema || {});
                       if (e.target.checked) {
-                        newCinema = { id: cinema.id };
+                        newCinema = { ...cinema };
                       } 
                       setEditingHall({
                         ...editingHall,
-                        cinema: newCinema
+                        cinema: newCinema,
+                        cinemaId: cinema.id
                       } as Hall);
                     }}
                   />
