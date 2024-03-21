@@ -93,7 +93,6 @@ async function updateUser(user: UserToUpdate) {
 async function createUser(user: User) {
   const token = localStorage.getItem("token");
   const headers = {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
   const options = makeOptions("POST", user, headers, true);

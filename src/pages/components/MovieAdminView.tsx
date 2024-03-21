@@ -94,8 +94,10 @@ export default function AdminMoviesList() {
     <>
       <AdminNavbar />
       <div id="admin-movies-table-container">
-        <div id="">
-          <button onClick={handleAddMovieClick}>Add movie</button>
+        <div id="admin-movies-table-header">
+          <button onClick={handleAddMovieClick} id="admin-movies-add-movie">
+            Add movie
+          </button>
         </div>
         <table id="admin-movies-table">
           <thead>

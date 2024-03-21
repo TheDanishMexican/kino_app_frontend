@@ -82,6 +82,7 @@
   #admin-movies-table-header button {
     right: 0;
     position: absolute;
+    margin-right: 100px;
   }
   
   .pageButton {
