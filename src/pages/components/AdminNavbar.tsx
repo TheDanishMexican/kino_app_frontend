@@ -68,7 +68,6 @@ export default function AdminNavbar() {
               icon={<MovieFilterIcon />}
               value="movies"
             />
-            <BottomNavigationAction label="Halls" icon={<EventSeatIcon />} />
           </BottomNavigation>
         </Box>
       </div>
