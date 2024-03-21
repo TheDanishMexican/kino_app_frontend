@@ -46,9 +46,14 @@ async function getHalls(): Promise<Array<Hall>> {
   const options = makeOptions("GET", null, undefined, true);
   return await fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 }
-async function deleteHall(id: number): Promise<Hall> {
+async function deleteHall(id: number) {
   const options = makeOptions("DELETE", null, undefined, true);
-  return fetch(`${API_URL}/halls/${id}`, options).then(handleHttpErrors);
+
+  const response = await fetch(`${API_URL}/halls/${id}`, options);
+
+  if(response.ok) {
+    console.log("hall deleted");
+  }
 }
 async function postHall(hall:Hall): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);

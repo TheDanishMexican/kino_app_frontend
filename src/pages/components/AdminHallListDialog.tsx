@@ -84,6 +84,7 @@ export default function AdmincinemaDialog({
     getCinemas().then((list) => {
       setCinemaList(list);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const handleChange = (event: SelectChangeEvent) => {
