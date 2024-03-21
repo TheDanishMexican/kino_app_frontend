@@ -23,3 +23,8 @@
     list-style: none;
     padding-left: 0;
 }
+
+.delete-button-reservations:hover {
+    cursor: pointer;
+    background-color: #ddd;
+}
