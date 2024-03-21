@@ -20,6 +20,8 @@ import MovieDetailView from './pages/components/MovieDetailView'
 import ReservationOverview from './pages/components/ReservationOverview'
 import SuccesPage from './pages/SuccesPage'
 import AdminKino from './pages/AdminKino'
+import AdminShowingsPage from './pages/AdminShowingsPage'
+import AdminHallsPage from './pages/AdminHallsPage'
 
 function App() {
     return (
@@ -89,6 +91,22 @@ function App() {
                     element={
                         <RequireAuth roles={['ADMIN']}>
                             <AdminKino />
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path="admin/halls"
+                    element={
+                        <RequireAuth roles={['ADMIN']}>
+                            <AdminHallsPage />
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path="admin/showings"
+                    element={
+                        <RequireAuth roles={['ADMIN']}>
+                            <AdminShowingsPage />
                         </RequireAuth>
                     }
                 />
