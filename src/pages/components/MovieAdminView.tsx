@@ -6,6 +6,7 @@ import { getMovies, deleteMovie, addMovie, updateMovie } from "../../services/ap
 import { Button } from "@mui/material";
 import MovieAdminDialog from "./MovieAdminEditDialog";
 import MovieAdminAddDialog from "./MovieAdminAddDialog";
+import AdminNavbar from "./AdminNavbar";
 
 import { Movie as APIMovie } from "../../services/apiFacade";
 
@@ -92,7 +93,10 @@ const handleAddMovieClick = () => {
   ));
 
   return (
+
+
     <div id="admin-movies-table-container">
+            <AdminNavbar />
       <div id="admin-movies-table-header">
         <button id="admin-movies-add-movie" onClick={handleAddMovieClick}>
           Add movie
