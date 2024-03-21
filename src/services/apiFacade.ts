@@ -1,5 +1,7 @@
 import { API_URL } from "../settings";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
+import Cinema from "../interfaces/cinema";
+import Hall from "../interfaces/hall";
 const MOVIES_URL = API_URL + "/movies";
 
 
@@ -16,60 +18,40 @@ interface Movie {
   updated: Date | string;
 }
 
-// Cinema interface
-interface APICinema {
-  name: string;
-  location: string;
-  halls: Array<APIHall>;
-  
-}
 
-// Hall interface
-interface APIHall {
-  name: string;
-  rows: number;
-  cinema: APICinema;
-  showings: Array<APIShowing>;
-}
-
-// Showing interface
-interface APIShowing {
-  movie: Movie;
-  hall: APIHall;
-  time: Date | string;
-  price: number;
-}
-
-async function getCinemas(): Promise<Array<Movie>> {
+async function getCinemas(): Promise<Array<Cinema>> {
   const options = makeOptions("GET", null, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
-async function postCinema(cinema:APICinema): Promise<Array<Movie>> {
+async function postCinema(cinema:Cinema): Promise<Cinema> {
   const options = makeOptions("POST", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 }
-async function putCinema(): Promise<Array<Movie>> {
-  const options = makeOptions("PUT", null, undefined, true);
+async function putCinema(cinema:Cinema): Promise<Cinema> {
+  const options = makeOptions("PUT", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
 
-async function getHalls(): Promise<Array<Movie>> {
+async function getHalls(): Promise<Array<Hall>> {
   const options = makeOptions("GET", null, undefined, true);
   return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 
 
 }
 
-async function postHall(hall:APIHall): Promise<Array<Movie>> {
+interface int {
+  int: number;
+}
+async function postHall(hall:Hall, cinemaId: int): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);
-  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
+  return fetch(`${API_URL}/${cinemaId}/halls`, options).then(handleHttpErrors);
 
 }
 
-async function putHall(): Promise<Array<Movie>> {
-  const options = makeOptions("PUT", null, undefined, true);
+async function putHall(hall:Hall): Promise<Hall> {
+  const options = makeOptions("PUT", hall, undefined, true);
   return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 }
 
