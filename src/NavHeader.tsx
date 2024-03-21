@@ -18,10 +18,7 @@ export default function NavHeader() {
   return (
     <nav className="nav-header">
       <ul className="nav-header-ul">
-        <li
-          id="nav-header-logo"
-     
-        >
+        <li id="nav-header-logo">
           <NavLink to="/">
             <CameraIcon />
           </NavLink>
@@ -86,10 +83,10 @@ export default function NavHeader() {
           <li
             id="nav-admin"
             className={
-              location.pathname == "/administrator" ? "active-header" : ""
+              location.pathname.startsWith("/admin") ? "active-header" : ""
             }
           >
-            <NavLink to="/administrator">
+            <NavLink to="/admin">
               <AdminPanelSettingsIcon />
               <p>Administrator</p>
             </NavLink>
