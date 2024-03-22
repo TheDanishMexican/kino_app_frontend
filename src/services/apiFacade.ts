@@ -3,6 +3,7 @@ import { User, UserToUpdate } from "./authFacade";
 import { makeOptions, handleHttpErrors } from "./fetchUtils";
 import Cinema from "../interfaces/cinema";
 import Hall from "../interfaces/hall";
+import Row from "../interfaces/row";
 const MOVIES_URL = API_URL + "/movies";
 
 interface Movie {
@@ -24,6 +25,10 @@ async function getCinemas(): Promise<Array<Cinema>> {
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 
 }
+async function getCinema(id: number): Promise<Cinema> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/cinemas/${id}`, options).then(handleHttpErrors);
+}
 async function postCinema(cinema:Cinema): Promise<Cinema> {
   const options = makeOptions("POST", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
@@ -40,17 +45,25 @@ async function deleteCinema(id: number): Promise<Cinema> {
 async function getHalls(): Promise<Array<Hall>> {
   const options = makeOptions("GET", null, undefined, true);
   return await fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
-
-
 }
+async function deleteHall(id: number) {
+  const options = makeOptions("DELETE", null, undefined, true);
 
-interface int {
-  int: number;
+  const response = await fetch(`${API_URL}/halls/${id}`, options);
+
+  if(response.ok) {
+    console.log("hall deleted");
+  }
 }
-async function postHall(hall:Hall, cinemaId: int): Promise<Hall> {
+async function postHall(hall:Hall): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);
-  return fetch(`${API_URL}/${cinemaId}/halls`, options).then(handleHttpErrors);
+  return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 
+}
+
+async function getRows(): Promise<Array<Row>> {
+  const options = makeOptions("GET", null, undefined, true);
+  return fetch(`${API_URL}/rows`, options).then(handleHttpErrors);
 }
 
 async function putHall(hall:Hall): Promise<Hall> {
@@ -188,12 +201,15 @@ export type { Movie };
 // eslint-disable-next-line react-refresh/only-export-components
 export {
   getCinemas,
+  getCinema,
   postCinema,
   putCinema,
   deleteCinema,
   getHalls,
   postHall,
   putHall,
+  deleteHall,
+  getRows,
   getMovies,
   getMovie,
   addMovie,
