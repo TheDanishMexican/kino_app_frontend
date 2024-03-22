@@ -35,3 +35,16 @@ button:hover {
 .add-showing-button {
     padding: 10px;
 }
+
+.btn-search {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar-showings {
+    padding: 9px;
+    border-radius: 5px;
+}
