@@ -19,23 +19,23 @@ interface Movie {
   edited: Date | string;
 }
 
-
 async function getCinemas(): Promise<Array<Cinema>> {
   const options = makeOptions("GET", null, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
-
 }
 async function getCinema(id: number): Promise<Cinema> {
   const options = makeOptions("GET", null, undefined, true);
   return fetch(`${API_URL}/cinemas/${id}`, options).then(handleHttpErrors);
 }
-async function postCinema(cinema:Cinema): Promise<Cinema> {
+async function postCinema(cinema: Cinema): Promise<Cinema> {
   const options = makeOptions("POST", cinema, undefined, true);
   return fetch(`${API_URL}/cinemas`, options).then(handleHttpErrors);
 }
-async function putCinema(cinema:Cinema): Promise<Cinema> {
+async function putCinema(cinema: Cinema): Promise<Cinema> {
   const options = makeOptions("PUT", cinema, undefined, true);
-  return fetch(`${API_URL}/cinemas/${cinema.id}`, options).then(handleHttpErrors);
+  return fetch(`${API_URL}/cinemas/${cinema.id}`, options).then(
+    handleHttpErrors
+  );
 }
 async function deleteCinema(id: number): Promise<Cinema> {
   const options = makeOptions("DELETE", null, undefined, true);
@@ -51,14 +51,13 @@ async function deleteHall(id: number) {
 
   const response = await fetch(`${API_URL}/halls/${id}`, options);
 
-  if(response.ok) {
-    console.log("hall deleted");
+  if (response.ok) {
+    console.log("Hall deleted.");
   }
 }
-async function postHall(hall:Hall): Promise<Hall> {
+async function postHall(hall: Hall): Promise<Hall> {
   const options = makeOptions("POST", hall, undefined, true);
   return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
-
 }
 
 async function getRows(): Promise<Array<Row>> {
@@ -66,16 +65,12 @@ async function getRows(): Promise<Array<Row>> {
   return fetch(`${API_URL}/rows`, options).then(handleHttpErrors);
 }
 
-async function putHall(hall:Hall): Promise<Hall> {
+async function putHall(hall: Hall): Promise<Hall> {
   const options = makeOptions("PUT", hall, undefined, true);
   return fetch(`${API_URL}/halls`, options).then(handleHttpErrors);
 }
 
-
-
 async function getMovies(): Promise<Array<Movie>> {
-  console.log("genre");
-
   const res = fetch(MOVIES_URL).then(handleHttpErrors);
   return res;
 }
@@ -85,7 +80,6 @@ async function getMovie(id: number): Promise<Movie> {
 }
 
 async function addMovie(newMovie: Movie): Promise<Movie> {
-
   const options = makeOptions("POST", newMovie, undefined, true);
   return fetch(MOVIES_URL, options).then(handleHttpErrors);
 }
@@ -101,13 +95,12 @@ async function updateMovie(updatedMovie: Movie): Promise<Movie> {
 }
 
 async function deleteMovie(id: number) {
-
   const options = makeOptions("DELETE", null, undefined, true);
 
   const response = await fetch(`${MOVIES_URL}/${id}`, options);
 
-  if(response.ok) {
-    console.log("Movie deleted");
+  if (response.ok) {
+    console.log("Movie deleted.");
   }
 }
 
@@ -221,5 +214,5 @@ export {
   createUser,
   getUserReservations,
   deleteUserReservation,
-  getShowing
+  getShowing,
 };

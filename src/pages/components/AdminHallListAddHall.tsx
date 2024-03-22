@@ -13,7 +13,12 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { postHall, getHalls, getRows, getCinemas } from "../../services/apiFacade";
+import {
+  postHall,
+  getHalls,
+  getRows,
+  getCinemas,
+} from "../../services/apiFacade";
 import Hall from "../../interfaces/hall";
 import React from "react";
 import Row from "../../interfaces/row";
@@ -56,13 +61,8 @@ export default function AdminrowListpostHall({
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSave = () => {
-    console.log(newHall);
-    if (
-      !newHall
-    ) {
-      setErrorMessage(
-        "Please fill all fields"
-      );
+    if (!newHall) {
+      setErrorMessage("Please fill all fields");
     } else {
       if (newHall) {
         postHall(newHall)
@@ -148,33 +148,32 @@ export default function AdminrowListpostHall({
     >
       <DialogTitle>Creating a new Hall</DialogTitle>
 
-
       <DialogContent>
-      <FormLabel>Cinemas</FormLabel>
-      <FormGroup>
-            {cinemaList.map((cinema) => (
-              <FormControlLabel
-                key={cinema.name}
-                control={
-                  <Checkbox
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      let newCinema = (newHall?.cinema || {});
-                      if (e.target.checked) {
-                        newCinema = { ...cinema } ;
-                      }
-                      setNewHall({
+        <FormLabel>Cinemas</FormLabel>
+        <FormGroup>
+          {cinemaList.map((cinema) => (
+            <FormControlLabel
+              key={cinema.name}
+              control={
+                <Checkbox
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    let newCinema = newHall?.cinema || {};
+                    if (e.target.checked) {
+                      newCinema = { ...cinema };
+                    }
+                    setNewHall({
                       ...newHall,
                       cinema: newCinema,
                       cinemaId: cinema.id,
                     } as Hall);
-                    }}
-                  />
-                }
-                label={cinema.name}
-              />
-            ))}
-          </FormGroup>
-          <FormControl fullWidth>
+                  }}
+                />
+              }
+              label={cinema.name}
+            />
+          ))}
+        </FormGroup>
+        <FormControl fullWidth>
           <FormLabel>Rows</FormLabel>
           <FormGroup>
             {rowList.map((row) => (

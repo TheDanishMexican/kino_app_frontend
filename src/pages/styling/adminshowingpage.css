@@ -1,47 +1,62 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+#admin-showings-container {
+  margin: 10 auto 10 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-th,
-td {
-    border: 1px solid #000;
-    padding: 8px;
-    text-align: left;
+#admin-showings-container button {
+  background-color: purple;
+  border: none;
+  color: white;
 }
 
-thead {
-    background-color: rgb(132, 49, 132);
-    color: #fff;
+#admin-showing-table table {
+  margin: 0 auto 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
-button {
-    background-color: rgb(132, 49, 132);
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
+#admin-showing-table th,
+#admin-showing-table td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
 }
 
-button:hover {
-    background-color: #7c287c;
+#admin-showing-table thead {
+  background-color: rgb(132, 49, 132);
+  color: #fff;
+}
+
+#admin-showing-table button {
+  background-color: rgb(132, 49, 132);
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#admin-showing-table button:hover {
+  background-color: #7c287c;
 }
 
 .add-showing-button {
-    padding: 10px;
+  padding: 10px;
 }
 
 .btn-search {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-bar-showings {
-    padding: 9px;
-    border-radius: 5px;
+  padding: 9px;
+  border-radius: 5px;
 }

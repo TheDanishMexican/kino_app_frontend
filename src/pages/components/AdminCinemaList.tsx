@@ -17,7 +17,6 @@ export default function AdmincinemasList() {
       .catch(() => setError("Error fetching cinemas, is the server running?"));
   }, []);
 
-
   // State
   const [cinemas, setCinemas] = useState<Array<Cinema>>([]);
   const [error, setError] = useState("");
@@ -40,22 +39,20 @@ export default function AdmincinemasList() {
   const [addOpen, setAddOpen] = useState(false);
   const [editingCinema, setEditingCinema] = useState<Cinema | null>(null);
 
-
   const fetchCinemas = () => {
-     getCinemas()
+    getCinemas()
       .then((res) => setCinemas(res))
       .catch(() => setError("Error fetching cinemas, is the server running?"));
   };
 
-  const filteredcinemas = cinemas
-    .filter((user) =>
-      Object.values(user).some(
-        // Filter by search term
-        (value) =>
-          (typeof value === "string" || typeof value === "number") &&
-          value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
+  const filteredcinemas = cinemas.filter((user) =>
+    Object.values(user).some(
+      // Filter by search term
+      (value) =>
+        (typeof value === "string" || typeof value === "number") &&
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   // Sorting the cinemas list
   const handleHeaderClick = (field: string) => {
@@ -103,7 +100,9 @@ export default function AdmincinemasList() {
     setTimeout(() => {
       getCinemas()
         .then((res) => setCinemas(res))
-        .catch(() => setError("Error fetching cinemas, is the server running?"));
+        .catch(() =>
+          setError("Error fetching cinemas, is the server running?")
+        );
     }, 1000);
   };
 
@@ -176,7 +175,7 @@ export default function AdmincinemasList() {
           id="admin-user-search"
           placeholder="Search cinemas"
           onChange={handleSearchChange}
-        /> 
+        />
         <button id="admin-users-add-user" onClick={handleAddUserClick}>
           Add Cinema
         </button>
@@ -185,19 +184,23 @@ export default function AdmincinemasList() {
         <thead>
           <tr>
             <th onClick={() => handleHeaderClick("name")}>
-             Name
-              {sortField === "name" &&
-                (sortDirection === "asc" ? " ▲" : " ▼")}
+              Name
+              {sortField === "name" && (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
             <th id="users-table-edit-header">Edit Cinema</th>
             <th id="users-table-delete-header">Delete Cinema</th>
           </tr>
         </thead>
-        <tbody>
-          {userListItems}
-          {error && <p>{error}</p>}
-        </tbody>
+        <tbody>{userListItems}</tbody>
+        {error && (
+          <tr>
+            <th>
+              <p>{error}</p>
+            </th>
+          </tr>
+        )}
       </table>
+
       <div>
         {sortedcinemas.length > cinemasPerPage &&
           pageNumbers.map((number) => (

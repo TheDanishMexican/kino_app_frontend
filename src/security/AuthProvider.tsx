@@ -20,7 +20,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [username, setUsername] = useState<string | null>(initialUsername);
 
   const signIn = async (user_: LoginRequest) => {
-    console.log(user_);
     return authProvider.signIn(user_).then((user) => {
       setUsername(user.username);
       localStorage.setItem("username", user.username);
@@ -31,7 +30,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const create = async (user_: User) => {
-    console.log(user_);
     return authProvider.create(user_).then((user) => {
       setUsername(user.username);
       localStorage.setItem("username", user.username);

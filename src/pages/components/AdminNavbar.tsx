@@ -21,7 +21,6 @@ export default function AdminNavbar() {
             value={value}
             onChange={(_event, newValue) => {
               setValue(newValue);
-              console.log(newValue);
               if (newValue === "users") {
                 navigate("/admin/users");
               }
@@ -68,4 +67,3 @@ export default function AdminNavbar() {
     </>
   );
 }
-
