@@ -3,7 +3,6 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
-import EventSeatIcon from "@mui/icons-material/EventSeat";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import "../styling/administrationpage.css";
 import { useNavigate } from "react-router-dom";
@@ -52,11 +51,6 @@ export default function AdminNavbar() {
               label="Cinemas"
               icon={<CameraOutdoorIcon />}
               value="cinemas"
-            />
-            <BottomNavigationAction
-              label="Halls"
-              icon={<EventSeatIcon />}
-              value="halls"
             />
             <BottomNavigationAction
               label="Showings"
