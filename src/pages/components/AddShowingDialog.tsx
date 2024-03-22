@@ -9,7 +9,7 @@ import { makeOptions } from '../../services/fetchUtils'
 interface FormData {
     hallId: number
     startTime: string
-    movieId: number
+    movie: Movie | null // Store the whole Movie object
     price: number
     showingDate: string
     is3D: boolean
@@ -17,11 +17,11 @@ interface FormData {
 
 export default function AddShowingDialog() {
     const [halls, setHalls] = useState<Hall[]>([])
-    const [movies, setMovies] = useState<Movie[]>([]) // State for storing movies
+    const [movies, setMovies] = useState<Movie[]>([])
     const [formData, setFormData] = useState<FormData>({
         hallId: 0,
         startTime: '',
-        movieId: 0,
+        movie: null,
         price: 0,
         showingDate: '',
         is3D: false,
@@ -29,7 +29,7 @@ export default function AddShowingDialog() {
     const option = makeOptions('POST', formData, undefined, true)
 
     async function addShowing() {
-        const response = await fetch(`${API_URL}/movies`, option)
+        const response = await fetch(`${API_URL}/showings`, option)
         if (response.ok) {
             console.log('Movie added successfully')
         } else {
@@ -40,7 +40,6 @@ export default function AddShowingDialog() {
     useEffect(() => {
         async function fetchData() {
             try {
-                // Fetch movies data
                 const moviesResponse = await fetch(`${API_URL}/movies`)
                 const hallsResponse = await fetch(`${API_URL}/halls`)
                 if (moviesResponse.ok && hallsResponse.ok) {
@@ -71,6 +70,15 @@ export default function AddShowingDialog() {
         setFormData({ ...formData, [name as string]: value })
     }
 
+    const handleMovieChange = (
+        event: React.ChangeEvent<{ value: unknown }>
+    ) => {
+        const selectedMovieId = event.target.value as number
+        const selectedMovie =
+            movies.find((movie) => movie.id === selectedMovieId) ?? null
+        setFormData({ ...formData, movie: selectedMovie })
+    }
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('Form submitted:', formData)
@@ -95,18 +103,18 @@ export default function AddShowingDialog() {
             </TextField>
             <TextField
                 type="time"
-                label="---------Start Time"
+                label="Start Time"
                 name="startTime"
                 value={formData.startTime}
                 onChange={handleChange}
                 fullWidth
             />
             <TextField
-                select // Change to select input for movies
-                name="movieId"
+                select
+                name="movie"
                 label="Movie"
-                value={formData.movieId}
-                onChange={handleChange}
+                value={formData.movie ? formData.movie.id : ''}
+                onChange={handleMovieChange}
                 fullWidth
             >
                 {movies.map((movie) => (
@@ -133,7 +141,6 @@ export default function AddShowingDialog() {
                 type="checkbox"
                 name="is3D"
                 label="3D"
-                value={formData.is3D}
                 onChange={handleChange}
                 fullWidth
             />
