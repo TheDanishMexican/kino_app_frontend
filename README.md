@@ -8,14 +8,14 @@
 
 You can ignore these steps if you want to use our Azure hosted site.
 
-If you want to run it on your local backend, follow the steps on the README.md file in this repository https://github.com/TheDanishMexican/kino_app_backend:
+If you want to run it on your local backend, follow the steps on the README.md file in this repository https://github.com/TheDanishMexican/kino_app_backend and make sure the backend variables match your local backend
 
 
 1. Clone this repository to your local machine, and open the folder
 
 2. Make sure the backend is running as intended
    
-3. Run the following commands:
+3. Make sure you are in the right directory and run the following commands:
 
     ```bash
     npm install
