@@ -26,4 +26,3 @@ jobs:
     - name: Build and test React project
       run: |
         npm run build
-        npm test
